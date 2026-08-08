@@ -441,7 +441,7 @@ export default function GalleryPage() {
                 {posts.length === 0 ? 'No cooks shared yet — be the first!' : 'No cooks match those filters'}
               </p>
               <p className="text-brand-muted text-sm max-w-xs mt-1">
-                Upload your photos directly or use the BBQ Calculator to plan and share your cook.
+                Upload your photos directly or use the calculator to plan and share your cook.
               </p>
               <button
                 onClick={() => setShowUploadModal(true)}

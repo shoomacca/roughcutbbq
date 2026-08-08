@@ -103,7 +103,7 @@ export default function GearPage() {
       <div className="mb-6">
         <h1 className="text-brand-text text-2xl font-bold">BBQ Gear</h1>
         <p className="text-brand-muted text-sm mt-1">
-          Kit we actually recommend — every link supports BBQ Calculator
+          Kit we actually recommend — every link supports Rough Cut BBQ
         </p>
       </div>
 
@@ -147,7 +147,7 @@ export default function GearPage() {
       )}
 
       <p className="text-brand-muted/40 text-xs text-center mt-12">
-        BBQ Calculator earns a commission from qualifying Amazon purchases via links on this page.
+        As an Amazon Associate, Rough Cut BBQ earns from qualifying purchases made via links on this page.
       </p>
     </div>
   );

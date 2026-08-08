@@ -73,7 +73,7 @@ export default function GearRecommendation({ method, limit = 1, title = 'Recomme
         ))}
       </div>
       <p className="text-brand-muted/30 text-[10px] mt-3">
-        Rough Cut BBQ may earn a commission from qualifying purchases.
+        As an Amazon Associate, Rough Cut BBQ earns from qualifying purchases.
       </p>
     </div>
   );

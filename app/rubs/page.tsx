@@ -100,7 +100,7 @@ export default function RubsPage() {
       <div className="mb-6">
         <h1 className="text-brand-text text-2xl font-bold">BBQ Rubs & Seasonings</h1>
         <p className="text-brand-muted text-sm mt-1">
-          30 rubs sorted by meat — every link supports BBQ Calculator
+          30 rubs sorted by meat — every link supports Rough Cut BBQ
         </p>
       </div>
 
@@ -144,7 +144,7 @@ export default function RubsPage() {
       )}
 
       <p className="text-brand-muted/40 text-xs text-center mt-12">
-        BBQ Calculator earns a commission from qualifying Amazon purchases via links on this page.
+        As an Amazon Associate, Rough Cut BBQ earns from qualifying purchases made via links on this page.
       </p>
     </div>
   );

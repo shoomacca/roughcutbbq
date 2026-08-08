@@ -1,8 +1,10 @@
 import { NextResponse } from 'next/server';
+import { cookies } from 'next/headers';
 import { unlink } from 'fs/promises';
 import path from 'path';
 import { RowDataPacket } from 'mysql2';
 import pool from '@/lib/db';
+import { verifyAdminToken } from '@/lib/auth';
 
 const BASE_URL = 'https://app.roughcut.com.au/uploads/gallery';
 const UPLOAD_DIR = path.join(process.cwd(), 'public', 'uploads', 'gallery');
@@ -13,8 +15,8 @@ interface PostRow extends RowDataPacket {
 }
 
 export async function DELETE(req: Request) {
-  const adminPass = req.headers.get('x-admin-password');
-  if (!adminPass || adminPass !== process.env.ADMIN_PASSWORD) {
+  const cookieStore = await cookies();
+  if (!verifyAdminToken(cookieStore.get('admin_token')?.value)) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 

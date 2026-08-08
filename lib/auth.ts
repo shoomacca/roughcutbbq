@@ -1,6 +1,26 @@
 import crypto from 'crypto';
 
-const JWT_SECRET = process.env.JWT_SECRET || 'fallback-secret-for-local-dev-please-change-it-in-production-1234567890';
+function getJwtSecret(): string {
+  const secret = process.env.JWT_SECRET;
+  if (secret) return secret;
+  if (process.env.NODE_ENV === 'production') {
+    // Never sign tokens with a known secret in production - anyone could forge sessions.
+    throw new Error('JWT_SECRET environment variable must be set in production.');
+  }
+  return 'local-dev-only-secret';
+}
+const JWT_SECRET = getJwtSecret();
+
+function timingSafeCompare(a: string, b: string): boolean {
+  const bufA = Buffer.from(a, 'utf8');
+  const bufB = Buffer.from(b, 'utf8');
+  if (bufA.length !== bufB.length) {
+    // Run comparison with self to consume uniform time
+    crypto.timingSafeEqual(bufA, bufA);
+    return false;
+  }
+  return crypto.timingSafeEqual(bufA, bufB);
+}
 
 export function signToken(payload: { userId: number; email: string }): string {
   const header = Buffer.from(JSON.stringify({ alg: 'HS256', typ: 'JWT' })).toString('base64url');
@@ -25,7 +45,7 @@ export function verifyToken(token: string): { userId: number; email: string } | 
       .update(`${header}.${body}`)
       .digest('base64url');
       
-    if (signature !== expectedSignature) return null;
+    if (!timingSafeCompare(signature, expectedSignature)) return null;
     
     const decodedBody = JSON.parse(Buffer.from(body, 'base64url').toString('utf8'));
     if (decodedBody.exp < Date.now()) return null; // Expired
@@ -47,6 +67,28 @@ export function verifyPassword(password: string, storedHash: string): boolean {
   if (!salt || !hash) return false;
   const verifyHash = crypto.scryptSync(password, salt, 64).toString('hex');
   return hash === verifyHash;
+}
+
+// -- Admin session tokens (httpOnly cookie, verified server-side) --
+export function signAdminToken(): string {
+  const exp = Date.now() + 24 * 60 * 60 * 1000; // 24 hours
+  const body = Buffer.from(JSON.stringify({ role: 'admin', exp })).toString('base64url');
+  const signature = crypto.createHmac('sha256', JWT_SECRET).update(`admin.${body}`).digest('base64url');
+  return `${body}.${signature}`;
+}
+
+export function verifyAdminToken(token: string | undefined): boolean {
+  if (!token) return false;
+  try {
+    const [body, signature] = token.split('.');
+    if (!body || !signature) return false;
+    const expected = crypto.createHmac('sha256', JWT_SECRET).update(`admin.${body}`).digest('base64url');
+    if (!timingSafeCompare(signature, expected)) return false;
+    const decoded = JSON.parse(Buffer.from(body, 'base64url').toString('utf8'));
+    return decoded.role === 'admin' && decoded.exp > Date.now();
+  } catch {
+    return false;
+  }
 }
 
 export function getAnonymousName(userId: number): string {

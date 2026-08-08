@@ -1,7 +1,7 @@
-# Update the Sitemap URL to your production domain before deploying
+
 User-agent: *
 Allow: /
 Disallow: /admin/
 Disallow: /api/
 
-Sitemap: https://bbqpro.app/sitemap.xml
+Sitemap: https://roughcut.com.au/sitemap.xml

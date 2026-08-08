@@ -81,8 +81,8 @@ export async function POST(req: Request) {
       ]
     );
   } catch (err: unknown) {
-    const mysqlErr = err as { code?: string };
-    if (mysqlErr.code === 'ER_DUP_ENTRY') {
+    const dbErr = err as { code?: string };
+    if (dbErr.code === 'ER_DUP_ENTRY' || dbErr.code === '23505') {
       return NextResponse.json({ error: 'already_subscribed' }, { status: 409 });
     }
     console.error('Subscribe DB error:', err);

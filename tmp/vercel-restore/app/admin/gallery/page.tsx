@@ -14,8 +14,6 @@ interface GalleryPost {
   created_at: string;
 }
 
-const SESSION_KEY = 'bbq_admin_auth';
-
 export default function AdminGalleryPage() {
   const [authed, setAuthed] = useState(false);
   const [password, setPassword] = useState('');
@@ -24,11 +22,12 @@ export default function AdminGalleryPage() {
   const [loading, setLoading] = useState(false);
   const [deleting, setDeleting] = useState<string | null>(null);
 
-  // Restore auth from session
+  // Check for an existing admin session (httpOnly cookie, verified server-side)
   useEffect(() => {
-    if (sessionStorage.getItem(SESSION_KEY)) {
-      setAuthed(true);
-    }
+    fetch('/api/admin/login')
+      .then((r) => r.json())
+      .then(({ authed }) => { if (authed) setAuthed(true); })
+      .catch(() => {});
   }, []);
 
   // Fetch flagged posts once authed
@@ -41,14 +40,22 @@ export default function AdminGalleryPage() {
       .catch(() => setLoading(false));
   }, [authed]);
 
-  function handleLogin(e: React.FormEvent) {
+  async function handleLogin(e: React.FormEvent) {
     e.preventDefault();
-    if (password === process.env.NEXT_PUBLIC_ADMIN_PASSWORD) {
-      sessionStorage.setItem(SESSION_KEY, '1');
-      setAuthed(true);
-      setAuthError('');
-    } else {
-      setAuthError('Incorrect password');
+    try {
+      const res = await fetch('/api/admin/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ password }),
+      });
+      if (res.ok) {
+        setAuthed(true);
+        setAuthError('');
+      } else {
+        setAuthError('Incorrect password');
+      }
+    } catch {
+      setAuthError('Login failed - try again');
     }
   }
 
@@ -58,10 +65,7 @@ export default function AdminGalleryPage() {
     try {
       const res = await fetch('/api/gallery/delete', {
         method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json',
-          'x-admin-password': process.env.NEXT_PUBLIC_ADMIN_PASSWORD ?? '',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ postId }),
       });
       if (res.ok) {
@@ -108,7 +112,7 @@ export default function AdminGalleryPage() {
           <p className="text-brand-muted text-sm mt-0.5">Flagged posts (report_count &gt; 0)</p>
         </div>
         <button
-          onClick={() => { sessionStorage.removeItem(SESSION_KEY); setAuthed(false); }}
+          onClick={() => setAuthed(false)}
           className="text-brand-muted text-sm hover:text-brand-text transition-colors"
         >
           Sign out

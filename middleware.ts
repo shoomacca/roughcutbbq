@@ -5,24 +5,20 @@ export function middleware(request: NextRequest) {
   const token = request.cookies.get('token')?.value;
   const { pathname } = request.nextUrl;
 
-  // Paths that do not require login
-  const isPublicPath =
-    pathname === '/login' ||
-    pathname === '/signup' ||
-    pathname.startsWith('/api/auth') ||
-    pathname.startsWith('/_next') ||
-    pathname.startsWith('/uploads') ||
-    pathname.includes('.') || // Matches files like favicon.ico, images, .apk
-    pathname === '/favicon.ico' ||
-    pathname === '/rough-cut-bbq-debug.apk';
+  // The site is public by default. Only these paths require login.
+  const isProtectedPath =
+    pathname === '/saves' ||
+    pathname.startsWith('/saves/') ||
+    pathname.startsWith('/admin');
 
-  if (!token && !isPublicPath) {
-    // Redirect to login page
-    return NextResponse.redirect(new URL('/login', request.url));
+  if (!token && isProtectedPath) {
+    const loginUrl = new URL('/login', request.url);
+    loginUrl.searchParams.set('next', pathname);
+    return NextResponse.redirect(loginUrl);
   }
 
-  // Redirect to calculator if logged-in user visits root page
-  if (token && pathname === '/') {
+  // Logged-in users skip the login/signup pages
+  if (token && (pathname === '/login' || pathname === '/signup')) {
     return NextResponse.redirect(new URL('/calculator', request.url));
   }
 

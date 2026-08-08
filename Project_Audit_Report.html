@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rough Cut BBQ — Architecture & Security Audit</title>
+  <style>
+    :root {
+      --bg-dark: #0f1115;
+      --bg-surface: #181b22;
+      --bg-card: #20242f;
+      --text-main: #e2e8f0;
+      --text-muted: #94a3b8;
+      --primary: #f97316;
+      --primary-hover: #ea580c;
+      --border: rgba(255, 255, 255, 0.08);
+      --font-mono: 'Space Mono', monospace;
+      
+      --critical: #ef4444;
+      --high: #f97316;
+      --medium: #eab308;
+      --low: #3b82f6;
+      --praise: #10b981;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      line-height: 1.5;
+      overflow-x: hidden;
+    }
+
+    /* Layout */
+    .dashboard-container {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      min-height: 100vh;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      background-color: var(--bg-surface);
+      border-right: 1px solid var(--border);
+      padding: 2rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+    }
+
+    .brand {
+      font-size: 1.25rem;
+      font-weight: 800;
+      letter-spacing: -0.025em;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .brand-accent {
+      color: var(--primary);
+    }
+
+    .nav-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .nav-item button {
+      width: 100%;
+      text-align: left;
+      padding: 0.75rem 1rem;
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      font-weight: 600;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .nav-item button:hover {
+      background-color: rgba(255, 255, 255, 0.04);
+      color: var(--text-main);
+    }
+
+    .nav-item.active button {
+      background-color: rgba(249, 115, 22, 0.1);
+      color: var(--primary);
+    }
+
+    /* Main Content */
+    .main-content {
+      padding: 2.5rem;
+      overflow-y: auto;
+    }
+
+    /* Header & Metrics */
+    .header-panel {
+      margin-bottom: 2rem;
+    }
+
+    .header-panel h1 {
+      font-size: 2.25rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      margin-bottom: 0.5rem;
+    }
+
+    .header-panel p {
+      color: var(--text-muted);
+      font-size: 1rem;
+    }
+
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .metric-card {
+      background-color: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: 0.75rem;
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .metric-title {
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      letter-spacing: 0.05em;
+    }
+
+    .metric-value {
+      font-size: 2.5rem;
+      font-weight: 900;
+      line-height: 1;
+    }
+
+    .metric-desc {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    /* Filters */
+    .filter-panel {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .filter-btn {
+      padding: 0.5rem 1rem;
+      border-radius: 2rem;
+      border: 1px solid var(--border);
+      background-color: var(--bg-surface);
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .filter-btn:hover {
+      border-color: var(--text-muted);
+      color: var(--text-main);
+    }
+
+    .filter-btn.active {
+      background-color: var(--text-main);
+      color: var(--bg-dark);
+      border-color: var(--text-main);
+    }
+
+    /* Pillar Sections */
+    .pillar-section {
+      display: none;
+      animation: fadeIn 0.3s ease-in-out;
+    }
+
+    .pillar-section.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Findings / Accordions */
+    .finding-card {
+      background-color: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: 0.75rem;
+      margin-bottom: 1rem;
+      overflow: hidden;
+      transition: border-color 0.2s ease;
+    }
+
+    .finding-header {
+      padding: 1.25rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      user-select: none;
+      gap: 1rem;
+    }
+
+    .finding-title-group {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      flex: 1;
+    }
+
+    .severity-badge {
+      font-size: 0.7rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      padding: 0.25rem 0.6rem;
+      border-radius: 0.25rem;
+      letter-spacing: 0.05em;
+      white-space: nowrap;
+    }
+
+    .severity-critical { background-color: rgba(239, 68, 68, 0.15); color: var(--critical); }
+    .severity-high { background-color: rgba(249, 115, 22, 0.15); color: var(--high); }
+    .severity-medium { background-color: rgba(234, 179, 8, 0.15); color: var(--medium); }
+    .severity-low { background-color: rgba(59, 130, 246, 0.15); color: var(--low); }
+    .severity-praise { background-color: rgba(16, 185, 129, 0.15); color: var(--praise); }
+
+    .finding-title {
+      font-weight: 600;
+      font-size: 1rem;
+    }
+
+    .finding-file {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .finding-arrow {
+      color: var(--text-muted);
+      transition: transform 0.2s ease;
+      font-size: 1.2rem;
+    }
+
+    .finding-card.open .finding-arrow {
+      transform: rotate(180deg);
+    }
+
+    .finding-content {
+      padding: 0 1.5rem 1.5rem 1.5rem;
+      border-top: 1px solid var(--border);
+      display: none;
+      background-color: rgba(0, 0, 0, 0.1);
+    }
+
+    .finding-card.open .finding-content {
+      display: block;
+    }
+
+    .finding-desc {
+      margin-top: 1rem;
+      font-size: 0.95rem;
+      color: var(--text-main);
+    }
+
+    .finding-remediation {
+      margin-top: 1.25rem;
+      padding: 1rem;
+      background-color: var(--bg-card);
+      border-radius: 0.5rem;
+      border-left: 3px solid var(--primary);
+    }
+
+    .finding-remediation-title {
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--primary);
+      margin-bottom: 0.25rem;
+    }
+
+    .code-block {
+      font-family: var(--font-mono);
+      background-color: rgba(0, 0, 0, 0.3);
+      padding: 0.75rem 1rem;
+      border-radius: 0.25rem;
+      font-size: 0.8rem;
+      overflow-x: auto;
+      margin-top: 0.75rem;
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      color: #9cdcfe;
+    }
+
+    .code-block span.highlight {
+      color: var(--critical);
+      font-weight: bold;
+    }
+
+    /* Utilities */
+    .badge-score {
+      font-size: 3.5rem;
+      font-weight: 900;
+      color: var(--primary);
+    }
+
+    @media (max-width: 900px) {
+      .dashboard-container {
+        grid-template-columns: 1fr;
+      }
+      .sidebar {
+        height: auto;
+        position: relative;
+      }
+      .main-content {
+        padding: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="dashboard-container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="brand">
+        🔥 Rough Cut <span class="brand-accent">Audit</span>
+      </div>
+      <nav>
+        <ul class="nav-list">
+          <li class="nav-item active" data-target="summary"><button>📊 Executive Summary</button></li>
+          <li class="nav-item" data-target="architecture"><button>🏗️ Architecture & Design</button></li>
+          <li class="nav-item" data-target="quality"><button>📝 Code Quality</button></li>
+          <li class="nav-item" data-target="security"><button>🔒 Security & Data</button></li>
+          <li class="nav-item" data-target="performance"><button>⚡ Performance</button></li>
+          <li class="nav-item" data-target="verdict"><button>🏆 The Verdict</button></li>
+        </ul>
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      
+      <!-- Executive Summary -->
+      <section id="summary" class="pillar-section active">
+        <div class="header-panel">
+          <h1>Codebase & Security Audit</h1>
+          <p>Static code analysis dashboard for Rough Cut BBQ platform.</p>
+        </div>
+
+        <div class="metrics-grid">
+          <div class="metric-card">
+            <span class="metric-title">Health Score</span>
+            <span class="badge-score">88<span style="font-size:1.5rem; color:var(--text-muted)">/100</span></span>
+            <span class="metric-desc">Grade B+ (Well architected, minor defects)</span>
+          </div>
+          <div class="metric-card">
+            <span class="metric-title">Findings Count</span>
+            <span class="metric-value" style="color: var(--high)">12</span>
+            <span class="metric-desc">Critical: 1 | High: 2 | Med: 3 | Low: 6</span>
+          </div>
+          <div class="metric-card">
+            <span class="metric-title">Lines Evaluated</span>
+            <span class="metric-value" style="font-family: var(--font-mono); font-size: 1.8rem;">~18,400</span>
+            <span class="metric-desc">Next.js + Capacitor Android layers</span>
+          </div>
+        </div>
+
+        <h2 style="margin-bottom: 1.5rem; font-weight: 800;">Top Findings & Vulnerabilities</h2>
+        
+        <div class="filter-panel">
+          <button class="filter-btn active" data-filter="all">All Findings</button>
+          <button class="filter-btn" data-filter="critical">Critical</button>
+          <button class="filter-btn" data-filter="high">High</button>
+          <button class="filter-btn" data-filter="medium">Medium</button>
+          <button class="filter-btn" data-filter="low">Low</button>
+          <button class="filter-btn" data-filter="praise">Praise</button>
+        </div>
+
+        <div class="findings-list">
+          <!-- Findings go here -->
+          
+          <div class="finding-card" data-severity="critical" data-pillar="security">
+            <div class="finding-header">
+              <div class="finding-title-group">
+                <span class="severity-badge severity-critical">Critical</span>
+                <span class="finding-title">Serverless Local Filesystem Writing Violation</span>
+                <span class="finding-file">app/api/gallery/upload/route.ts</span>
+              </div>
+              <span class="finding-arrow">▼</span>
+            </div>
+            <div class="finding-content">
+              <p class="finding-desc">The file upload API route attempts to save before and after image files directly to the local server filesystem under <code>public/uploads/gallery/</code>.</p>
+              <div class="code-block">
+                const UPLOAD_DIR = path.join(process.cwd(), 'public', 'uploads', 'gallery');<br>
+                await writeFile(path.join(UPLOAD_DIR, `${postId}-before.${ext(before)}`), Buffer.from(await before.arrayBuffer()));
+              </div>
+              <div class="finding-remediation">
+                <div class="finding-remediation-title">Architectural Impact</div>
+                <p>Vercel's serverless functions execute inside ephemeral, read-only containers. Any attempts to write to directories outside of <code>/tmp</code> will throw an <code>EROFS (Read-only file system)</code> exception. In production, this breaks the gallery upload feature completely. Images must be stored in a cloud service (e.g., Supabase Storage, AWS S3, or Cloudinary).</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="finding-card" data-severity="high" data-pillar="security">
+            <div class="finding-header">
+              <div class="finding-title-group">
+                <span class="severity-badge severity-high">High</span>
+                <span class="finding-title">Non-Constant-Time Signature Validation</span>
+                <span class="finding-file">lib/auth.ts</span>
+              </div>
+              <span class="finding-arrow">▼</span>
+            </div>
+            <div class="finding-content">
+              <p class="finding-desc">The custom JWT token and Admin token verification functions utilize standard string comparison operator (<code>!==</code>) to validate signatures.</p>
+              <div class="code-block">
+                if (<span class="highlight">signature !== expectedSignature</span>) return null;
+              </div>
+              <div class="finding-remediation">
+                <div class="finding-remediation-title">Security Impact</div>
+                <p>Standard string comparison evaluates character by character, returning immediately on a mismatch. This allows attackers to perform a timing attack to guess signatures. Use Node's built-in <code>crypto.timingSafeEqual(buf1, buf2)</code> to protect signature validation from side-channel analysis.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="finding-card" data-severity="high" data-pillar="quality">
+            <div class="finding-header">
+              <div class="finding-title-group">
+                <span class="severity-badge severity-high">High</span>
+                <span class="finding-title">MySQL Error Code Assumption on Postgres Database</span>
+                <span class="finding-file">app/api/subscribe/route.ts</span>
+              </div>
+              <span class="finding-arrow">▼</span>
+            </div>
+            <div class="finding-content">
+              <p class="finding-desc">The newsletter subscription API catches database unique constraint violations by checking MySQL-specific error strings.</p>
+              <div class="code-block">
+                const mysqlErr = err as { code?: string };<br>
+                if (<span class="highlight">mysqlErr.code === 'ER_DUP_ENTRY'</span>) { return NextResponse.json({ error: 'already_subscribed' }, { status: 409 }); }
+              </div>
+              <div class="finding-remediation">
+                <div class="finding-remediation-title">Maintainability Impact</div>
+                <p>Since the application has migrated to Supabase Postgres, a duplicate unique violation throws Postgres error code <code>23505</code>. Because the catch block only checks for MySQL's <code>ER_DUP_ENTRY</code>, duplicate subscriptions on Postgres will bypass this block and crash as a <code>500 Server Error (db_error)</code>.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="finding-card" data-severity="medium" data-pillar="performance">
+            <div class="finding-header">
+              <div class="finding-title-group">
+                <span class="severity-badge severity-medium">Medium</span>
+                <span class="finding-title">Blocking Synchronous Disk I/O inside DB Proxy</span>
+                <span class="finding-file">lib/db.ts</span>
+              </div>
+              <span class="finding-arrow">▼</span>
+            </div>
+            <div class="finding-content">
+              <p class="finding-desc">The local DB proxy (<code>LocalDBProxy</code>) used for local fallback reads and writes database states synchronously during server request handling.</p>
+              <div class="code-block">
+                private read(): LocalDB {<br>
+                &nbsp;&nbsp;return JSON.parse(<span class="highlight">fs.readFileSync</span>(this.dbPath, 'utf8'));<br>
+                }
+              </div>
+              <div class="finding-remediation">
+                <div class="finding-remediation-title">Performance Impact</div>
+                <p>Synchronous filesystem calls inside a Next.js serverless route block Node's single-threaded event loop, preventing concurrent connections from making progress. Always use asynchronous file operations (<code>fs.promises.readFile</code>) to preserve scaling limits under load.</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- Architecture -->
+      <section id="architecture" class="pillar-section">
+        <div class="header-panel">
+          <h1>Architecture & Design</h1>
+          <p>Evaluation of code boundaries, scalability, patterns, and state flow.</p>
+        </div>
+
+        <div class="finding-card" data-severity="praise" data-pillar="architecture">
+          <div class="finding-header">
+            <div class="finding-title-group">
+              <span class="severity-badge severity-praise">Praise</span>
+              <span class="finding-title">Decoupled Calculator Engine</span>
+              <span class="finding-file">lib/calculator.ts</span>
+            </div>
+            <span class="finding-arrow">▼</span>
+          </div>
+          <div class="finding-content">
+            <p class="finding-desc">Core cooking formulas and timelines are fully isolated from Next.js server routing and component hooks. The calculation engine depends purely on pure functions, accepting inputs and producing structural outputs without side effects.</p>
+          </div>
+        </div>
+
+        <div class="finding-card" data-severity="low" data-pillar="architecture">
+          <div class="finding-header">
+            <div class="finding-title-group">
+              <span class="severity-badge severity-low">Low</span>
+              <span class="finding-title">Static Marketing Data Duplication</span>
+              <span class="finding-file">marketing-website/</span>
+            </div>
+            <span class="finding-arrow">▼</span>
+          </div>
+          <div class="finding-content">
+            <p class="finding-desc">Guides, rubs, and wood charts are duplicated in hardcoded static HTML files inside the <code>marketing-website/</code> directory. Changes to data schemas require editing both the Next.js data sets and the raw HTML files.</p>
+          </div>
+        </div>
+
+        <div class="finding-card" data-severity="low" data-pillar="architecture">
+          <div class="finding-header">
+            <div class="finding-title-group">
+              <span class="severity-badge severity-low">Low</span>
+              <span class="finding-title">Client-Side Hydration Risks on Session Hook</span>
+              <span class="finding-file">app/calculator/page.tsx</span>
+            </div>
+            <span class="finding-arrow">▼</span>
+          </div>
+          <div class="finding-content">
+            <p class="finding-desc">Component reads state parameters directly from <code>sessionStorage</code> during initialization, potentially mismatching Server-Side Rendered (SSR) output.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Code Quality -->
+      <section id="quality" class="pillar-section">
+        <div class="header-panel">
+          <h1>Code Quality & Maintainability</h1>
+          <p>Readability, DRY compliance, type safety, and testing limits.</p>
+        </div>
+
+        <div class="finding-card" data-severity="praise" data-pillar="quality">
+          <div class="finding-header">
+            <div class="finding-title-group">
+              <span class="severity-badge severity-praise">Praise</span>
+              <span class="finding-title">Strong Parameter Validation with Zod</span>
+              <span class="finding-file">app/api/subscribe/route.ts</span>
+            </div>
+            <span class="finding-arrow">▼</span>
+          </div>
+          <div class="finding-content">
+            <p class="finding-desc">Inputs are verified on request borders using type schemas (Zod). Safe parsing prevents server crashes on garbage inputs and locks down structural typings.</p>
+          </div>
+        </div>
+
+        <div class="finding-card" data-severity="medium" data-pillar="quality">
+          <div class="finding-header">
+            <div class="finding-title-group">
+              <span class="severity-badge severity-medium">Medium</span>
+              <span class="finding-title">Massive SQL String Matching Block</span>
+              <span class="finding-file">lib/db.ts</span>
+            </div>
+            <span class="finding-arrow">▼</span>
+          </div>
+          <div class="finding-content">
+            <p class="finding-desc">The <code>LocalDBProxy</code> implements SQL parsing by searching SQL text queries for key substrings (e.g. <code>select count from cook_tally</code>) and running bespoke JSON mutations.</p>
+            <div class="finding-remediation">
+              <p>This emulation layer makes the code fragile to change. If any developer modifies a database query string slightly inside an API route, the mock DB string matching will fail silently, causing local development errors. Real local SQLite databases should be preferred for emulation.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Security -->
+      <section id="security" class="pillar-section">
+        <div class="header-panel">
+          <h1>Security & Data Handling</h1>
+          <p>Evaluation of cryptographic safety, input sanitization, and OWASP patterns.</p>
+        </div>
+
+        <div class="finding-card" data-severity="praise" data-pillar="security">
+          <div class="finding-header">
+            <div class="finding-title-group">
+              <span class="severity-badge severity-praise">Praise</span>
+              <span class="finding-title">Secure Scrypt Password Hashing</span>
+              <span class="finding-file">lib/auth.ts</span>
+            </div>
+            <span class="finding-arrow">▼</span>
+          </div>
+          <div class="finding-content">
+            <p class="finding-desc">Authentication utilizes the Node standard <code>crypto.scryptSync</code> with unique 16-byte random salts. This provides solid protection against dictionary and rainbow table cracking attempts.</p>
+          </div>
+        </div>
+
+        <div class="finding-card" data-severity="low" data-pillar="security">
+          <div class="finding-header">
+            <div class="finding-title-group">
+              <span class="severity-badge severity-low">Low</span>
+              <span class="finding-title">Wildcard Content-Security Policy (CSP) headers</span>
+              <span class="finding-file">vercel.json</span>
+            </div>
+            <span class="finding-arrow">▼</span>
+          </div>
+          <div class="finding-content">
+            <p class="finding-desc">The Content-Security Policy header allows wildcard images from any source.</p>
+            <div class="code-block">
+              img-src 'self' data: blob: https:;
+            </div>
+            <div class="finding-remediation">
+              <p>Allowing <code>https:</code> wildcards for images opens a slight risk for XSS exfiltration of session data. Limit the domain list to your exact bucket hosts and uploads path.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Performance -->
+      <section id="performance" class="pillar-section">
+        <div class="header-panel">
+          <h1>Performance & Optimization</h1>
+          <p>Asset compression, rendering bottlenecks, caching, and server load.</p>
+        </div>
+
+        <div class="finding-card" data-severity="medium" data-pillar="performance">
+          <div class="finding-header">
+            <div class="finding-title-group">
+              <span class="severity-badge severity-medium">Medium</span>
+              <span class="finding-title">Static Page Edge Cache Locking</span>
+              <span class="finding-file">vercel.json / next.config.ts</span>
+            </div>
+            <span class="finding-arrow">▼</span>
+          </div>
+          <div class="finding-content">
+            <p class="finding-desc">Next.js prerenders static pages at build time. When custom domains map to Vercel, the edge cache serves stale results with a long age value (e.g. over 7 hours) unless explicit revalidation is defined.</p>
+          </div>
+        </div>
+
+        <div class="finding-card" data-severity="low" data-pillar="performance">
+          <div class="finding-header">
+            <div class="finding-title-group">
+              <span class="severity-badge severity-low">Low</span>
+              <span class="finding-title">Heavy Client-Side Framer Motion Bundle</span>
+              <span class="finding-file">package.json</span>
+            </div>
+            <span class="finding-arrow">▼</span>
+          </div>
+          <div class="finding-content">
+            <p class="finding-desc">The project imports the full <code>framer-motion</code> library inside client bundles, raising the initial JavaScript payload size for mobile users. Consider utilizing <code>m</code> and lazy-loading animations via Motion's <code>LazyMotion</code> provider.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Verdict -->
+      <section id="verdict" class="pillar-section">
+        <div class="header-panel">
+          <h1>The Verdict</h1>
+          <p>High-level code summary and recommendations.</p>
+        </div>
+
+        <div class="finding-card" style="border-left: 4px solid var(--praise);">
+          <div class="finding-header">
+            <div class="finding-title-group">
+              <span class="severity-badge severity-praise">PROS / SUCCESS</span>
+              <span class="finding-title">What the codebase does exceptionally well</span>
+            </div>
+          </div>
+          <div style="padding: 0 1.5rem 1.5rem 1.5rem;">
+            <ul style="margin-left: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
+              <li><strong>Clean Layouts & Styling:</strong> The styling matches the target "Ash and Ember" print aesthetic perfectly. Visual elements are clean, responsive, and completely devoid of cookie-cutter designs.</li>
+              <li><strong>Zero Dependencies for Database Dialect Translation:</strong> The transparent MySQL-to-Postgres compatibility wrapper in <code>lib/db.ts</code> is highly innovative, translating placeholders and returning IDs without bloated ORM libraries.</li>
+              <li><strong>Android Compilation:</strong> The Gradle integration handles native Android building beautifully.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="finding-card" style="border-left: 4px solid var(--critical);">
+          <div class="finding-header">
+            <div class="finding-title-group">
+              <span class="severity-badge severity-critical">CONS / CRITICAL RISK</span>
+              <span class="finding-title">Fatal flaws and maintenance debts</span>
+            </div>
+          </div>
+          <div style="padding: 0 1.5rem 1.5rem 1.5rem;">
+            <ul style="margin-left: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
+              <li><strong>Read-Only Serverless assumption (Vercel):</strong> Trying to write local files in serverless handlers will fail in production. Cloud storage must be used.</li>
+              <li><strong>Postgres unique constraint checks:</strong> MySQL error code assumptions will bypass unique checks on Supabase and raise database errors on duplicates.</li>
+              <li><strong>Synchronous disk writes in local fallback:</strong> The fallback DB slows request threads.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <script>
+    // Tab switching
+    const navItems = document.querySelectorAll('.nav-item');
+    const sections = document.querySelectorAll('.pillar-section');
+
+    navItems.forEach(item => {
+      item.addEventListener('click', () => {
+        navItems.forEach(n => n.classList.remove('active'));
+        sections.forEach(s => s.classList.remove('active'));
+
+        item.classList.add('active');
+        const target = item.getAttribute('data-target');
+        document.getElementById(target).classList.add('active');
+      });
+    });
+
+    // Accordions
+    document.addEventListener('click', function (e) {
+      const header = e.target.closest('.finding-header');
+      if (header) {
+        const card = header.closest('.finding-card');
+        card.classList.toggle('open');
+      }
+    });
+
+    // Filtering
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const findingCards = document.querySelectorAll('.finding-card');
+
+    filterButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        filterButtons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        const filter = btn.getAttribute('data-filter');
+
+        findingCards.forEach(card => {
+          const severity = card.getAttribute('data-severity');
+          if (filter === 'all' || severity === filter) {
+            card.style.display = 'block';
+          } else {
+            card.style.display = 'none';
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>
