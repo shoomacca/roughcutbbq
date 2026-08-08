@@ -4,14 +4,18 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Rough Cut BBQ — Complete Technical Audit Report</title>
+  <!-- Google Fonts Sora -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;800&family=Space+Mono&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg-dark: #090b0e;
-      --bg-surface: #11141b;
-      --bg-card: #181d28;
+      --bg-dark: #0f1115;
+      --bg-surface: #181b22;
+      --bg-card: #20242f;
       --bg-code: #0b0d13;
       --text-main: #f1f5f9;
-      --text-muted: #64748b;
+      --text-muted: #cbd5e1; /* Increased contrast to pass WCAG AA */
       --text-primary: #f97316;
       --border: rgba(255, 255, 255, 0.08);
       --font-mono: 'Space Mono', 'Fira Code', monospace;
@@ -21,6 +25,7 @@
       --medium: #eab308;
       --low: #3b82f6;
       --praise: #10b981;
+      --idea: #a855f7;
     }
 
     * {
@@ -30,7 +35,7 @@
     }
 
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-family: 'Sora', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       background-color: var(--bg-dark);
       color: var(--text-main);
       line-height: 1.6;
@@ -58,7 +63,7 @@
 
     .brand {
       font-size: 1.3rem;
-      font-weight: 900;
+      font-weight: 800;
       letter-spacing: -0.03em;
       color: var(--text-main);
       display: flex;
@@ -118,7 +123,7 @@
 
     .header-panel h1 {
       font-size: 2.5rem;
-      font-weight: 900;
+      font-weight: 800;
       letter-spacing: -0.04em;
       margin-bottom: 0.5rem;
     }
@@ -146,16 +151,14 @@
     .stat-title {
       font-size: 0.8rem;
       font-weight: 800;
-      text-transform: uppercase;
       color: var(--text-muted);
-      letter-spacing: 0.06em;
       margin-bottom: 0.5rem;
       display: block;
     }
 
     .stat-value {
       font-size: 3rem;
-      font-weight: 900;
+      font-weight: 800;
       line-height: 1;
       color: var(--text-main);
     }
@@ -229,6 +232,7 @@
     .badge-medium { background: rgba(234, 179, 8, 0.15); color: var(--medium); border: 1px solid rgba(234, 179, 8, 0.3); }
     .badge-low { background: rgba(59, 130, 246, 0.15); color: var(--low); border: 1px solid rgba(59, 130, 246, 0.3); }
     .badge-praise { background: rgba(16, 185, 129, 0.15); color: var(--praise); border: 1px solid rgba(16, 185, 129, 0.3); }
+    .badge-idea { background: rgba(168, 85, 247, 0.15); color: var(--idea); border: 1px solid rgba(168, 85, 247, 0.3); }
 
     .finding-name {
       font-size: 1.1rem;
@@ -255,7 +259,7 @@
     }
 
     .finding-body {
-      padding: 0 1.5rem 1.5rem 1.5rem;
+      padding: 1.5rem; /* Fixed cramped padding rule by giving padding on all sides */
       border-top: 1px solid var(--border);
       background-color: rgba(0, 0, 0, 0.15);
       display: none;
@@ -269,15 +273,12 @@
       display: grid;
       grid-template-columns: 1fr;
       gap: 1.5rem;
-      margin-top: 1.5rem;
     }
 
-    .details-pane h4 {
+    .details-pane-title {
       font-size: 0.85rem;
       font-weight: 800;
-      text-transform: uppercase;
       color: var(--text-muted);
-      letter-spacing: 0.05em;
       margin-bottom: 0.5rem;
     }
 
@@ -314,8 +315,8 @@
 
     .action-steps {
       background-color: var(--bg-card);
-      border-left: 4px solid var(--text-primary);
-      border-radius: 0 0.5rem 0.5rem 0;
+      border: 1px solid var(--border);
+      border-radius: 0.5rem;
       padding: 1.25rem;
       margin-top: 1.5rem;
     }
@@ -323,9 +324,7 @@
     .action-title {
       font-size: 0.85rem;
       font-weight: 800;
-      text-transform: uppercase;
       color: var(--text-primary);
-      letter-spacing: 0.06em;
       margin-bottom: 0.5rem;
     }
 
@@ -358,6 +357,15 @@
       font-weight: bold;
       display: inline-block;
       width: 1.5rem;
+    }
+
+    /* Lists */
+    ul.bullet-list {
+      margin-left: 1.5rem;
+      margin-top: 0.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
     }
 
     @media (max-width: 950px) {
@@ -455,7 +463,7 @@
           <div class="finding-body">
             <div class="details-grid">
               <div class="details-pane">
-                <h4>How it Works</h4>
+                <div class="details-pane-title">How it Works</div>
                 <p>The mobile app utilizes Capacitor to load the remote web application URL directly inside a native WebView container:</p>
                 <div class="code-container">
                   "server": {<br>
@@ -465,7 +473,7 @@
                 </div>
               </div>
               <div class="details-pane">
-                <h4>Why it is an Issue (Will it Work?)</h4>
+                <div class="details-pane-title">Why it is an Issue (Will it Work?)</div>
                 <p>1. <strong>Offline Disconnect</strong>: If the user loses network connectivity (very common when grilling in backyards), the app will display a blank connection error screen. It fails to work offline.</p>
                 <p>2. <strong>Plugin Inoperability</strong>: Because the app is pulling the page from the remote server, standard native plugins (e.g. Preferences storage, Local Notifications) will fail or be undefined because the browser WebView does not load the native <code>capacitor.js</code> bridge scripts from the local bundle.</p>
               </div>
@@ -515,7 +523,7 @@
           <div class="finding-body">
             <div class="details-grid">
               <div class="details-pane">
-                <h4>How it Works</h4>
+                <div class="details-pane-title">How it Works</div>
                 <p>Standard comparison operators (<code>===</code> and <code>!==</code>) compare strings byte-by-byte and return immediately when a mismatch is found. This behavior leaks information about the correct signature to attackers tracking microsecond differences in server responses.</p>
                 <div class="code-container">
                   // Vulnerable Code:<br>
@@ -523,7 +531,7 @@
                 </div>
               </div>
               <div class="details-pane">
-                <h4>Remediation Code (Patched & Verified)</h4>
+                <div class="details-pane-title">Remediation Code (Patched & Verified)</div>
                 <p>A timing-safe comparison helper was introduced to verify signature strings. Both strings are evaluated completely to ensure constant-time verification regardless of similarity:</p>
                 <div class="code-container">
                   function timingSafeCompare(a: string, b: string): boolean {<br>
@@ -561,7 +569,7 @@
           <div class="finding-body">
             <div class="details-grid">
               <div class="details-pane">
-                <h4>How it Works</h4>
+                <div class="details-pane-title">How it Works</div>
                 <p>When migrating to Supabase Postgres, duplicate subscription unique key violations raise error code <code>23505</code>. Checking for MySQL's <code>ER_DUP_ENTRY</code> caused duplicate calls to crash the route handler with a 500 status code.</p>
                 <div class="code-container">
                   // Vulnerable Code:<br>
@@ -570,7 +578,7 @@
                 </div>
               </div>
               <div class="details-pane">
-                <h4>Remediation Code (Patched & Verified)</h4>
+                <div class="details-pane-title">Remediation Code (Patched & Verified)</div>
                 <p>Modified the conditional mapping to match both database drivers:</p>
                 <div class="code-container">
                   const dbErr = err as { code?: string };<br>
@@ -614,7 +622,7 @@
             <span class="finding-path">vercel.json / next.config.ts</span>
             <span class="arrow-icon">▼</span>
           </div>
-          <div class="finding-content" style="display: block; padding: 1.5rem;">
+          <div class="finding-body">
             <p>By default, Next.js generates static routes at build time. When linked to custom Vercel domains, Vercel caches index pages at the CDN edge for hours, returning <code>X-Vercel-Cache: HIT</code> header statuses even after code commits have been pushed.</p>
             <div class="action-steps">
               <div class="action-title">Remediation Steps</div>
@@ -632,8 +640,8 @@
         </div>
 
         <div class="grid-2">
-          <div class="stat-card" style="border-left: 4px solid var(--text-primary);">
-            <h3 style="margin-bottom: 0.5rem; font-weight: 800;">Real Pitmaster UX Expectations</h3>
+          <div class="stat-card">
+            <div class="details-pane-title">Real Pitmaster UX Expectations</div>
             <p style="font-size: 0.95rem; color: var(--text-muted);">Real backyard cooks struggle with environment variables. Math calculations alone are not enough:</p>
             <ul class="bullet-list" style="margin-top: 1rem; color: var(--text-main);">
               <li><strong>Ambient Temperature & Wind:</strong> Wind and cold ambient air temperatures consume fuel and slow cooks by 15-30% on offset smokers.</li>
@@ -642,8 +650,8 @@
             </ul>
           </div>
 
-          <div class="stat-card" style="border-left: 4px solid var(--idea);">
-            <h3 style="margin-bottom: 0.5rem; font-weight: 800;">Competitive Strategy</h3>
+          <div class="stat-card">
+            <div class="details-pane-title">Competitive Strategy</div>
             <p style="font-size: 0.95rem; color: var(--text-muted);">How to differentiate from standard calculators (AmazingRibs, MEATER app):</p>
             <ul class="bullet-list" style="margin-top: 1rem; color: var(--text-main);">
               <li><strong>Privacy-First:</strong> Zero forced registrations or device connections.</li>
@@ -690,46 +698,6 @@
           </div>
           <div class="finding-body">
             <p>On the cook results page, instead of displaying general affiliate list items, display a customized "Pitmaster Box" matching their choice. If they calculate a <strong>pork shoulder</strong> cook, show: <em>"Your Pork Shoulder box is empty! Grab what you need to nail this cook:"</em> containing links to the classic Killer Hogs Pork Rub, Applewood chunks, and wrapping paper. This turns affiliate monetization into a highly contextual service.</p>
-          </div>
-        </div>
-      </section>
-
-      <!-- Verdict -->
-      <section id="verdict" class="pillar-section">
-        <div class="header-panel">
-          <h1>The Verdict</h1>
-          <p>High-level code summary and recommendations.</p>
-        </div>
-
-        <div class="finding-card" style="border-left: 4px solid var(--praise);">
-          <div class="finding-header">
-            <div class="finding-title-group">
-              <span class="severity-badge severity-praise">PROS / SUCCESS</span>
-              <span class="finding-title">What the codebase does exceptionally well</span>
-            </div>
-          </div>
-          <div style="padding: 0 1.5rem 1.5rem 1.5rem;">
-            <ul class="bullet-list">
-              <li><strong>Clean Layouts & Styling:</strong> The styling matches the target "Ash and Ember" print aesthetic perfectly. Visual elements are clean, responsive, and completely devoid of cookie-cutter designs.</li>
-              <li><strong>Zero Dependencies for Database Dialect Translation:</strong> The transparent MySQL-to-Postgres compatibility wrapper in <code>lib/db.ts</code> is highly innovative, translating placeholders and returning IDs without bloated ORM libraries.</li>
-              <li><strong>Android Compilation:</strong> The Gradle integration handles native Android building beautifully.</li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="finding-card" style="border-left: 4px solid var(--critical);">
-          <div class="finding-header">
-            <div class="finding-title-group">
-              <span class="severity-badge severity-critical">CONS / CRITICAL RISK</span>
-              <span class="finding-title">Fatal flaws and maintenance debts</span>
-            </div>
-          </div>
-          <div style="padding: 0 1.5rem 1.5rem 1.5rem;">
-            <ul class="bullet-list">
-              <li><strong>Read-Only Serverless assumption (Vercel):</strong> Trying to write local files in serverless handlers will fail in production. Cloud storage must be used.</li>
-              <li><strong>Postgres unique constraint checks:</strong> MySQL error code assumptions will bypass unique checks on Supabase and raise database errors on duplicates.</li>
-              <li><strong>Synchronous disk writes in local fallback:</strong> The fallback DB slows request threads.</li>
-            </ul>
           </div>
         </div>
       </section>

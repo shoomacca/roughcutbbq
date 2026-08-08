@@ -12,7 +12,7 @@
   
   --font-serif: 'Playfair Display', Georgia, serif;
   --font-mono: 'Space Mono', 'Courier New', monospace;
-  --font-sans: 'Inter', system-ui, sans-serif;
+  --font-sans: 'Sora', system-ui, -apple-system, sans-serif;
 }
 
 /* ── Reset & Core Styles ───────────────────────────────────────────── */
@@ -437,8 +437,8 @@ h1, h2, h3, h4 {
 }
 
 .article-content blockquote {
-  border-left: 3px solid var(--color-gold);
-  padding-left: 24px;
+  border-left: 1px solid rgba(245, 158, 11, 0.4);
+  padding-left: 20px;
   margin: 40px 0;
   font-family: var(--font-serif);
   font-style: italic;
@@ -460,7 +460,6 @@ h1, h2, h3, h4 {
   font-family: var(--font-mono);
   font-size: 0.75rem;
   color: var(--color-text-muted);
-  letter-spacing: 0.05em;
 }
 
 .footer-link {
