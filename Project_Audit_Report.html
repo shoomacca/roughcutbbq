@@ -406,8 +406,8 @@
         </div>
 
         <div class="findings-list">
-          <!-- Findings go here -->
           
+          <!-- Finding 1 -->
           <div class="finding-card" data-severity="critical" data-pillar="security">
             <div class="finding-header">
               <div class="finding-title-group">
@@ -418,18 +418,19 @@
               <span class="finding-arrow">▼</span>
             </div>
             <div class="finding-content">
-              <p class="finding-desc">The file upload API route attempts to save before and after image files directly to the local server filesystem under <code>public/uploads/gallery/</code>.</p>
+              <p class="finding-desc">The file upload API route originally saved image files directly to the local server filesystem under <code>public/uploads/gallery/</code>.</p>
               <div class="code-block">
                 const UPLOAD_DIR = path.join(process.cwd(), 'public', 'uploads', 'gallery');<br>
                 await writeFile(path.join(UPLOAD_DIR, `${postId}-before.${ext(before)}`), Buffer.from(await before.arrayBuffer()));
               </div>
               <div class="finding-remediation">
-                <div class="finding-remediation-title">Architectural Impact</div>
-                <p>Vercel's serverless functions execute inside ephemeral, read-only containers. Any attempts to write to directories outside of <code>/tmp</code> will throw an <code>EROFS (Read-only file system)</code> exception. In production, this breaks the gallery upload feature completely. Images must be stored in a cloud service (e.g., Supabase Storage, AWS S3, or Cloudinary).</p>
+                <div class="finding-remediation-title">Remediation Status: FIXED</div>
+                <p>Rewrote the upload flow to use Supabase Storage buckets via secure REST API calls if <code>SUPABASE_URL</code> is defined, with a robust fallback to local disk writing for developers working in local development environments. This completely avoids read-only filesystem errors on Vercel.</p>
               </div>
             </div>
           </div>
 
+          <!-- Finding 2 -->
           <div class="finding-card" data-severity="high" data-pillar="security">
             <div class="finding-header">
               <div class="finding-title-group">
@@ -440,39 +441,41 @@
               <span class="finding-arrow">▼</span>
             </div>
             <div class="finding-content">
-              <p class="finding-desc">The custom JWT token and Admin token verification functions utilize standard string comparison operator (<code>!==</code>) to validate signatures.</p>
+              <p class="finding-desc">The custom JWT token verification functions utilized a standard inequality comparison operator (<code>!==</code>) to validate HMAC signatures, introducing timing side-channels.</p>
               <div class="code-block">
                 if (<span class="highlight">signature !== expectedSignature</span>) return null;
               </div>
               <div class="finding-remediation">
-                <div class="finding-remediation-title">Security Impact</div>
-                <p>Standard string comparison evaluates character by character, returning immediately on a mismatch. This allows attackers to perform a timing attack to guess signatures. Use Node's built-in <code>crypto.timingSafeEqual(buf1, buf2)</code> to protect signature validation from side-channel analysis.</p>
+                <div class="finding-remediation-title">Remediation Status: FIXED</div>
+                <p>Replaced the comparison checks with a custom constant-time string comparison function wrapper (<code>timingSafeCompare</code>) that utilizes Node's built-in <code>crypto.timingSafeEqual</code> API safely, mitigating information leakage side-channels.</p>
               </div>
             </div>
           </div>
 
+          <!-- Finding 3 -->
           <div class="finding-card" data-severity="high" data-pillar="quality">
             <div class="finding-header">
               <div class="finding-title-group">
                 <span class="severity-badge severity-high">High</span>
-                <span class="finding-title">MySQL Error Code Assumption on Postgres Database</span>
+                <span class="finding-title">MySQL Error Code Assumption on PostgreSQL DB</span>
                 <span class="finding-file">app/api/subscribe/route.ts</span>
               </div>
               <span class="finding-arrow">▼</span>
             </div>
             <div class="finding-content">
-              <p class="finding-desc">The newsletter subscription API catches database unique constraint violations by checking MySQL-specific error strings.</p>
+              <p class="finding-desc">The database subscriber duplicate handling logic caught constraint violations using only the MySQL error code string, causing crashes when running under PostgreSQL.</p>
               <div class="code-block">
                 const mysqlErr = err as { code?: string };<br>
-                if (<span class="highlight">mysqlErr.code === 'ER_DUP_ENTRY'</span>) { return NextResponse.json({ error: 'already_subscribed' }, { status: 409 }); }
+                if (<span class="highlight">mysqlErr.code === 'ER_DUP_ENTRY'</span>) { ... }
               </div>
               <div class="finding-remediation">
-                <div class="finding-remediation-title">Maintainability Impact</div>
-                <p>Since the application has migrated to Supabase Postgres, a duplicate unique violation throws Postgres error code <code>23505</code>. Because the catch block only checks for MySQL's <code>ER_DUP_ENTRY</code>, duplicate subscriptions on Postgres will bypass this block and crash as a <code>500 Server Error (db_error)</code>.</p>
+                <div class="finding-remediation-title">Remediation Status: FIXED</div>
+                <p>Updated the exception filter mapping to look for both the MySQL <code>ER_DUP_ENTRY</code> code and the PostgreSQL unique key constraint violation code <code>23505</code>. Duplicate subscriptions are now caught correctly on Supabase.</p>
               </div>
             </div>
           </div>
 
+          <!-- Finding 4 -->
           <div class="finding-card" data-severity="medium" data-pillar="performance">
             <div class="finding-header">
               <div class="finding-title-group">
@@ -483,16 +486,105 @@
               <span class="finding-arrow">▼</span>
             </div>
             <div class="finding-content">
-              <p class="finding-desc">The local DB proxy (<code>LocalDBProxy</code>) used for local fallback reads and writes database states synchronously during server request handling.</p>
+              <p class="finding-desc">The local DB proxy proxying calls to `local_db.json` reads and writes status dynamically during requests using blocking synchronous I/O operations.</p>
               <div class="code-block">
                 private read(): LocalDB {<br>
                 &nbsp;&nbsp;return JSON.parse(<span class="highlight">fs.readFileSync</span>(this.dbPath, 'utf8'));<br>
                 }
               </div>
               <div class="finding-remediation">
-                <div class="finding-remediation-title">Performance Impact</div>
-                <p>Synchronous filesystem calls inside a Next.js serverless route block Node's single-threaded event loop, preventing concurrent connections from making progress. Always use asynchronous file operations (<code>fs.promises.readFile</code>) to preserve scaling limits under load.</p>
+                <div class="finding-remediation-title">Performance Recommendation</div>
+                <p>Asynchronous operations (<code>fs.promises</code>) should be adopted to prevent blocking Next.js single-threaded request queues in local developer environments.</p>
               </div>
+            </div>
+          </div>
+
+          <!-- Finding 5 -->
+          <div class="finding-card" data-severity="medium" data-pillar="architecture">
+            <div class="finding-header">
+              <div class="finding-title-group">
+                <span class="severity-badge severity-medium">Medium</span>
+                <span class="finding-title">Hardcoded Base URL in Gallery upload</span>
+                <span class="finding-file">app/api/gallery/upload/route.ts</span>
+              </div>
+              <span class="finding-arrow">▼</span>
+            </div>
+            <div class="finding-content">
+              <p class="finding-desc">The upload API route contains a hardcoded reference to the custom production host domain when generating output URLs.</p>
+              <div class="code-block">
+                const BASE_URL = 'https://app.roughcut.com.au/uploads/gallery';
+              </div>
+              <div class="finding-remediation">
+                <div class="finding-remediation-title">Recommendation</div>
+                <p>BASE_URL should be derived dynamically from <code>req.headers.get('host')</code> or read from an environment variable to support seamless staging, review, and test environments.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Finding 6 -->
+          <div class="finding-card" data-severity="medium" data-pillar="quality">
+            <div class="finding-header">
+              <div class="finding-title-group">
+                <span class="severity-badge severity-medium">Medium</span>
+                <span class="finding-title">Fragile Substring Database Query Parser</span>
+                <span class="finding-file">lib/db.ts</span>
+              </div>
+              <span class="finding-arrow">▼</span>
+            </div>
+            <div class="finding-content">
+              <p class="finding-desc">The database fallback mock proxy emulates a SQL runner by performing simple substring checking on SQL strings.</p>
+              <div class="code-block">
+                if (queryLower.includes('select name, slug, recommended_for from gear')) { ... }
+              </div>
+              <div class="finding-remediation">
+                <div class="finding-remediation-title">Architectural Impact</div>
+                <p>Any query format update in routes will cause local mock database queries to fail silently. Emulating SQL with SQLite is recommended over manual query text parser matching.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Finding 7 -->
+          <div class="finding-card" data-severity="low" data-pillar="architecture">
+            <div class="finding-header">
+              <div class="finding-title-group">
+                <span class="severity-badge severity-low">Low</span>
+                <span class="finding-title">Static Content Duplication</span>
+                <span class="finding-file">marketing-website/</span>
+              </div>
+              <span class="finding-arrow">▼</span>
+            </div>
+            <div class="finding-content">
+              <p class="finding-desc">Core marketing guide data is duplicated between the Next.js routes and the raw static HTML folder, causing synchronization debt.</p>
+            </div>
+          </div>
+
+          <!-- Finding 8 -->
+          <div class="finding-card" data-severity="low" data-pillar="security">
+            <div class="finding-header">
+              <div class="finding-title-group">
+                <span class="severity-badge severity-low">Low</span>
+                <span class="finding-title">Opaque Error Disclosures</span>
+                <span class="finding-file">app/api/auth/login/route.ts</span>
+              </div>
+              <span class="finding-arrow">▼</span>
+            </div>
+            <div class="finding-content">
+              <p class="finding-desc">Catch-all blocks swallow specific validation issues and return generic `500 Server Error` values, reducing diagnostic visibility.</p>
+            </div>
+          </div>
+
+          <!-- Finding 9 -->
+          <div class="finding-card" data-severity="low" data-pillar="performance">
+            <div class="finding-header">
+              <div class="finding-title-group">
+                <span class="severity-badge severity-low">Low</span>
+                <span class="finding-title">Stale Prerender Edge Caching</span>
+                <span class="finding-file">vercel.json</span>
+              </div>
+              <span class="finding-arrow">▼</span>
+            </div>
+            <div class="finding-content">
+              <p class="finding-desc">Vercel caches statically generated pages at the edge. Without request bypass configs, code deployments may serve stale edge content for several hours.</p>
             </div>
           </div>
 
