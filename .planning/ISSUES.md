@@ -96,6 +96,15 @@ Ref AC O3.
 
 **Accept:** the folder list matches BLUEPRINT v1 §1 "Keep" only.
 
+**RC-0.10 Test / demo accounts (user + admin) + seed/reset script** · risk-prod-state · S · blocked by 0.6 · Linear BOTS-735 (added 2026-09-30)
+- `scripts/seed-demo.ts`, idempotent, with a `--reset` flag.
+- **Demo user** `demo@roughcut.com.au` with seeded saves, gallery posts, comments and stars.
+- **Demo admin** login.
+- Staging gets the full data set; prod gets only the demo user, and only with Chris's go.
+- `is_demo` accounts are excluded from tally, analytics and clicks, and are **never emailed**.
+- Credentials are kept in Vercel env and Chris's password manager, never in the repo or Linear.
+- **Accept:** Chris logs in as the demo user and as admin on staging; reset works; demo accounts are sent no email and excluded from counts. Also feeds Play "App access" (RC-12.4).
+
 ## M1 — Security & trust hotfixes
 
 **RC-1.1 Lock down `/api/og-image`** · risk-safe-fix · S
@@ -671,4 +680,5 @@ Ref AC SE3, SE4.
 - **Accept:** the production track is live; the store link works.
 
 ---
+**Done:** RC-0.4 (05ec731, verified 2026-09-30).
 **Next:** RC-0.1 (Chris: decisions). Can run meanwhile without decisions: RC-0.4 → RC-0.5 → RC-1.1 → RC-1.2 → RC-1.3 (all code-only, no prod state).
