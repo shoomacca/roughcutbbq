@@ -1,10 +1,12 @@
 import { NextResponse } from 'next/server';
 import { getSupabase } from '@/lib/supabase';
+import { errorResponse, parseQuery } from '@/lib/api';
+import { unsubscribeQuery } from '@/lib/api-schemas';
 
 export async function GET(req: Request) {
-  const { searchParams } = new URL(req.url);
-  const token = searchParams.get('token');
-  if (!token) return NextResponse.json({ error: 'missing_token' }, { status: 400 });
+  const q = parseQuery(req.url, unsubscribeQuery);
+  if (!q.ok) return errorResponse(400, 'missing_token');
+  const { token } = q.data;
 
   try {
     const supabase = getSupabase();

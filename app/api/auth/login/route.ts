@@ -2,19 +2,20 @@ import { NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
 import { getSupabase } from '@/lib/supabase';
 import { verifyPassword, signToken } from '@/lib/auth';
+import { parseBody } from '@/lib/api';
+import { loginBody } from '@/lib/api-schemas';
 
 export async function POST(req: Request) {
   try {
-    const { email, password } = await req.json();
-    if (!email || !password) {
-      return NextResponse.json({ error: 'invalid_input' }, { status: 400 });
-    }
+    const parsed = await parseBody(req, loginBody);
+    if (!parsed.ok) return parsed.res;
+    const { email, password } = parsed.data;
 
     const supabase = getSupabase();
     const { data: user, error } = await supabase
       .from('users')
       .select('id, password_hash')
-      .eq('email', String(email).toLowerCase().trim())
+      .eq('email', email.toLowerCase())
       .maybeSingle();
 
     if (error) throw error;

@@ -19,7 +19,7 @@ export default function PrivacyPage() {
         <section>
           <h2 className="text-xl font-bold text-brand-secondary mb-2">1. Overview</h2>
           <p>
-            RoughCut BBQ ("we", "us", or "our") manages the RoughCut BBQ web application and mobile companion apps. 
+            RoughCut BBQ (&quot;we&quot;, &quot;us&quot;, or &quot;our&quot;) manages the RoughCut BBQ web application and mobile companion apps. 
             We respect your privacy and are committed to protecting it. This Privacy Policy details what information 
             we collect, how it is used, and your rights concerning your personal data.
           </p>

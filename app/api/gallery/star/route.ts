@@ -1,23 +1,17 @@
 import { NextResponse } from 'next/server';
-import { cookies } from 'next/headers';
 import { getSupabase } from '@/lib/supabase';
-import { verifyToken } from '@/lib/auth';
-
-async function getAuthenticatedUser() {
-  const cookieStore = await cookies();
-  const sessionCookie = cookieStore.get('session');
-  if (!sessionCookie) return null;
-  return verifyToken(sessionCookie.value);
-}
+import { parseBody, requireUser } from '@/lib/api';
+import { postIdBody } from '@/lib/api-schemas';
 
 export async function POST(req: Request) {
-  const user = await getAuthenticatedUser();
-  if (!user) return NextResponse.json({ error: 'unauthorized' }, { status: 401 });
+  const auth = await requireUser();
+  if (!auth.ok) return auth.res;
+  const { user } = auth;
+  const parsed = await parseBody(req, postIdBody);
+  if (!parsed.ok) return parsed.res;
+  const { postId } = parsed.data;
 
   try {
-    const { postId } = await req.json();
-    if (!postId) return NextResponse.json({ error: 'missing_post_id' }, { status: 400 });
-
     const supabase = getSupabase();
 
     const { data: existing } = await supabase

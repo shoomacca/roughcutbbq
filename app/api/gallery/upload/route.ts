@@ -1,8 +1,8 @@
 import { NextResponse } from 'next/server';
 import { nanoid } from 'nanoid';
-import { cookies } from 'next/headers';
 import { getSupabase, galleryPublicUrl } from '@/lib/supabase';
-import { verifyToken } from '@/lib/auth';
+import { errorResponse, optionalUser, validate } from '@/lib/api';
+import { uploadFields } from '@/lib/api-schemas';
 
 const MAX_BYTES = 10 * 1024 * 1024; // 10MB
 const ALLOWED = ['image/jpeg', 'image/png', 'image/webp'];
@@ -12,17 +12,24 @@ function ext(file: File): string {
 }
 
 export async function POST(req: Request) {
-  const form = await req.formData();
+  let form: FormData;
+  try {
+    form = await req.formData();
+  } catch {
+    return errorResponse(400, 'invalid_input');
+  }
   const before = form.get('before') as File | null;
   const after = form.get('after') as File | null;
-  const cut = (form.get('cut') as string | null) ?? '';
-  const method = (form.get('method') as string | null) ?? '';
-  const name = (form.get('name') as string | null) || null;
-  const gearUsed = (form.get('gearUsed') as string | null) || null;
+  const fields = validate(uploadFields, {
+    cut: form.get('cut') ?? '',
+    method: form.get('method') ?? '',
+    name: (form.get('name') as string | null) || null,
+    gearUsed: (form.get('gearUsed') as string | null) || null,
+  });
 
-  if (!before || !after || !cut || !method) {
-    return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
-  }
+  if (!fields.ok) return fields.res;
+  if (!before || !after) return errorResponse(400, 'invalid_input');
+  const { cut, method, name, gearUsed } = fields.data;
 
   for (const file of [before, after]) {
     if (!ALLOWED.includes(file.type)) {
@@ -52,13 +59,7 @@ export async function POST(req: Request) {
       if (error) throw error;
     }
 
-    const cookieStore = await cookies();
-    const sessionCookie = cookieStore.get('session');
-    let userId: number | null = null;
-    if (sessionCookie) {
-      const user = verifyToken(sessionCookie.value);
-      if (user) userId = user.userId;
-    }
+    const userId = (await optionalUser())?.userId ?? null;
 
     const { error: insertError } = await supabase.from('gallery_posts').insert({
       id: postId,

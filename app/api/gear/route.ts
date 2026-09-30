@@ -1,10 +1,13 @@
 import { NextResponse } from 'next/server';
 import { getSupabase } from '@/lib/supabase';
+import { parseQuery } from '@/lib/api';
+import { gearQuery } from '@/lib/api-schemas';
 
 export async function GET(req: Request) {
-  const { searchParams } = new URL(req.url);
-  const category = searchParams.get('category');
-  const limit = Math.min(parseInt(searchParams.get('limit') ?? '100', 10), 100);
+  const q = parseQuery(req.url, gearQuery);
+  if (!q.ok) return q.res;
+  const { category } = q.data;
+  const limit = Math.min(parseInt(q.data.limit ?? '100', 10), 100);
 
   try {
     const supabase = getSupabase();

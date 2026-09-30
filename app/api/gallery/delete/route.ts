@@ -1,15 +1,16 @@
 import { NextResponse } from 'next/server';
 import { getSupabase } from '@/lib/supabase';
-import { isAdminRequest } from '@/lib/auth';
+import { parseBody, requireAdmin } from '@/lib/api';
+import { postIdBody } from '@/lib/api-schemas';
 
 export async function DELETE(req: Request) {
   // Admin-only: require a valid httpOnly admin_token cookie (set by /api/admin/login)
-  if (!(await isAdminRequest())) {
-    return NextResponse.json({ error: 'unauthorized' }, { status: 401 });
-  }
+  const admin = await requireAdmin();
+  if (!admin.ok) return admin.res;
 
-  const { postId } = await req.json();
-  if (!postId) return NextResponse.json({ error: 'Missing postId' }, { status: 400 });
+  const parsed = await parseBody(req, postIdBody);
+  if (!parsed.ok) return parsed.res;
+  const { postId } = parsed.data;
 
   try {
     const supabase = getSupabase();

@@ -1,7 +1,8 @@
 import { NextResponse } from 'next/server';
-import { cookies } from 'next/headers';
 import { getSupabase } from '@/lib/supabase';
-import { verifyToken, getAnonymousName } from '@/lib/auth';
+import { getAnonymousName } from '@/lib/auth';
+import { optionalUser, parseQuery } from '@/lib/api';
+import { galleryQuery } from '@/lib/api-schemas';
 
 interface GalleryRow {
   id: string;
@@ -20,10 +21,10 @@ interface GalleryRow {
 }
 
 export async function GET(req: Request) {
-  const { searchParams } = new URL(req.url);
-  const method = searchParams.get('method');
-  const cut = searchParams.get('cut');
-  const flagged = searchParams.get('flagged') === 'true';
+  const q = parseQuery(req.url, galleryQuery);
+  if (!q.ok) return q.res;
+  const { method, cut } = q.data;
+  const flagged = q.data.flagged === 'true';
 
   try {
     const supabase = getSupabase();
@@ -43,18 +44,14 @@ export async function GET(req: Request) {
     const rows = (data ?? []) as GalleryRow[];
 
     // Which posts has the current user starred?
-    const cookieStore = await cookies();
-    const sessionCookie = cookieStore.get('session');
+    const user = await optionalUser();
     const starredSet = new Set<string>();
-    if (sessionCookie) {
-      const user = verifyToken(sessionCookie.value);
-      if (user) {
-        const { data: starred } = await supabase
-          .from('post_stars')
-          .select('post_id')
-          .eq('user_id', user.userId);
-        (starred ?? []).forEach((r) => starredSet.add(r.post_id));
-      }
+    if (user) {
+      const { data: starred } = await supabase
+        .from('post_stars')
+        .select('post_id')
+        .eq('user_id', user.userId);
+      (starred ?? []).forEach((r) => starredSet.add(r.post_id));
     }
 
     const posts = rows.map((row) => ({

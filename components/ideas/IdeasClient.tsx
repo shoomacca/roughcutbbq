@@ -1,6 +1,7 @@
 'use client';
 
 import { useMemo, useState } from 'react';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import meatsData from '@/data/meats.json';
 import { RECIPES, type Recipe } from '@/data/recipes';
@@ -284,9 +285,9 @@ export default function IdeasClient() {
                 {recipes.map((r, i) => (
                   <span key={r.slug}>
                     {i > 0 && ' · '}
-                    <a href="/recipes" className="underline hover:text-brand-secondary">
+                    <Link href="/recipes" className="underline hover:text-brand-secondary">
                       {r.name}
-                    </a>
+                    </Link>
                   </span>
                 ))}
               </div>

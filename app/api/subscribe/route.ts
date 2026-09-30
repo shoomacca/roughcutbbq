@@ -5,12 +5,13 @@ import { Resend } from 'resend';
 import { render } from '@react-email/components';
 import * as React from 'react';
 import { getSupabase } from '@/lib/supabase';
+import { parseBody } from '@/lib/api';
 import CookPlanEmail from '@/emails/CookPlanEmail';
 
 const bodySchema = z.object({
-  email: z.string().email(),
-  cut: z.string().optional(),
-  method: z.string().optional(),
+  email: z.string().email().max(254),
+  cut: z.string().max(120).optional(),
+  method: z.string().max(40).optional(),
   weight_kg: z.number().optional(),
   cook_time_minutes: z.number().int().optional(),
   appliance_temp_c: z.number().int().optional(),
@@ -50,17 +51,8 @@ async function getContextualGear(method?: string): Promise<{ name: string; slug:
 }
 
 export async function POST(req: Request) {
-  let body: unknown;
-  try {
-    body = await req.json();
-  } catch {
-    return NextResponse.json({ error: 'invalid_json' }, { status: 400 });
-  }
-
-  const parsed = bodySchema.safeParse(body);
-  if (!parsed.success) {
-    return NextResponse.json({ error: 'invalid_email' }, { status: 400 });
-  }
+  const parsed = await parseBody(req, bodySchema);
+  if (!parsed.ok) return parsed.res;
 
   const { email, cut, method, weight_kg, cook_time_minutes, appliance_temp_c, internal_temp_c } =
     parsed.data;

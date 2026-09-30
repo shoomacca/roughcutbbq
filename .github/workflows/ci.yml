@@ -20,8 +20,6 @@ jobs:
       - name: Typecheck
         run: npm run typecheck
       - name: Lint
-        # TODO RC-1.4: make lint blocking once the 8 pre-existing errors are fixed
-        continue-on-error: true
         run: npm run lint
       - name: Unit tests
         run: npm test

@@ -1,26 +1,27 @@
 import { NextResponse } from 'next/server';
 import { getSupabase } from '@/lib/supabase';
-import { isAdminRequest } from '@/lib/auth';
+import { parseBody, parseQuery, requireAdmin } from '@/lib/api';
+import { gearCreateBody, gearDeleteQuery, gearUpdateBody } from '@/lib/api-schemas';
 
 const FIELDS = ['slug', 'name', 'category', 'description', 'affiliate_url', 'recommended_for', 'sort_order'] as const;
 
-function pickFields(body: Record<string, unknown>) {
+function pickFields(body: object) {
+  const src = body as Record<string, unknown>;
   const out: Record<string, unknown> = {};
   for (const f of FIELDS) {
-    if (body[f] !== undefined) out[f] = body[f];
+    if (src[f] !== undefined) out[f] = src[f];
   }
   return out;
 }
 
 export async function POST(req: Request) {
-  if (!(await isAdminRequest())) return NextResponse.json({ error: 'unauthorized' }, { status: 401 });
+  const admin = await requireAdmin();
+  if (!admin.ok) return admin.res;
+  const parsed = await parseBody(req, gearCreateBody);
+  if (!parsed.ok) return parsed.res;
   try {
-    const body = await req.json();
-    if (!body.slug || !body.name || !body.category || !body.affiliate_url) {
-      return NextResponse.json({ error: 'slug, name, category and affiliate_url are required' }, { status: 400 });
-    }
     const supabase = getSupabase();
-    const { data, error } = await supabase.from('gear').insert(pickFields(body)).select('*').single();
+    const { data, error } = await supabase.from('gear').insert(pickFields(parsed.data)).select('*').single();
     if (error) {
       if (error.code === '23505') return NextResponse.json({ error: 'slug_exists' }, { status: 409 });
       throw error;
@@ -33,14 +34,16 @@ export async function POST(req: Request) {
 }
 
 export async function PATCH(req: Request) {
-  if (!(await isAdminRequest())) return NextResponse.json({ error: 'unauthorized' }, { status: 401 });
+  const admin = await requireAdmin();
+  if (!admin.ok) return admin.res;
+  const parsed = await parseBody(req, gearUpdateBody);
+  if (!parsed.ok) return parsed.res;
+  const body = parsed.data;
   try {
-    const body = await req.json();
-    if (!body.id) return NextResponse.json({ error: 'id required' }, { status: 400 });
     const updates = pickFields(body);
     delete updates.slug; // slugs are permanent — they're the public /go/ URLs
     const supabase = getSupabase();
-    const { data, error } = await supabase.from('gear').update(updates).eq('id', body.id).select('*').single();
+    const { data, error } = await supabase.from('gear').update(updates).eq('id', Number(body.id)).select('*').single();
     if (error) throw error;
     return NextResponse.json({ ok: true, item: data });
   } catch (e) {
@@ -50,13 +53,13 @@ export async function PATCH(req: Request) {
 }
 
 export async function DELETE(req: Request) {
-  if (!(await isAdminRequest())) return NextResponse.json({ error: 'unauthorized' }, { status: 401 });
+  const admin = await requireAdmin();
+  if (!admin.ok) return admin.res;
+  const parsed = parseQuery(req.url, gearDeleteQuery);
+  if (!parsed.ok) return parsed.res;
   try {
-    const { searchParams } = new URL(req.url);
-    const id = searchParams.get('id');
-    if (!id) return NextResponse.json({ error: 'id required' }, { status: 400 });
     const supabase = getSupabase();
-    const { error } = await supabase.from('gear').delete().eq('id', parseInt(id, 10));
+    const { error } = await supabase.from('gear').delete().eq('id', Number(parsed.data.id));
     if (error) throw error;
     return NextResponse.json({ ok: true });
   } catch (e) {

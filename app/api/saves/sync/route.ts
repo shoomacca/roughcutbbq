@@ -1,24 +1,22 @@
 import { NextResponse } from 'next/server';
-import { cookies } from 'next/headers';
 import { getSupabase } from '@/lib/supabase';
-import { verifyToken } from '@/lib/auth';
+import { parseBody, requireUser } from '@/lib/api';
+import { SYNC_MAX_BODY_BYTES, syncBody, syncItem } from '@/lib/api-schemas';
 
 export async function POST(req: Request) {
-  const cookieStore = await cookies();
-  const sessionCookie = cookieStore.get('session');
-  if (!sessionCookie) return NextResponse.json({ error: 'unauthorized' }, { status: 401 });
-
-  const user = verifyToken(sessionCookie.value);
-  if (!user) return NextResponse.json({ error: 'unauthorized' }, { status: 401 });
+  const auth = await requireUser();
+  if (!auth.ok) return auth.res;
+  const { user } = auth;
+  const parsed = await parseBody(req, syncBody, { maxBytes: SYNC_MAX_BODY_BYTES });
+  if (!parsed.ok) return parsed.res;
 
   try {
-    const { cooks } = await req.json();
-    if (!cooks || !Array.isArray(cooks)) {
-      return NextResponse.json({ error: 'invalid_input' }, { status: 400 });
-    }
-
-    const rows = cooks
-      .filter((cook) => cook.method && cook.cutName && cook.weightKg)
+    // Invalid items are dropped (as before), not rejected.
+    const rows = parsed.data.cooks
+      .flatMap((c) => {
+        const r = syncItem.safeParse(c);
+        return r.success ? [r.data as Record<string, unknown> & { method: string; cutName: string; weightKg: number; categoryName?: string }] : [];
+      })
       .map((cook) => ({
         user_id: user.userId,
         method: cook.method,

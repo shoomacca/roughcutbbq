@@ -1,9 +1,12 @@
 import { NextResponse } from 'next/server';
 import { getSupabase } from '@/lib/supabase';
+import { parseBody } from '@/lib/api';
+import { postIdBody } from '@/lib/api-schemas';
 
 export async function POST(req: Request) {
-  const { postId } = await req.json();
-  if (!postId) return NextResponse.json({ error: 'Missing postId' }, { status: 400 });
+  const parsed = await parseBody(req, postIdBody);
+  if (!parsed.ok) return parsed.res;
+  const { postId } = parsed.data;
 
   try {
     const supabase = getSupabase();

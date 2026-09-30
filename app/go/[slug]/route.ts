@@ -1,5 +1,7 @@
 import { NextResponse } from 'next/server';
 import { getSupabase } from '@/lib/supabase';
+import { validate } from '@/lib/api';
+import { slugParam } from '@/lib/api-schemas';
 import { GEAR } from '@/data/gear';
 import { RUBS } from '@/data/rubs';
 
@@ -7,7 +9,9 @@ export async function GET(
   req: Request,
   { params }: { params: Promise<{ slug: string }> }
 ) {
-  const { slug } = await params;
+  const p = validate(slugParam, await params);
+  if (!p.ok) return NextResponse.redirect(new URL('/gear', req.url));
+  const { slug } = p.data;
 
   let affiliateUrl: string | undefined;
 

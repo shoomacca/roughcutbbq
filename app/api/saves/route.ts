@@ -1,15 +1,8 @@
 import { NextResponse } from 'next/server';
-import { cookies } from 'next/headers';
 import { getSupabase } from '@/lib/supabase';
-import { verifyToken } from '@/lib/auth';
+import { parseBody, parseQuery, requireUser } from '@/lib/api';
+import { saveBody, saveDeleteQuery, savePatchBody } from '@/lib/api-schemas';
 import { type SavedCook } from '@/lib/resultStorage';
-
-async function getAuthenticatedUser() {
-  const cookieStore = await cookies();
-  const sessionCookie = cookieStore.get('session');
-  if (!sessionCookie) return null;
-  return verifyToken(sessionCookie.value);
-}
 
 interface SavedCookRow {
   id: number;
@@ -22,8 +15,9 @@ interface SavedCookRow {
 }
 
 export async function GET() {
-  const user = await getAuthenticatedUser();
-  if (!user) return NextResponse.json({ error: 'unauthorized' }, { status: 401 });
+  const auth = await requireUser();
+  if (!auth.ok) return auth.res;
+  const { user } = auth;
 
   try {
     const supabase = getSupabase();
@@ -61,15 +55,15 @@ export async function GET() {
 }
 
 export async function POST(req: Request) {
-  const user = await getAuthenticatedUser();
-  if (!user) return NextResponse.json({ error: 'unauthorized' }, { status: 401 });
+  const auth = await requireUser();
+  if (!auth.ok) return auth.res;
+  const { user } = auth;
+
+  const parsed = await parseBody(req, saveBody);
+  if (!parsed.ok) return parsed.res;
+  const cook = parsed.data as Record<string, unknown> & { method: string; cutName: string; weightKg: number; categoryName?: string };
 
   try {
-    const cook = await req.json();
-    if (!cook.method || !cook.cutName || !cook.weightKg) {
-      return NextResponse.json({ error: 'invalid_input' }, { status: 400 });
-    }
-
     const supabase = getSupabase();
     const { data, error } = await supabase
       .from('saved_cooks')
@@ -93,14 +87,16 @@ export async function POST(req: Request) {
 }
 
 export async function PATCH(req: Request) {
-  const user = await getAuthenticatedUser();
-  if (!user) return NextResponse.json({ error: 'unauthorized' }, { status: 401 });
+  const auth = await requireUser();
+  if (!auth.ok) return auth.res;
+  const { user } = auth;
+
+  const parsed = await parseBody(req, savePatchBody);
+  if (!parsed.ok) return parsed.res;
+  const { rating, notes } = parsed.data;
+  const id = Number(parsed.data.saveId);
 
   try {
-    const { saveId, rating, notes } = await req.json();
-    if (!saveId) return NextResponse.json({ error: 'missing_id' }, { status: 400 });
-
-    const id = parseInt(saveId, 10);
     const supabase = getSupabase();
 
     const { data: row, error } = await supabase
@@ -138,19 +134,20 @@ export async function PATCH(req: Request) {
 }
 
 export async function DELETE(req: Request) {
-  const user = await getAuthenticatedUser();
-  if (!user) return NextResponse.json({ error: 'unauthorized' }, { status: 401 });
+  const auth = await requireUser();
+  if (!auth.ok) return auth.res;
+  const { user } = auth;
+
+  const parsed = parseQuery(req.url, saveDeleteQuery);
+  if (!parsed.ok) return parsed.res;
+  const saveId = Number(parsed.data.saveId);
 
   try {
-    const { searchParams } = new URL(req.url);
-    const saveId = searchParams.get('saveId');
-    if (!saveId) return NextResponse.json({ error: 'missing_id' }, { status: 400 });
-
     const supabase = getSupabase();
     const { error } = await supabase
       .from('saved_cooks')
       .delete()
-      .eq('id', parseInt(saveId, 10))
+      .eq('id', saveId)
       .eq('user_id', user.userId);
     if (error) throw error;
 
