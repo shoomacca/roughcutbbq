@@ -1,0 +1,4882 @@
+[
+  {
+    "id": "pork",
+    "name": "Pork",
+    "cuts": [
+      {
+        "id": "pork_shoulder",
+        "name": "Pork Shoulder (Boston Butt)",
+        "methods": [
+          "smoker",
+          "oven",
+          "kamado",
+          "charcoal_kettle",
+          "slow_cooker",
+          "pressure_cooker"
+        ],
+        "timeMode": {
+          "smoker": "per_kg",
+          "oven": "per_kg",
+          "kamado": "per_kg",
+          "charcoal_kettle": "per_kg",
+          "slow_cooker": "per_kg",
+          "pressure_cooker": "flat"
+        },
+        "hoursPerKg": {
+          "smoker": 3.85,
+          "oven": 2.4,
+          "kamado": 3.85,
+          "charcoal_kettle": 3.85,
+          "slow_cooker": 1.5
+        },
+        "flatCookHours": {
+          "pressure_cooker": 1.25
+        },
+        "applianceTempC": {
+          "smoker": 110,
+          "oven": 150,
+          "kamado": 110,
+          "charcoal_kettle": 110,
+          "slow_cooker": 90,
+          "pressure_cooker": 121
+        },
+        "internalTempC": {
+          "smoker": 95,
+          "oven": 95,
+          "kamado": 95,
+          "charcoal_kettle": 95,
+          "slow_cooker": 95,
+          "pressure_cooker": 95
+        },
+        "restMinutes": 60,
+        "hasStall": {
+          "smoker": true,
+          "oven": false,
+          "kamado": true,
+          "charcoal_kettle": true,
+          "slow_cooker": false,
+          "pressure_cooker": false
+        },
+        "stallTempC": 70,
+        "wrapTempC": {
+          "smoker": 72,
+          "oven": 67,
+          "kamado": 72,
+          "charcoal_kettle": 72,
+          "slow_cooker": null,
+          "pressure_cooker": null
+        },
+        "safeMinTempC": 71,
+        "rubs": [
+          "Classic SPG: equal parts coarse salt, black pepper, garlic powder. Add smoked paprika (1 tsp per kg) and a pinch of cayenne. Apply generously the night before and leave uncovered in the fridge — the dry brine builds a killer bark.",
+          "Memphis dry rub: 2 tbsp paprika, 1 tbsp each brown sugar and garlic powder, 1 tsp each cumin, onion powder, dry mustard, black pepper, salt. Pat dry before applying. No sauce needed.",
+          "Competition style: yellow mustard slather as a binder, then coat with 1 part coffee (fine ground), 1 part brown sugar, 1 part SPG, pinch of cocoa powder. Bold, complex bark with a slight sweetness."
+        ],
+        "woods": [
+          "Hickory — bold, bacon-like smoke. Classic pairing for pulled pork. Don't overdo it — 2-3 chunks max for a full shoulder.",
+          "Apple or cherry — sweeter, milder smoke with a rosy colour on the bark. Great for guests who don't like heavy smoke.",
+          "50/50 hickory and cherry blend — bold smoke without bitterness. Best of both worlds. Add chunks every 2 hours for the first 4 hours only."
+        ],
+        "tips": [
+          "Cook to 93–98°C internal, not the clock. The stall around 70°C can last 2–4 hrs — be patient. Pull temp is everything for pullable pork.",
+          "Wrap in unwaxed butcher paper (or foil) at 68–70°C to power through the stall. Foil steams more; paper keeps bark crispier. Unwrap for the last 30 min to firm up.",
+          "Rest for at least 1 hour in a cooler wrapped in a towel before pulling. The carryover and juice redistribution makes a huge difference. Pull apart with forks while still hot."
+        ]
+      },
+      {
+        "id": "baby_back_ribs",
+        "name": "Baby Back Ribs",
+        "methods": [
+          "smoker",
+          "oven",
+          "kamado",
+          "charcoal_kettle",
+          "slow_cooker",
+          "pressure_cooker"
+        ],
+        "timeMode": {
+          "smoker": "flat",
+          "oven": "flat",
+          "kamado": "flat",
+          "charcoal_kettle": "flat",
+          "slow_cooker": "flat",
+          "pressure_cooker": "flat"
+        },
+        "hoursPerKg": {},
+        "flatCookHours": {
+          "smoker": 5.25,
+          "oven": 3.5,
+          "kamado": 5.25,
+          "charcoal_kettle": 5.25,
+          "slow_cooker": 6,
+          "pressure_cooker": 0.5
+        },
+        "applianceTempC": {
+          "smoker": 110,
+          "oven": 150,
+          "kamado": 110,
+          "charcoal_kettle": 110,
+          "slow_cooker": 90,
+          "pressure_cooker": 121
+        },
+        "internalTempC": {
+          "smoker": 93,
+          "oven": 93,
+          "kamado": 93,
+          "charcoal_kettle": 93,
+          "slow_cooker": 93,
+          "pressure_cooker": 93
+        },
+        "restMinutes": 25,
+        "hasStall": {
+          "smoker": false,
+          "oven": false,
+          "kamado": false,
+          "charcoal_kettle": false,
+          "slow_cooker": false,
+          "pressure_cooker": false
+        },
+        "stallTempC": null,
+        "wrapTempC": {
+          "smoker": 72,
+          "oven": null,
+          "kamado": 72,
+          "charcoal_kettle": 72,
+          "slow_cooker": null,
+          "pressure_cooker": null
+        },
+        "safeMinTempC": 63,
+        "rubs": [
+          "Sweet Memphis: 2 tbsp brown sugar, 1 tbsp paprika, 1 tsp each garlic powder, onion powder, dry mustard, salt, black pepper, pinch of cayenne. Apply liberally the night before.",
+          "Kansas City style: equal parts paprika and brown sugar, add garlic powder, onion powder, celery salt, white pepper, black pepper, cayenne. Press into the meat, rest 30 min minimum.",
+          "Minimalist SPG: coarse salt, coarse black pepper, garlic powder (3:2:1). Simple and lets the pork speak. Finish with a thin glaze of honey and apple cider vinegar in the last 15 min."
+        ],
+        "woods": [
+          "Apple — light, sweet smoke that won't overpower delicate rib meat. Perfect with a sweet rub or glaze.",
+          "Cherry — adds a deep mahogany colour and mild, fruity smoke. Pairs beautifully with brown sugar rubs.",
+          "Pecan — slightly nutty, medium smoke. Sits between apple and hickory. Great all-rounder for ribs."
+        ],
+        "tips": [
+          "Remove the membrane on the back of the rack — slide a butter knife under it, grab with a paper towel, and peel off in one strip. This lets the rub penetrate and the smoke get in.",
+          "3-2-1 method for fall-off-bone: 3 hrs smoke, 2 hrs wrapped with a splash of apple juice and butter, 1 hr unwrapped to set the glaze. Adjust to 2-2-1 for baby backs.",
+          "Test doneness by picking up the rack with tongs at the one-third mark — it should bend and crack the bark. Or probe between bones; should feel like softened butter around 93°C."
+        ]
+      },
+      {
+        "id": "pork_belly",
+        "name": "Pork Belly",
+        "methods": [
+          "smoker",
+          "oven",
+          "kamado",
+          "charcoal_kettle",
+          "slow_cooker",
+          "pressure_cooker"
+        ],
+        "timeMode": {
+          "smoker": "per_kg",
+          "oven": "per_kg",
+          "kamado": "per_kg",
+          "charcoal_kettle": "per_kg",
+          "slow_cooker": "per_kg",
+          "pressure_cooker": "flat"
+        },
+        "hoursPerKg": {
+          "smoker": 3.3,
+          "oven": 2.2,
+          "kamado": 3.3,
+          "charcoal_kettle": 3.3,
+          "slow_cooker": 1.2
+        },
+        "flatCookHours": {
+          "pressure_cooker": 0.75
+        },
+        "applianceTempC": {
+          "smoker": 110,
+          "oven": 150,
+          "kamado": 110,
+          "charcoal_kettle": 110,
+          "slow_cooker": 90,
+          "pressure_cooker": 121
+        },
+        "internalTempC": {
+          "smoker": 90,
+          "oven": 88,
+          "kamado": 90,
+          "charcoal_kettle": 90,
+          "slow_cooker": 90,
+          "pressure_cooker": 90
+        },
+        "restMinutes": 30,
+        "hasStall": {
+          "smoker": false,
+          "oven": false,
+          "kamado": false,
+          "charcoal_kettle": false,
+          "slow_cooker": false,
+          "pressure_cooker": false
+        },
+        "stallTempC": null,
+        "wrapTempC": {
+          "smoker": null,
+          "oven": null,
+          "kamado": null,
+          "charcoal_kettle": null,
+          "slow_cooker": null,
+          "pressure_cooker": null
+        },
+        "safeMinTempC": 63,
+        "rubs": [
+          "Asian-style: 1 tbsp each soy sauce, brown sugar, 1 tsp each five spice, garlic powder, white pepper. Rub all over, including the skin side. Rest 4+ hours.",
+          "Classic BBQ: coarse salt, cracked black pepper, garlic powder, smoked paprika (2:1:1:1). Score the skin before rubbing. Pat skin dry for crispier crackling.",
+          "Fennel and herb: 1 tbsp fennel seeds (crushed), 1 tsp each rosemary (dried), garlic powder, salt, cracked pepper. Press into the meat side. Great for oven or kamado."
+        ],
+        "woods": [
+          "Applewood — mild, sweet smoke complements the fat in pork belly without overpowering. Add small chunks only.",
+          "Cherry — beautiful colour on the rendered fat, slightly fruity flavour. 1-2 chunks for the first hour.",
+          "Light hickory — small amount gives a classic BBQ note. One chunk only — belly fat absorbs smoke aggressively."
+        ],
+        "tips": [
+          "Score the skin in a crosshatch pattern (don't cut into the meat) and rub kosher salt into the cuts. This is what gets you proper crackling or bark on the skin side.",
+          "Cook fat-side up the whole time so the fat bastes the meat as it renders. If you want crackling, finish skin-side down over direct high heat for the last 10 minutes.",
+          "Slice thick (2–3 cm) across the grain when serving. The meat should be fork-tender and the fat completely rendered and jiggly — not dry. Pull at 90°C internal for best texture."
+        ]
+      },
+      {
+        "id": "pork_leg",
+        "name": "Pork Leg (for pulling)",
+        "methods": [
+          "smoker",
+          "oven",
+          "kamado",
+          "slow_cooker",
+          "pressure_cooker"
+        ],
+        "timeMode": {
+          "smoker": "per_kg",
+          "oven": "per_kg",
+          "kamado": "per_kg",
+          "slow_cooker": "per_kg",
+          "pressure_cooker": "flat"
+        },
+        "hoursPerKg": {
+          "smoker": 3.85,
+          "oven": 2.4,
+          "kamado": 3.85,
+          "slow_cooker": 1.5
+        },
+        "flatCookHours": {
+          "pressure_cooker": 1.5
+        },
+        "applianceTempC": {
+          "smoker": 110,
+          "oven": 150,
+          "kamado": 110,
+          "slow_cooker": 90,
+          "pressure_cooker": 121
+        },
+        "internalTempC": {
+          "smoker": 92,
+          "oven": 92,
+          "kamado": 92,
+          "slow_cooker": 95,
+          "pressure_cooker": 95
+        },
+        "restMinutes": 60,
+        "hasStall": {
+          "smoker": true,
+          "oven": false,
+          "kamado": true,
+          "slow_cooker": false,
+          "pressure_cooker": false
+        },
+        "stallTempC": 70,
+        "wrapTempC": {
+          "smoker": 72,
+          "oven": 67,
+          "kamado": 72,
+          "slow_cooker": null,
+          "pressure_cooker": null
+        },
+        "safeMinTempC": 71,
+        "rubs": [
+          "SPG plus: coarse salt, black pepper, garlic powder, smoked paprika. Score the skin deeply before rubbing. Apply 24 hrs ahead for a proper dry brine.",
+          "Herb and garlic: 4 cloves garlic (mashed), fresh rosemary, olive oil, salt, black pepper. Stuff into score marks and rub all over. Classic roast-style.",
+          "Brown sugar and mustard: Dijon mustard as a binder, coat with brown sugar, garlic powder, smoked paprika, onion powder, salt, pepper. Great on kamado or rotisserie."
+        ],
+        "woods": [
+          "Hickory — bold smoke for a full leg. Use sparingly — no more than 2-3 chunks total given the long cook time.",
+          "Apple and oak blend — apple for sweetness, oak for structure. Balanced smoke without bitterness over a multi-hour cook.",
+          "Cherry — gives the skin a beautiful deep mahogany colour and mild sweet smoke. Best for a leg with skin on."
+        ],
+        "tips": [
+          "Score the skin all the way down to the meat — this helps the fat render and lets the smoke and rub penetrate deeper. Use a sharp knife and go at least 1 cm deep.",
+          "Cook low and slow to 90°C internal for pulling, or to 75°C for slicing. Two completely different textures — know what you're going for before you start.",
+          "If the skin is burning before the meat is done, wrap the leg in foil or butcher paper and continue cooking. Crisp the skin uncovered for the last 30 min at higher heat."
+        ]
+      },
+      {
+        "id": "spare_ribs_st_louis",
+        "name": "Spare Ribs (St. Louis Cut)",
+        "methods": [
+          "smoker",
+          "oven",
+          "kamado",
+          "charcoal_kettle",
+          "slow_cooker",
+          "pressure_cooker"
+        ],
+        "timeMode": {
+          "smoker": "flat",
+          "oven": "flat",
+          "kamado": "flat",
+          "charcoal_kettle": "flat",
+          "slow_cooker": "flat",
+          "pressure_cooker": "flat"
+        },
+        "hoursPerKg": {},
+        "flatCookHours": {
+          "smoker": 6,
+          "oven": 4,
+          "kamado": 6,
+          "charcoal_kettle": 6,
+          "slow_cooker": 6,
+          "pressure_cooker": 0.5
+        },
+        "applianceTempC": {
+          "smoker": 110,
+          "oven": 150,
+          "kamado": 110,
+          "charcoal_kettle": 110,
+          "slow_cooker": 90,
+          "pressure_cooker": 121
+        },
+        "internalTempC": {
+          "smoker": 93,
+          "oven": 93,
+          "kamado": 93,
+          "charcoal_kettle": 93,
+          "slow_cooker": 93,
+          "pressure_cooker": 93
+        },
+        "restMinutes": 25,
+        "hasStall": {
+          "smoker": false,
+          "oven": false,
+          "kamado": false,
+          "charcoal_kettle": false,
+          "slow_cooker": false,
+          "pressure_cooker": false
+        },
+        "stallTempC": null,
+        "wrapTempC": {
+          "smoker": 72,
+          "oven": null,
+          "kamado": 72,
+          "charcoal_kettle": 72,
+          "slow_cooker": null,
+          "pressure_cooker": null
+        },
+        "safeMinTempC": 63,
+        "rubs": [
+          "Classic SPG: 2 tbsp coarse salt, 2 tbsp coarse black pepper, 1 tbsp garlic powder. Nothing else. Let the pork and smoke carry it.",
+          "Competition sweet: paprika, brown sugar, garlic powder, onion powder, chilli powder, salt, black pepper, cayenne (2:2:1:1:1:1:1:0.5 ratio). Apply thick, press in, rest overnight.",
+          "Spicy dry: 1 tbsp each chipotle powder, smoked paprika, garlic powder, 1 tsp each cayenne, cumin, salt, cracked pepper. Great with a honey finish glaze."
+        ],
+        "woods": [
+          "Hickory — full-flavoured smoke for a full rack of spare ribs. Add 2-3 chunks over the first 3 hours.",
+          "Pecan — slightly sweeter and less intense than hickory. Great if you want smoke flavour without heaviness.",
+          "Apple and cherry mix — pretty colour on the bark and a fruity background note. Good with sweet rubs."
+        ],
+        "tips": [
+          "St. Louis cut already has the sternum and skirt removed — but check for the flap on the bone side and trim it off. Consistent thickness means even cooking.",
+          "These take longer than baby backs. Use the 3-2-1 method: 3 hrs smoke, 2 hrs wrapped tight with brown sugar and butter, 1 hr unwrapped with sauce or dry.",
+          "Bend test: grab one end with tongs and hold horizontally. Proper ribs will bend sharply and the bark will crack. If they flop over completely, they're overdone."
+        ]
+      },
+      {
+        "id": "pork_tenderloin",
+        "name": "Pork Tenderloin",
+        "methods": [
+          "smoker",
+          "oven"
+        ],
+        "timeMode": {
+          "smoker": "per_kg",
+          "oven": "per_kg"
+        },
+        "hoursPerKg": {
+          "smoker": 1.5,
+          "oven": 0.6
+        },
+        "flatCookHours": {},
+        "applianceTempC": {
+          "smoker": 120,
+          "oven": 200
+        },
+        "internalTempC": {
+          "smoker": 65,
+          "oven": 65
+        },
+        "restMinutes": 10,
+        "hasStall": {
+          "smoker": false,
+          "oven": false
+        },
+        "stallTempC": null,
+        "wrapTempC": {
+          "smoker": null,
+          "oven": null
+        },
+        "safeMinTempC": 63,
+        "rubs": [
+          "Herb rub: 1 tbsp olive oil, 1 tsp each dried thyme, rosemary, garlic powder, onion powder, salt and black pepper. Coat all over and rest 30 min minimum.",
+          "Spicy mustard: coat with Dijon mustard, then dust with smoked paprika, garlic powder, brown sugar, salt, cracked pepper. The mustard helps form a great crust.",
+          "Coffee and cocoa: 1 tsp each espresso powder, cocoa, smoked paprika, garlic powder, brown sugar, salt. Surprisingly great on tenderloin — bold without overpowering."
+        ],
+        "woods": [
+          "Apple — mild, sweet, light smoke. Tenderloin is lean and quick-cooking; apple won't dominate. Use only 1 small chunk.",
+          "Cherry — beautiful colour on the exterior and a hint of fruit. Perfect for a short cook.",
+          "Pecan — mild nuttiness that complements the pork without overpowering. Best paired with a herb or mustard rub."
+        ],
+        "tips": [
+          "Tenderloin is lean and cooks fast — it can go from perfect to dry in minutes. Use a probe thermometer and pull at exactly 63°C internal. Rest 5 minutes before slicing.",
+          "Slice on an angle across the grain into medallions 2–3 cm thick. Thin slices get cold fast and turn dry — serve thick.",
+          "Because it's so lean, a brief marinade (30–60 min) in olive oil, garlic, herbs, and lemon zest makes a big difference. Don't marinate overnight — the acid gets to the texture."
+        ]
+      },
+      {
+        "id": "pork_cheeks",
+        "name": "Pork Cheeks",
+        "methods": [
+          "smoker",
+          "oven",
+          "kamado",
+          "slow_cooker",
+          "pressure_cooker"
+        ],
+        "timeMode": {
+          "smoker": "per_kg",
+          "oven": "per_kg",
+          "kamado": "per_kg",
+          "slow_cooker": "flat",
+          "pressure_cooker": "flat"
+        },
+        "hoursPerKg": {
+          "smoker": 3.85,
+          "oven": 2.5,
+          "kamado": 3.85
+        },
+        "flatCookHours": {
+          "slow_cooker": 6,
+          "pressure_cooker": 0.75
+        },
+        "applianceTempC": {
+          "smoker": 110,
+          "oven": 150,
+          "kamado": 110,
+          "slow_cooker": 90,
+          "pressure_cooker": 121
+        },
+        "internalTempC": {
+          "smoker": 90,
+          "oven": 88,
+          "kamado": 90,
+          "slow_cooker": 90,
+          "pressure_cooker": 90
+        },
+        "restMinutes": 30,
+        "hasStall": {
+          "smoker": true,
+          "oven": false,
+          "kamado": true,
+          "slow_cooker": false,
+          "pressure_cooker": false
+        },
+        "stallTempC": 68,
+        "wrapTempC": {
+          "smoker": 70,
+          "oven": null,
+          "kamado": 70,
+          "slow_cooker": null,
+          "pressure_cooker": null
+        },
+        "safeMinTempC": 63,
+        "rubs": [
+          "Simple SPG: equal parts coarse salt, black pepper, garlic powder. Apply 2 hrs before cooking. The collagen in cheeks needs no help — just good seasoning.",
+          "Paprika and brown sugar: 1 tbsp each smoked paprika, brown sugar, 1 tsp each garlic powder, onion powder, salt, cracked pepper. Press in generously.",
+          "Spanish-style: smoked paprika (sweet), garlic powder, dried oregano, cumin, olive oil, salt. Coat well and rest overnight if possible."
+        ],
+        "woods": [
+          "Oak — medium smoke that holds up to the rich, fatty cheeks without overloading. 1-2 chunks max.",
+          "Cherry — mild and fruity, gives a dark glossy exterior. Works beautifully with brown sugar rubs.",
+          "Apple — light and sweet if you want minimal smoke influence. Good for first-timers with cheeks."
+        ],
+        "tips": [
+          "Pork cheeks are pure collagen — they NEED to hit 88–92°C internal to break down properly. Pull early and they'll be tough. Patience is everything.",
+          "After cooking, let them rest in their own juices for 20 min before serving. The braising liquid from a slow cooker makes an incredible sauce — reduce it on the stovetop.",
+          "Serve whole as portions or pull apart for tacos and sliders. The texture when properly cooked is unlike anything else — silky and rich with a wobble."
+        ]
+      },
+      {
+        "id": "pork_knuckle",
+        "name": "Pork Knuckle (Hock)",
+        "methods": [
+          "smoker",
+          "oven",
+          "slow_cooker",
+          "pressure_cooker"
+        ],
+        "timeMode": {
+          "smoker": "per_kg",
+          "oven": "per_kg",
+          "slow_cooker": "flat",
+          "pressure_cooker": "flat"
+        },
+        "hoursPerKg": {
+          "smoker": 4,
+          "oven": 2.75
+        },
+        "flatCookHours": {
+          "slow_cooker": 8,
+          "pressure_cooker": 1.25
+        },
+        "applianceTempC": {
+          "smoker": 110,
+          "oven": 160,
+          "slow_cooker": 90,
+          "pressure_cooker": 121
+        },
+        "internalTempC": {
+          "smoker": 88,
+          "oven": 88,
+          "slow_cooker": 90,
+          "pressure_cooker": 90
+        },
+        "restMinutes": 30,
+        "hasStall": {
+          "smoker": false,
+          "oven": false,
+          "slow_cooker": false,
+          "pressure_cooker": false
+        },
+        "stallTempC": null,
+        "wrapTempC": {
+          "smoker": null,
+          "oven": null,
+          "slow_cooker": null,
+          "pressure_cooker": null
+        },
+        "safeMinTempC": 63,
+        "rubs": [
+          "German-style: caraway seeds (crushed), garlic powder, salt, cracked black pepper. Score the skin deeply first. Traditional Schweinshaxe approach.",
+          "SPG plus paprika: coarse salt, black pepper, garlic powder, smoked paprika. Stuff crushed garlic into the score marks before rubbing.",
+          "Herb salt: 2 tbsp coarse salt, 1 tsp each dried rosemary, thyme, garlic powder, cracked pepper. Rub aggressively into the scored skin."
+        ],
+        "woods": [
+          "Beech — traditional European wood for pork, mild and slightly nutty. Great with caraway rubs.",
+          "Apple — sweet and mild, keeps the flavour classic. Good option if beech isn't available.",
+          "Oak — medium-bodied smoke that won't overpower the skin crackling flavour. 1-2 chunks."
+        ],
+        "tips": [
+          "Score the skin in a tight diamond pattern all the way down to the fat layer. Pat completely dry before rubbing — moisture is the enemy of good crackling.",
+          "For crispy crackling, blast at 200°C+ for the last 30 minutes or use a blowtorch on the skin. The slow cook softens it; the blast crisps it up.",
+          "The knuckle joint holds a lot of collagen — cook to 90°C internal minimum. The meat should pull clean from the bone. If it resists, keep cooking."
+        ]
+      },
+      {
+        "id": "pork_neck_collar",
+        "name": "Pork Neck / Collar",
+        "methods": [
+          "smoker",
+          "oven",
+          "kamado",
+          "charcoal_kettle",
+          "slow_cooker",
+          "pressure_cooker"
+        ],
+        "timeMode": {
+          "smoker": "per_kg",
+          "oven": "per_kg",
+          "kamado": "per_kg",
+          "charcoal_kettle": "per_kg",
+          "slow_cooker": "per_kg",
+          "pressure_cooker": "flat"
+        },
+        "hoursPerKg": {
+          "smoker": 3.5,
+          "oven": 2.2,
+          "kamado": 3.5,
+          "charcoal_kettle": 3.5,
+          "slow_cooker": 1.2
+        },
+        "flatCookHours": {
+          "pressure_cooker": 0.75
+        },
+        "applianceTempC": {
+          "smoker": 110,
+          "oven": 150,
+          "kamado": 110,
+          "charcoal_kettle": 110,
+          "slow_cooker": 90,
+          "pressure_cooker": 121
+        },
+        "internalTempC": {
+          "smoker": 90,
+          "oven": 88,
+          "kamado": 90,
+          "charcoal_kettle": 90,
+          "slow_cooker": 90,
+          "pressure_cooker": 90
+        },
+        "restMinutes": 45,
+        "hasStall": {
+          "smoker": true,
+          "oven": false,
+          "kamado": true,
+          "charcoal_kettle": true,
+          "slow_cooker": false,
+          "pressure_cooker": false
+        },
+        "stallTempC": 70,
+        "wrapTempC": {
+          "smoker": 72,
+          "oven": null,
+          "kamado": 72,
+          "charcoal_kettle": 72,
+          "slow_cooker": null,
+          "pressure_cooker": null
+        },
+        "safeMinTempC": 63,
+        "rubs": [
+          "SPG and paprika: coarse salt, black pepper, garlic powder, smoked paprika (1:1:1:0.5). Apply generously the night before. This cut handles big seasoning well.",
+          "Sweet and smoky: brown sugar, smoked paprika, garlic powder, onion powder, black pepper, salt, pinch of cayenne (2:2:1:1:1:1:0.5). Press into the meat.",
+          "Asian-inspired: five spice, garlic powder, soy sauce powder (if available), white pepper, salt, brown sugar. Unusual but works beautifully on the fatty collar."
+        ],
+        "woods": [
+          "Hickory — robust smoke for a rich, fatty cut. Don't overdo it — 2 chunks over the first 2 hours.",
+          "Pecan — milder than hickory with a buttery note. Perfect balance for a long collar cook.",
+          "Apple — lighter smoke for a more neutral flavour profile. Good choice if serving with strong sauces."
+        ],
+        "tips": [
+          "The collar (coppa) is heavily marbled — it stays moist even at higher internal temps. Aim for 85–90°C for slicing or 93°C+ for pulling.",
+          "This cut responds well to a rest in foil for 30+ minutes. The marbling redistributes and the texture goes from good to spectacular.",
+          "Slice thickly (2+ cm) across the grain for the best texture. Thin slices crumble and don't show off the marbling."
+        ]
+      },
+      {
+        "id": "country_style_ribs",
+        "name": "Country Style Pork Ribs",
+        "methods": [
+          "smoker",
+          "oven",
+          "kamado",
+          "slow_cooker",
+          "pressure_cooker"
+        ],
+        "timeMode": {
+          "smoker": "flat",
+          "oven": "flat",
+          "kamado": "flat",
+          "slow_cooker": "flat",
+          "pressure_cooker": "flat"
+        },
+        "hoursPerKg": {},
+        "flatCookHours": {
+          "smoker": 4,
+          "oven": 3,
+          "kamado": 4,
+          "slow_cooker": 6,
+          "pressure_cooker": 0.5
+        },
+        "applianceTempC": {
+          "smoker": 110,
+          "oven": 150,
+          "kamado": 110,
+          "slow_cooker": 90,
+          "pressure_cooker": 121
+        },
+        "internalTempC": {
+          "smoker": 90,
+          "oven": 88,
+          "kamado": 90,
+          "slow_cooker": 93,
+          "pressure_cooker": 93
+        },
+        "restMinutes": 15,
+        "hasStall": {
+          "smoker": false,
+          "oven": false,
+          "kamado": false,
+          "slow_cooker": false,
+          "pressure_cooker": false
+        },
+        "stallTempC": null,
+        "wrapTempC": {
+          "smoker": null,
+          "oven": null,
+          "kamado": null,
+          "slow_cooker": null,
+          "pressure_cooker": null
+        },
+        "safeMinTempC": 63,
+        "rubs": [
+          "Classic BBQ: smoked paprika, brown sugar, garlic powder, onion powder, salt, black pepper, dry mustard (2:2:1:1:1:1:0.5). Coat well, rest at least 1 hr.",
+          "Simple SPG: coarse salt, cracked black pepper, garlic powder. Sometimes the simplest rub with a good piece of meat is the best choice.",
+          "Memphis-style: paprika, salt, sugar, black pepper, cumin, garlic powder, onion powder, celery salt, cayenne. Heavier rub for more flavour surface."
+        ],
+        "woods": [
+          "Apple — sweet, clean smoke. Works with any rub style on country ribs.",
+          "Cherry — dark colour on the outside, fruity background. Pairs great with sweet rubs.",
+          "Hickory — if you want proper BBQ smoke on these. Keep it to 1-2 chunks as they're smaller pieces."
+        ],
+        "tips": [
+          "Country ribs are actually cut from the shoulder — they have much more meat than spare ribs. They're forgiving to cook and don't need the same low-slow treatment.",
+          "Great finishing move: after smoking to temp, sear over direct high heat for 2 min each side to caramelise the rub. Adds a great crust.",
+          "These are perfect for sliders. Pull at 93°C, shred, toss in your favourite BBQ sauce. Serve on brioche buns with slaw."
+        ]
+      },
+      {
+        "id": "bone_in_ham",
+        "name": "Bone-In Ham (Whole)",
+        "methods": [
+          "smoker",
+          "oven",
+          "slow_cooker",
+          "pressure_cooker"
+        ],
+        "timeMode": {
+          "smoker": "per_kg",
+          "oven": "per_kg",
+          "slow_cooker": "per_kg",
+          "pressure_cooker": "flat"
+        },
+        "hoursPerKg": {
+          "smoker": 1.75,
+          "oven": 1.1,
+          "slow_cooker": 1
+        },
+        "flatCookHours": {
+          "pressure_cooker": 1.5
+        },
+        "applianceTempC": {
+          "smoker": 110,
+          "oven": 160,
+          "slow_cooker": 90,
+          "pressure_cooker": 121
+        },
+        "internalTempC": {
+          "smoker": 74,
+          "oven": 74,
+          "slow_cooker": 71,
+          "pressure_cooker": 71
+        },
+        "restMinutes": 30,
+        "hasStall": {
+          "smoker": false,
+          "oven": false,
+          "slow_cooker": false,
+          "pressure_cooker": false
+        },
+        "stallTempC": null,
+        "wrapTempC": {
+          "smoker": null,
+          "oven": null,
+          "slow_cooker": null,
+          "pressure_cooker": null
+        },
+        "safeMinTempC": 63,
+        "rubs": [
+          "Brown sugar glaze: 3 tbsp brown sugar, 1 tbsp Dijon mustard, 1 tsp each ground cloves, cinnamon, garlic powder. Apply in the last 45 min so the sugar doesn't burn.",
+          "Honey mustard: equal parts honey and Dijon, brush generously over the scored surface. Apply the last hour and reapply every 20 min for a sticky glaze.",
+          "SPG smoke rub: for pre-cooking from raw. Coarse salt, black pepper, garlic powder, smoked paprika. Apply 12+ hrs ahead, smoke low the whole way."
+        ],
+        "woods": [
+          "Applewood — classic ham pairing. Sweet, mild smoke that complements the cured meat perfectly.",
+          "Cherry — beautiful pink colour enhancement and fruity smoke. Traditional with honey glazed ham.",
+          "Pecan — nutty and subtle. Great with mustard-based glazes. Doesn't overpower the natural ham flavour."
+        ],
+        "tips": [
+          "Score the skin in a diamond pattern about 1 cm deep. This lets the glaze penetrate and gives you those classic diamond pieces. Insert cloves at the intersections for a traditional look.",
+          "If it's a pre-cooked/cured ham you're just reheating and glazing, it only needs to reach 60°C internal. Don't overcook — it's already done, you're just warming and flavouring.",
+          "Keep it on the bone — it stays juicier and looks more impressive. Carve tableside by running the knife along the bone on both sides then slicing down."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "beef",
+    "name": "Beef",
+    "cuts": [
+      {
+        "id": "brisket",
+        "name": "Full Packer Brisket",
+        "methods": [
+          "smoker",
+          "oven",
+          "kamado",
+          "charcoal_kettle",
+          "slow_cooker",
+          "pressure_cooker"
+        ],
+        "timeMode": {
+          "smoker": "per_kg",
+          "oven": "per_kg",
+          "kamado": "per_kg",
+          "charcoal_kettle": "per_kg",
+          "slow_cooker": "per_kg",
+          "pressure_cooker": "per_kg"
+        },
+        "hoursPerKg": {
+          "smoker": 2.75,
+          "oven": 1.9,
+          "kamado": 2.75,
+          "charcoal_kettle": 2.75,
+          "slow_cooker": 1.5,
+          "pressure_cooker": 0.25
+        },
+        "flatCookHours": {},
+        "applianceTempC": {
+          "smoker": 110,
+          "oven": 150,
+          "kamado": 110,
+          "charcoal_kettle": 110,
+          "slow_cooker": 90,
+          "pressure_cooker": 121
+        },
+        "internalTempC": {
+          "smoker": 95,
+          "oven": 95,
+          "kamado": 95,
+          "charcoal_kettle": 95,
+          "slow_cooker": 95,
+          "pressure_cooker": 95
+        },
+        "restMinutes": 90,
+        "hasStall": {
+          "smoker": true,
+          "oven": false,
+          "kamado": true,
+          "charcoal_kettle": true,
+          "slow_cooker": false,
+          "pressure_cooker": false
+        },
+        "stallTempC": 70,
+        "wrapTempC": {
+          "smoker": 72,
+          "oven": null,
+          "kamado": 72,
+          "charcoal_kettle": 72,
+          "slow_cooker": null,
+          "pressure_cooker": null
+        },
+        "safeMinTempC": 63,
+        "rubs": [
+          "Texas SPG: equal parts coarse salt (Diamond Crystal or coarse kosher) and 16-mesh cracked black pepper, with a small amount of garlic powder. This IS the standard. Apply 12-24 hrs ahead.",
+          "Competition brisket: SPG base, add smoked paprika, onion powder, a touch of chipotle powder and brown sugar (not too much — focus is bark, not sweetness). Apply the night before.",
+          "Coffee and cocoa rub: 1 tbsp each espresso powder, cocoa powder, coarse black pepper, coarse salt, garlic powder. Deep, complex bark with rich flavour. Rest 4+ hrs before cooking."
+        ],
+        "woods": [
+          "Post oak — the gold standard for Texas brisket. Clean, medium smoke that lets the beef shine. Use large splits, not chips. Your first choice every time.",
+          "Hickory — stronger, more aggressive smoke. Classic Central Texas alternative. Use less than you think — over-smoked brisket is bitter.",
+          "Oak and cherry blend — oak for structure, cherry for a hint of sweetness and beautiful bark colour. Great competition choice."
+        ],
+        "tips": [
+          "Cook fat side up on most smokers (fat side down if your heat is from below). Trim the fat cap to about 6mm — enough to baste the meat, not so much it just renders into the fire.",
+          "The stall at 70°C can last 3–6 hrs. Wrap in unwaxed butcher paper (not foil) to push through while keeping the bark intact. Foil makes it steamy and soft.",
+          "Rest is NON-NEGOTIABLE. 1 hour minimum in a cooler wrapped in a towel. 2-4 hours is better. The brisket carryovers and the juice redistributes — cutting hot makes it dry."
+        ]
+      },
+      {
+        "id": "beef_short_ribs",
+        "name": "Beef Short Ribs",
+        "methods": [
+          "smoker",
+          "oven",
+          "kamado",
+          "charcoal_kettle",
+          "slow_cooker",
+          "pressure_cooker"
+        ],
+        "timeMode": {
+          "smoker": "per_kg",
+          "oven": "per_kg",
+          "kamado": "per_kg",
+          "charcoal_kettle": "per_kg",
+          "slow_cooker": "flat",
+          "pressure_cooker": "flat"
+        },
+        "hoursPerKg": {
+          "smoker": 3.3,
+          "oven": 2.4,
+          "kamado": 3.3,
+          "charcoal_kettle": 3.3
+        },
+        "flatCookHours": {
+          "slow_cooker": 7,
+          "pressure_cooker": 0.75
+        },
+        "applianceTempC": {
+          "smoker": 110,
+          "oven": 150,
+          "kamado": 110,
+          "charcoal_kettle": 110,
+          "slow_cooker": 90,
+          "pressure_cooker": 121
+        },
+        "internalTempC": {
+          "smoker": 95,
+          "oven": 95,
+          "kamado": 95,
+          "charcoal_kettle": 95,
+          "slow_cooker": 95,
+          "pressure_cooker": 95
+        },
+        "restMinutes": 45,
+        "hasStall": {
+          "smoker": true,
+          "oven": false,
+          "kamado": true,
+          "charcoal_kettle": true,
+          "slow_cooker": false,
+          "pressure_cooker": false
+        },
+        "stallTempC": 70,
+        "wrapTempC": {
+          "smoker": 72,
+          "oven": null,
+          "kamado": 72,
+          "charcoal_kettle": 72,
+          "slow_cooker": null,
+          "pressure_cooker": null
+        },
+        "safeMinTempC": 63,
+        "rubs": [
+          "Texas SPG: equal parts coarse salt and cracked black pepper, small amount of garlic powder. Keep it simple — short ribs are so rich the seasoning just needs to highlight them.",
+          "Coffee and black pepper: 1 tbsp each espresso powder and coarse cracked black pepper, 1 tsp each coarse salt, garlic powder, smoked paprika. Bold and robust.",
+          "Korean-inspired: soy sauce powder, sesame oil powder (or brush on), garlic powder, ginger powder, black pepper, brown sugar, pinch of cayenne. Incredible on the smoker."
+        ],
+        "woods": [
+          "Post oak or oak — the best pairing for beef. Clean, honest smoke that doesn't interfere with the natural beef richness. Use 2-3 chunks.",
+          "Hickory — punchy smoke for big ribs. Works well if you want a traditional Southern BBQ flavour profile.",
+          "Cherry and oak blend — cherry adds sweetness and visual appeal (dark mahogany colour), oak provides backbone. A beautiful combination for beef ribs."
+        ],
+        "tips": [
+          "Don't trim the fat — it's what makes short ribs extraordinary. The fat rendering over 7+ hours is the whole point. Just remove the thick silver skin membrane from the bone side.",
+          "Cook until probe-tender, not just to temperature. A probe should slide into the meat between the bones with zero resistance — like butter. Could be 93°C or 98°C depending on the beef.",
+          "Plate one bone per person — these are enormously rich. A single short rib is a full serving. Let them rest 30 min off the smoker before serving."
+        ]
+      },
+      {
+        "id": "chuck_roast",
+        "name": "Chuck Roast",
+        "methods": [
+          "smoker",
+          "oven",
+          "kamado",
+          "charcoal_kettle",
+          "slow_cooker",
+          "pressure_cooker"
+        ],
+        "timeMode": {
+          "smoker": "per_kg",
+          "oven": "per_kg",
+          "kamado": "per_kg",
+          "charcoal_kettle": "per_kg",
+          "slow_cooker": "per_kg",
+          "pressure_cooker": "per_kg"
+        },
+        "hoursPerKg": {
+          "smoker": 3.85,
+          "oven": 2.75,
+          "kamado": 3.85,
+          "charcoal_kettle": 3.85,
+          "slow_cooker": 1.25,
+          "pressure_cooker": 0.25
+        },
+        "flatCookHours": {},
+        "applianceTempC": {
+          "smoker": 110,
+          "oven": 150,
+          "kamado": 110,
+          "charcoal_kettle": 110,
+          "slow_cooker": 90,
+          "pressure_cooker": 121
+        },
+        "internalTempC": {
+          "smoker": 95,
+          "oven": 95,
+          "kamado": 95,
+          "charcoal_kettle": 95,
+          "slow_cooker": 95,
+          "pressure_cooker": 95
+        },
+        "restMinutes": 60,
+        "hasStall": {
+          "smoker": true,
+          "oven": false,
+          "kamado": true,
+          "charcoal_kettle": true,
+          "slow_cooker": false,
+          "pressure_cooker": false
+        },
+        "stallTempC": 70,
+        "wrapTempC": {
+          "smoker": 72,
+          "oven": null,
+          "kamado": 72,
+          "charcoal_kettle": 72,
+          "slow_cooker": null,
+          "pressure_cooker": null
+        },
+        "safeMinTempC": 63,
+        "rubs": [
+          "SPG plus: coarse salt, black pepper, garlic powder, smoked paprika (3:2:1:1). Apply 12+ hrs ahead. The chuck soaks up seasoning beautifully.",
+          "Brisket-style: equal parts coarse salt and cracked black pepper, pinch of garlic powder. Simple and traditional. Let the beef do the talking.",
+          "Spicy bark: black pepper, salt, garlic powder, chipotle powder, cayenne, onion powder (2:2:1:0.5:0.25:1). Heat and smoke together — outstanding bark."
+        ],
+        "woods": [
+          "Oak — reliable, clean smoke for chuck. Doesn't overpower. 2 chunks over the first 2-3 hours.",
+          "Hickory — classic beef pairing. Punchy smoke that works well with the richness of chuck. Don't overuse.",
+          "Cherry and oak — the cherry adds colour and sweetness to balance the robust beef fat. Great combination."
+        ],
+        "tips": [
+          "Chuck has tons of collagen — cook to 95°C+ internal for pulling, or 88-90°C for slicing. At 95°C a probe slides through with zero resistance. Below that, the collagen hasn't fully converted.",
+          "\"Poor man's brisket\" — chuck roast on the smoker rivals brisket at a fraction of the cost. The stall hits just like brisket; wrap in butcher paper to push through.",
+          "If pulling: rest in a cooler for 1 hr, pull apart with two forks (or just your hands at 75°C), and toss with the rendered juices from the wrap. No sauce needed."
+        ]
+      },
+      {
+        "id": "tomahawk_steak",
+        "name": "Tomahawk Steak",
+        "methods": [
+          "smoker",
+          "oven",
+          "kamado",
+          "charcoal_kettle"
+        ],
+        "timeMode": {
+          "smoker": "per_kg",
+          "oven": "per_kg",
+          "kamado": "per_kg",
+          "charcoal_kettle": "per_kg"
+        },
+        "hoursPerKg": {
+          "smoker": 1.5,
+          "oven": 0.75,
+          "kamado": 1.5,
+          "charcoal_kettle": 1.5
+        },
+        "flatCookHours": {},
+        "applianceTempC": {
+          "smoker": 110,
+          "oven": 200,
+          "kamado": 110,
+          "charcoal_kettle": 110
+        },
+        "internalTempC": {
+          "smoker": 54,
+          "oven": 54,
+          "kamado": 54,
+          "charcoal_kettle": 54
+        },
+        "restMinutes": 20,
+        "hasStall": {
+          "smoker": false,
+          "oven": false,
+          "kamado": false,
+          "charcoal_kettle": false
+        },
+        "stallTempC": null,
+        "wrapTempC": {
+          "smoker": null,
+          "oven": null,
+          "kamado": null,
+          "charcoal_kettle": null
+        },
+        "safeMinTempC": 63,
+        "rubs": [
+          "Coarse salt and pepper only: 2 tbsp coarse kosher salt, 1 tbsp coarse cracked black pepper. Apply 45 min before cooking or 24+ hrs ahead (dry brine). Anything else is a distraction.",
+          "Montreal steak seasoning: coarse salt, cracked pepper, garlic, coriander, dill, red chilli flakes. Classic steakhouse rub. Apply right before cooking.",
+          "Herb butter finish: cook with just salt and pepper, rest, then top with compound butter (softened butter, garlic, fresh herbs, lemon). The heat from the steak melts it over the top."
+        ],
+        "woods": [
+          "Cherry — short exposure gives a beautiful red colour and very mild smoke. This is a sear-focused cook, not a long smoke — keep wood minimal.",
+          "Oak — if you want a whisper of smoke flavour on a reverse-sear. Use tiny chips, not chunks. One chip is enough.",
+          "No wood recommended for high-heat direct sear. The char from the grill grates IS the flavour. Only add wood if reverse-searing first."
+        ],
+        "tips": [
+          "Reverse sear for best results: low and slow in the smoker/oven to 48-52°C internal, rest 10 min, then sear hard over ripping hot charcoal or cast iron for 2-3 min each side.",
+          "The bone can make the meat cook unevenly — the meat right against the bone cooks slower. Factor this in and check temps at multiple points.",
+          "Let the steak come to room temperature for 1 hr before cooking. A cold centre means overcooked exterior by the time the middle is right."
+        ]
+      },
+      {
+        "id": "rump_roast",
+        "name": "Rump Roast",
+        "methods": [
+          "smoker",
+          "oven",
+          "slow_cooker",
+          "pressure_cooker"
+        ],
+        "timeMode": {
+          "smoker": "per_kg",
+          "oven": "per_kg",
+          "slow_cooker": "per_kg",
+          "pressure_cooker": "per_kg"
+        },
+        "hoursPerKg": {
+          "smoker": 2.4,
+          "oven": 1.9,
+          "slow_cooker": 1,
+          "pressure_cooker": 0.25
+        },
+        "flatCookHours": {},
+        "applianceTempC": {
+          "smoker": 110,
+          "oven": 150,
+          "slow_cooker": 90,
+          "pressure_cooker": 121
+        },
+        "internalTempC": {
+          "smoker": 57,
+          "oven": 57,
+          "slow_cooker": 90,
+          "pressure_cooker": 90
+        },
+        "restMinutes": 20,
+        "hasStall": {
+          "smoker": false,
+          "oven": false,
+          "slow_cooker": false,
+          "pressure_cooker": false
+        },
+        "stallTempC": null,
+        "wrapTempC": {
+          "smoker": null,
+          "oven": null,
+          "slow_cooker": null,
+          "pressure_cooker": null
+        },
+        "safeMinTempC": 63,
+        "rubs": [
+          "SPG: coarse salt, black pepper, garlic powder (2:1:1). Apply 24 hrs ahead for a deep dry brine. No fat cap to worry about — season all surfaces evenly.",
+          "Herb and garlic: fresh rosemary, thyme, garlic (minced), olive oil, salt, cracked pepper. Rub over all surfaces, rest 4+ hours.",
+          "Smoked paprika rub: smoked paprika, garlic powder, onion powder, brown sugar, salt, black pepper, dry mustard. Works well for lower internal temps (slicing)."
+        ],
+        "woods": [
+          "Oak — classic beef wood. Clean and medium-bodied, won't overwhelm a rump. 2 chunks early in the cook.",
+          "Hickory — bolder smoke for those who like it strong. Pairs well with the herb-based rubs.",
+          "Cherry — lighter, slightly sweet smoke. Gives a great colour on the exterior."
+        ],
+        "tips": [
+          "Rump is a lean, hard-working muscle — it's best at medium-rare (57-60°C) for slicing. Above 65°C it starts to tighten up. Pull at 57°C and rest 15+ min.",
+          "Tie it with butcher's twine into a uniform shape if possible. Even thickness = even cooking.",
+          "Slice paper thin across the grain for serving. The grain runs in multiple directions — find it before you cut. Thin slicing makes a tough cut tender."
+        ]
+      },
+      {
+        "id": "tri_tip",
+        "name": "Tri-Tip",
+        "methods": [
+          "smoker",
+          "oven"
+        ],
+        "timeMode": {
+          "smoker": "per_kg",
+          "oven": "per_kg"
+        },
+        "hoursPerKg": {
+          "smoker": 1.5,
+          "oven": 0.75
+        },
+        "flatCookHours": {},
+        "applianceTempC": {
+          "smoker": 120,
+          "oven": 200
+        },
+        "internalTempC": {
+          "smoker": 57,
+          "oven": 57
+        },
+        "restMinutes": 20,
+        "hasStall": {
+          "smoker": false,
+          "oven": false
+        },
+        "stallTempC": null,
+        "wrapTempC": {
+          "smoker": null,
+          "oven": null
+        },
+        "safeMinTempC": 63,
+        "rubs": [
+          "Santa Maria style: coarse salt, cracked black pepper, garlic powder (equal parts). This IS the tri-tip rub. Apply 1 hr before cooking. Tradition for a reason.",
+          "Red wine and garlic: garlic powder, onion powder, dried rosemary, coarse pepper, salt, a tablespoon of red wine vinegar worked in. California steakhouse style.",
+          "Coffee rub: espresso powder, brown sugar, garlic powder, smoked paprika, salt, cracked black pepper (1:1:1:1:1:2). Strong flavour, great bark on the reverse sear."
+        ],
+        "woods": [
+          "Red oak — traditional Santa Maria choice. If you can get it, it's what tri-tip was born to be cooked over.",
+          "Oak — the go-to if red oak isn't available. Clean, honest smoke for beef.",
+          "Cherry — lighter option that gives great colour. Shorter cook time than brisket so less smoke is needed."
+        ],
+        "tips": [
+          "Tri-tip has two different grain directions that meet in the middle. Before you cook, figure out which way the grain runs in each half — you'll need to slice accordingly.",
+          "Rest for at least 15 minutes before slicing. Tri-tip is small so it cooks and rests quickly. Don't rush it.",
+          "Ideal at medium-rare to medium (57-63°C). Thin slices across the grain. It's not a braising cut — don't cook it past medium or it gets tough."
+        ]
+      },
+      {
+        "id": "beef_cheeks",
+        "name": "Beef Cheeks",
+        "methods": [
+          "smoker",
+          "oven",
+          "kamado",
+          "slow_cooker",
+          "pressure_cooker"
+        ],
+        "timeMode": {
+          "smoker": "per_kg",
+          "oven": "per_kg",
+          "kamado": "per_kg",
+          "slow_cooker": "flat",
+          "pressure_cooker": "flat"
+        },
+        "hoursPerKg": {
+          "smoker": 4.5,
+          "oven": 3,
+          "kamado": 4.5
+        },
+        "flatCookHours": {
+          "slow_cooker": 8,
+          "pressure_cooker": 1
+        },
+        "applianceTempC": {
+          "smoker": 110,
+          "oven": 150,
+          "kamado": 110,
+          "slow_cooker": 90,
+          "pressure_cooker": 121
+        },
+        "internalTempC": {
+          "smoker": 95,
+          "oven": 93,
+          "kamado": 95,
+          "slow_cooker": 95,
+          "pressure_cooker": 95
+        },
+        "restMinutes": 30,
+        "hasStall": {
+          "smoker": true,
+          "oven": false,
+          "kamado": true,
+          "slow_cooker": false,
+          "pressure_cooker": false
+        },
+        "stallTempC": 70,
+        "wrapTempC": {
+          "smoker": 72,
+          "oven": null,
+          "kamado": 72,
+          "slow_cooker": null,
+          "pressure_cooker": null
+        },
+        "safeMinTempC": 63,
+        "rubs": [
+          "Red wine and herbs: red wine reduction, fresh thyme, garlic, salt, cracked black pepper as a marinade rub. Sear first for extra depth.",
+          "Simple SPG: coarse salt, black pepper, garlic powder. The collagen in cheeks will dominate the flavour — you just need the seasoning to support it.",
+          "Smoked paprika and coffee: smoked paprika, espresso powder, garlic powder, onion powder, salt, cracked black pepper. Rich and complex bark."
+        ],
+        "woods": [
+          "Oak — clean and strong enough for beef cheeks without overpowering. Small amounts only for long cooks.",
+          "Hickory — robust smoke for a rich collagen-heavy cut. Use sparingly — a little goes a long way.",
+          "Cherry — gives a gorgeous dark glaze on the outside and mild sweetness. Good contrast to the rich beef flavour."
+        ],
+        "tips": [
+          "Beef cheeks are pure collagen — they need to reach 90–95°C internal to convert to gelatin. Under this and they're tough; over and they fall apart (which is fine for braise-style).",
+          "The rendered collagen makes a sauce naturally. In a slow cooker, the liquid around them becomes incredibly rich — reduce it by half on the stovetop and serve as jus.",
+          "Serve in portions for a restaurant-style plate, or pull and serve in tacos, on polenta, or over mashed potatoes. The silky texture pairs with rich starchy bases."
+        ]
+      },
+      {
+        "id": "oxtail",
+        "name": "Oxtail",
+        "methods": [
+          "oven",
+          "slow_cooker",
+          "pressure_cooker"
+        ],
+        "timeMode": {
+          "oven": "per_kg",
+          "slow_cooker": "flat",
+          "pressure_cooker": "flat"
+        },
+        "hoursPerKg": {
+          "oven": 3.5
+        },
+        "flatCookHours": {
+          "slow_cooker": 8,
+          "pressure_cooker": 1
+        },
+        "applianceTempC": {
+          "oven": 150,
+          "slow_cooker": 90,
+          "pressure_cooker": 121
+        },
+        "internalTempC": {
+          "oven": 95,
+          "slow_cooker": 95,
+          "pressure_cooker": 95
+        },
+        "restMinutes": 20,
+        "hasStall": {
+          "oven": false,
+          "slow_cooker": false,
+          "pressure_cooker": false
+        },
+        "stallTempC": null,
+        "wrapTempC": {
+          "oven": null,
+          "slow_cooker": null,
+          "pressure_cooker": null
+        },
+        "safeMinTempC": 63,
+        "rubs": [
+          "Simple SPG: generous salt, pepper, garlic powder. Sear hard in a hot pan before smoking or slow cooking — the browning is where the flavour is.",
+          "Caribbean-style: allspice, thyme, garlic powder, onion powder, brown sugar, scotch bonnet powder, salt, black pepper. Traditional jerk-adjacent flavour.",
+          "Red wine braising: coat in flour, sear, then deglaze with red wine. For smoker: SPG rub, smoke for 2 hrs, then transfer to a braising liquid for the rest of the cook."
+        ],
+        "woods": [
+          "Oak — the classic choice for a long oxtail cook. Add 2 chunks at the start and that's enough.",
+          "Hickory — rich, assertive smoke for oxtail. Works with Caribbean-style rubs especially.",
+          "Cherry — adds a sweeter dimension and beautiful colour. Good option to balance the intense beef flavour."
+        ],
+        "tips": [
+          "Oxtail has tons of collagen and fat between the bones — it absolutely must be cooked low and slow until it falls from the bone. Minimum 7-8 hrs at 110°C.",
+          "The gelatin-rich braising liquid that oxtail produces is liquid gold. Skim the fat and reduce it by half for an incredible sauce or the best gravy you've ever made.",
+          "Oxtail is traditionally braised, not purely smoked. For best results: smoke for 2-3 hrs to get colour and smoke flavour, then submerge in stock and red wine and finish in a covered pot."
+        ]
+      },
+      {
+        "id": "picanha",
+        "name": "Picanha (Top Sirloin Cap)",
+        "methods": [
+          "smoker",
+          "oven",
+          "wood_fire"
+        ],
+        "timeMode": {
+          "smoker": "per_kg",
+          "oven": "per_kg",
+          "wood_fire": "per_kg"
+        },
+        "hoursPerKg": {
+          "smoker": 1.75,
+          "oven": 0.85,
+          "wood_fire": 0.85
+        },
+        "flatCookHours": {},
+        "applianceTempC": {
+          "smoker": 120,
+          "oven": 200,
+          "wood_fire": 280
+        },
+        "internalTempC": {
+          "smoker": 57,
+          "oven": 57,
+          "wood_fire": 57
+        },
+        "restMinutes": 20,
+        "hasStall": {
+          "smoker": false,
+          "oven": false,
+          "wood_fire": false
+        },
+        "stallTempC": null,
+        "wrapTempC": {
+          "smoker": null,
+          "oven": null,
+          "wood_fire": null
+        },
+        "safeMinTempC": 63,
+        "rubs": [
+          "Brazilian style: only coarse salt (rock salt). Skewer the picanha into a horseshoe shape, season heavily with rock salt all over, and cook over high charcoal. That's it. That's the recipe.",
+          "Garlic and herb: garlic powder, coarse salt, cracked black pepper, dried oregano. Simple and effective for oven or kamado.",
+          "SPG with chimichurri finish: minimal salt and pepper rub while cooking, then serve with generous fresh chimichurri (parsley, garlic, olive oil, red wine vinegar, chilli). The sauce is the star."
+        ],
+        "woods": [
+          "No wood needed — high-heat direct charcoal is traditional for picanha. The char from the coals is the flavour.",
+          "Quebracho charcoal — Argentine hardwood charcoal burns hot and imparts a slight smoke. The authentic choice.",
+          "Cherry — if cooking lower and slower, a small amount of cherry wood adds a beautiful blush to the fat cap."
+        ],
+        "tips": [
+          "Always cook with the fat cap ON. Skewer it with the fat cap on the outside — it bastes the meat as it drips. Never trim the fat off a picanha.",
+          "Cut against the grain and serve medium-rare to medium (55-62°C). Picanha gets tough quickly above medium. Serve immediately — it doesn't like sitting.",
+          "The fat cap is the best part. If cooking over charcoal, let it char and caramelise slightly. Eat it. You'll thank yourself."
+        ]
+      },
+      {
+        "id": "beef_tenderloin",
+        "name": "Beef Tenderloin (Whole)",
+        "methods": [
+          "smoker",
+          "oven"
+        ],
+        "timeMode": {
+          "smoker": "per_kg",
+          "oven": "per_kg"
+        },
+        "hoursPerKg": {
+          "smoker": 1.5,
+          "oven": 0.6
+        },
+        "flatCookHours": {},
+        "applianceTempC": {
+          "smoker": 110,
+          "oven": 200
+        },
+        "internalTempC": {
+          "smoker": 54,
+          "oven": 54
+        },
+        "restMinutes": 20,
+        "hasStall": {
+          "smoker": false,
+          "oven": false
+        },
+        "stallTempC": null,
+        "wrapTempC": {
+          "smoker": null,
+          "oven": null
+        },
+        "safeMinTempC": 63,
+        "rubs": [
+          "Simple elegance: coarse kosher salt and cracked black pepper, applied 24 hrs ahead. The tenderloin is delicate — let the meat shine, don't bury it under rub.",
+          "Herb crust: Dijon mustard as a binder, then coat with fresh thyme, rosemary, garlic (minced), parsley, breadcrumbs, salt, pepper. Apply right before cooking.",
+          "Umami butter: compound butter (softened butter, roasted garlic, parmesan, fresh herbs, salt) applied AFTER cooking as it rests. Melts into the carved slices."
+        ],
+        "woods": [
+          "Cherry — the most delicate smoke for the most delicate beef cut. Very short exposure, small amount. It's an accent, not a feature.",
+          "Apple — even milder than cherry. If you want any smoke, this is the gentlest option for tenderloin.",
+          "No wood recommended for high-heat sear finish — the focus is the Maillard crust, not smoke flavour."
+        ],
+        "tips": [
+          "Tie the tenderloin with butcher's twine at 3 cm intervals to create a uniform shape. Without this, the tapered end cooks faster and will be overdone.",
+          "Pull at 51-53°C for medium-rare, rest 10-15 min to carry over to 55-57°C. Over-cooked tenderloin is an unforgivable waste. Use a probe, not intuition.",
+          "Carve at the table for maximum impact. Slice 2-3 cm thick medallions. This is a showpiece cut — treat it like one."
+        ]
+      },
+      {
+        "id": "bolar_blade",
+        "name": "Bolar Blade (Oyster Blade Roast)",
+        "methods": [
+          "smoker",
+          "oven",
+          "kamado",
+          "slow_cooker",
+          "pressure_cooker"
+        ],
+        "timeMode": {
+          "smoker": "per_kg",
+          "oven": "per_kg",
+          "kamado": "per_kg",
+          "slow_cooker": "per_kg",
+          "pressure_cooker": "flat"
+        },
+        "hoursPerKg": {
+          "smoker": 3.5,
+          "oven": 2.5,
+          "kamado": 3.5,
+          "slow_cooker": 1.25
+        },
+        "flatCookHours": {
+          "pressure_cooker": 1
+        },
+        "applianceTempC": {
+          "smoker": 110,
+          "oven": 150,
+          "kamado": 110,
+          "slow_cooker": 90,
+          "pressure_cooker": 121
+        },
+        "internalTempC": {
+          "smoker": 90,
+          "oven": 90,
+          "kamado": 90,
+          "slow_cooker": 95,
+          "pressure_cooker": 95
+        },
+        "restMinutes": 45,
+        "hasStall": {
+          "smoker": true,
+          "oven": false,
+          "kamado": true,
+          "slow_cooker": false,
+          "pressure_cooker": false
+        },
+        "stallTempC": 70,
+        "wrapTempC": {
+          "smoker": 72,
+          "oven": null,
+          "kamado": 72,
+          "slow_cooker": null,
+          "pressure_cooker": null
+        },
+        "safeMinTempC": 63,
+        "rubs": [
+          "SPG plus: coarse salt, black pepper, garlic powder, smoked paprika (3:2:1:1). Apply 12 hrs ahead — the blade benefits from a long dry brine.",
+          "Brisket-style: equal parts coarse salt and cracked black pepper, garlic powder. Works beautifully on a blade — similar results to brisket at lower cost.",
+          "Herb and garlic: garlic powder, rosemary, thyme, olive oil, salt, cracked pepper. Press into any natural seams in the muscle."
+        ],
+        "woods": [
+          "Oak — clean, medium smoke. The blade has plenty of flavour from the fat and collagen — oak supports without dominating.",
+          "Hickory — robust smoke for a rich cut. Keep to 2 chunks maximum.",
+          "Cherry — adds sweetness and a beautiful dark exterior. Good combination with the paprika rub."
+        ],
+        "tips": [
+          "Bolar blade has a natural seam running through it — you can leave it whole or separate along the seam. Whole is easier; separated cooks more evenly.",
+          "Cook to 90-95°C for pulling. Like chuck, it stalls hard around 70°C — wrap in butcher paper and push through.",
+          "The fat vein running through the centre renders completely at 95°C — that's when you know it's done. Pull it, let it rest, and that vein becomes pure gelatin."
+        ]
+      },
+      {
+        "id": "beef_shin",
+        "name": "Beef Shin (Osso Buco)",
+        "methods": [
+          "oven",
+          "slow_cooker",
+          "pressure_cooker"
+        ],
+        "timeMode": {
+          "oven": "per_kg",
+          "slow_cooker": "flat",
+          "pressure_cooker": "flat"
+        },
+        "hoursPerKg": {
+          "oven": 3
+        },
+        "flatCookHours": {
+          "slow_cooker": 7,
+          "pressure_cooker": 0.75
+        },
+        "applianceTempC": {
+          "oven": 150,
+          "slow_cooker": 90,
+          "pressure_cooker": 121
+        },
+        "internalTempC": {
+          "oven": 90,
+          "slow_cooker": 90,
+          "pressure_cooker": 90
+        },
+        "restMinutes": 15,
+        "hasStall": {
+          "oven": false,
+          "slow_cooker": false,
+          "pressure_cooker": false
+        },
+        "stallTempC": null,
+        "wrapTempC": {
+          "oven": null,
+          "slow_cooker": null,
+          "pressure_cooker": null
+        },
+        "safeMinTempC": 63,
+        "rubs": [
+          "SPG: coarse salt, cracked black pepper, garlic powder. Generously applied — shin is robust and can handle big seasoning.",
+          "Italian-style: rosemary, garlic, lemon zest, olive oil, salt, cracked pepper. Massage into the meat surface. Rest overnight.",
+          "Red wine and herbs: red wine reduction, thyme, garlic powder, salt, black pepper as a wet rub/baste. Apply before and during cooking."
+        ],
+        "woods": [
+          "Oak — strong and reliable for this tough, flavourful working muscle. A classic pairing.",
+          "Hickory — robust smoke that holds up to the intense connective tissue in shin. Good choice.",
+          "Cherry — softer option, still works well. Better if you plan to serve with delicate sides."
+        ],
+        "tips": [
+          "Beef shin (osso bucco-style) is all about collagen. Cook it until a probe goes in with zero resistance — usually 90°C+ and probe-tender. The gelatinous texture is the reward.",
+          "The marrow in the bone is edible and delicious. Scoop it out and spread on crusty bread as a starter while the shin rests.",
+          "Shin is perfect for a hybrid cook: 2 hrs on the smoker for colour and smoke, then braised in stock, wine, and aromatics for 4-5 hrs until fall-apart tender."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "chicken",
+    "name": "Chicken & Poultry",
+    "cuts": [
+      {
+        "id": "whole_chicken",
+        "name": "Whole Chicken",
+        "methods": [
+          "smoker",
+          "oven",
+          "rotisserie",
+          "kamado",
+          "charcoal_kettle",
+          "slow_cooker",
+          "pressure_cooker"
+        ],
+        "timeMode": {
+          "smoker": "per_kg",
+          "oven": "per_kg",
+          "rotisserie": "per_kg",
+          "kamado": "per_kg",
+          "charcoal_kettle": "per_kg",
+          "slow_cooker": "flat",
+          "pressure_cooker": "flat"
+        },
+        "hoursPerKg": {
+          "smoker": 2,
+          "oven": 1,
+          "rotisserie": 0.75,
+          "kamado": 2,
+          "charcoal_kettle": 2
+        },
+        "flatCookHours": {
+          "slow_cooker": 5,
+          "pressure_cooker": 0.5
+        },
+        "applianceTempC": {
+          "smoker": 110,
+          "oven": 150,
+          "rotisserie": 180,
+          "kamado": 110,
+          "charcoal_kettle": 110,
+          "slow_cooker": 90,
+          "pressure_cooker": 121
+        },
+        "internalTempC": {
+          "smoker": 74,
+          "oven": 74,
+          "rotisserie": 74,
+          "kamado": 74,
+          "charcoal_kettle": 74,
+          "slow_cooker": 82,
+          "pressure_cooker": 82
+        },
+        "restMinutes": 12,
+        "hasStall": {
+          "smoker": false,
+          "oven": false,
+          "rotisserie": false,
+          "kamado": false,
+          "charcoal_kettle": false,
+          "slow_cooker": false,
+          "pressure_cooker": false
+        },
+        "stallTempC": null,
+        "wrapTempC": {
+          "smoker": null,
+          "oven": null,
+          "rotisserie": null,
+          "kamado": null,
+          "charcoal_kettle": null,
+          "slow_cooker": null,
+          "pressure_cooker": null
+        },
+        "safeMinTempC": 74,
+        "rubs": [
+          "Lemon and herb: 2 tbsp olive oil, 1 tbsp each garlic powder, onion powder, dried thyme, salt, cracked black pepper. Apply under the skin as well as over it for maximum flavour.",
+          "BBQ dry rub: smoked paprika, brown sugar, garlic powder, onion powder, salt, black pepper, cayenne (2:1:1:1:1:1:0.25). Apply under the skin and all over. Let it sit 4+ hrs.",
+          "Cajun-style: smoked paprika, garlic powder, onion powder, dried oregano, dried thyme, cayenne, black pepper, white pepper, salt. Aggressive and flavourful."
+        ],
+        "woods": [
+          "Apple — mild, sweet smoke that doesn't overpower the chicken. Perfect for a first smoke or when serving to guests who don't like heavy smoke.",
+          "Cherry — lovely colour on the skin and fruity undertones. Great for whole birds.",
+          "Pecan — slightly richer than apple, nutty and mild. Best all-round wood for whole chicken."
+        ],
+        "tips": [
+          "Separate the skin from the breast meat with your fingers and rub seasoning directly onto the meat. This gets the flavour where it counts and helps the skin crisp independently.",
+          "Place a halved lemon, garlic head, and fresh herbs in the cavity. They steam from inside and perfume the meat without making it soggy.",
+          "For crispy skin, pat completely dry with paper towels before rubbing, then leave uncovered in the fridge for at least 4 hrs (overnight is better). Moisture is the enemy of crispy skin."
+        ]
+      },
+      {
+        "id": "chicken_thighs",
+        "name": "Chicken Thighs (bone-in)",
+        "methods": [
+          "smoker",
+          "oven",
+          "kamado",
+          "charcoal_kettle",
+          "slow_cooker",
+          "pressure_cooker"
+        ],
+        "timeMode": {
+          "smoker": "flat",
+          "oven": "flat",
+          "kamado": "flat",
+          "charcoal_kettle": "flat",
+          "slow_cooker": "flat",
+          "pressure_cooker": "flat"
+        },
+        "hoursPerKg": {},
+        "flatCookHours": {
+          "smoker": 1.5,
+          "oven": 0.875,
+          "kamado": 1.5,
+          "charcoal_kettle": 1.5,
+          "slow_cooker": 4,
+          "pressure_cooker": 0.33
+        },
+        "applianceTempC": {
+          "smoker": 110,
+          "oven": 150,
+          "kamado": 110,
+          "charcoal_kettle": 110,
+          "slow_cooker": 90,
+          "pressure_cooker": 121
+        },
+        "internalTempC": {
+          "smoker": 82,
+          "oven": 82,
+          "kamado": 82,
+          "charcoal_kettle": 82,
+          "slow_cooker": 82,
+          "pressure_cooker": 82
+        },
+        "restMinutes": 7,
+        "hasStall": {
+          "smoker": false,
+          "oven": false,
+          "kamado": false,
+          "charcoal_kettle": false,
+          "slow_cooker": false,
+          "pressure_cooker": false
+        },
+        "stallTempC": null,
+        "wrapTempC": {
+          "smoker": null,
+          "oven": null,
+          "kamado": null,
+          "charcoal_kettle": null,
+          "slow_cooker": null,
+          "pressure_cooker": null
+        },
+        "safeMinTempC": 74,
+        "rubs": [
+          "Garlic and herb: garlic powder, onion powder, dried thyme, smoked paprika, salt, cracked pepper (1:1:1:1:1:1). Apply under the skin. Chicken thighs can handle aggressive seasoning.",
+          "Spicy sweet: brown sugar, smoked paprika, garlic powder, cayenne, salt, black pepper, onion powder. The sugar caramelises on the skin beautifully.",
+          "Cajun: garlic powder, onion powder, smoked paprika, dried oregano, dried thyme, cayenne, white pepper, black pepper, salt. Authentic and punchy."
+        ],
+        "woods": [
+          "Apple — sweet, mild smoke. Default for chicken. Hard to go wrong.",
+          "Cherry — red colour on the skin and fruity smoke. Excellent with sweet rubs.",
+          "Pecan — nutty and mild. Works with any rub style on thighs."
+        ],
+        "tips": [
+          "Always cook thighs skin-side up. Never flip until you sear at the end. The fat renders down through the meat, keeping it moist.",
+          "Thighs are forgiving — they taste better at 82-85°C internal, well above the USDA 74°C minimum. The collagen converts and the texture improves. Don't be afraid to push them.",
+          "If skin isn't crispy enough, crank heat to 200°C+ or sear skin-side down on cast iron for 3-4 min at the end. Crispy skin is non-negotiable."
+        ]
+      },
+      {
+        "id": "spatchcock_chicken",
+        "name": "Spatchcock Chicken",
+        "methods": [
+          "smoker",
+          "oven",
+          "kamado",
+          "charcoal_kettle",
+          "wood_fire"
+        ],
+        "timeMode": {
+          "smoker": "flat",
+          "oven": "flat",
+          "kamado": "flat",
+          "charcoal_kettle": "flat",
+          "wood_fire": "flat"
+        },
+        "hoursPerKg": {},
+        "flatCookHours": {
+          "smoker": 2.5,
+          "oven": 1,
+          "kamado": 2.5,
+          "charcoal_kettle": 2.5,
+          "wood_fire": 0.75
+        },
+        "applianceTempC": {
+          "smoker": 120,
+          "oven": 200,
+          "kamado": 120,
+          "charcoal_kettle": 120,
+          "wood_fire": 260
+        },
+        "internalTempC": {
+          "smoker": 74,
+          "oven": 74,
+          "kamado": 74,
+          "charcoal_kettle": 74,
+          "wood_fire": 74
+        },
+        "restMinutes": 15,
+        "hasStall": {
+          "smoker": false,
+          "oven": false,
+          "kamado": false,
+          "charcoal_kettle": false,
+          "wood_fire": false
+        },
+        "stallTempC": null,
+        "wrapTempC": {
+          "smoker": null,
+          "oven": null,
+          "kamado": null,
+          "charcoal_kettle": null,
+          "wood_fire": null
+        },
+        "safeMinTempC": 74,
+        "rubs": [
+          "Under-skin herb butter: softened butter mixed with garlic, thyme, rosemary, lemon zest, salt, pepper. Apply directly under the breast and thigh skin.",
+          "All-over dry rub: smoked paprika, garlic powder, onion powder, dried herbs, salt, black pepper. Apply after spatchcocking, including under the skin.",
+          "Spicy citrus: lemon zest, garlic powder, cayenne, smoked paprika, oregano, salt, cracked pepper. The lemon brightens everything."
+        ],
+        "woods": [
+          "Apple — mild and sweet. Fast cook on spatchcock means you don't want heavy smoke. Apple is perfect.",
+          "Cherry — subtle fruitiness, great colour. One small chunk for a 45-minute cook.",
+          "Pecan — best if you want any noticeable smoke flavour. Still mild enough not to overwhelm."
+        ],
+        "tips": [
+          "Spatchcocking cuts cook time by 30–40% and ensures even cooking. The key is to flatten completely — lean hard on the breastbone until it pops flat.",
+          "Great trick: place a brick wrapped in foil on top while cooking to press the skin flat against the grates. Incredible skin and even browning.",
+          "Test doneness at the thickest part of the thigh — it's the last to cook. The breast will already be at safe temperature. Always probe the thigh."
+        ]
+      },
+      {
+        "id": "duck_breast",
+        "name": "Duck Breast",
+        "methods": [
+          "smoker",
+          "oven"
+        ],
+        "timeMode": {
+          "smoker": "flat",
+          "oven": "flat"
+        },
+        "hoursPerKg": {},
+        "flatCookHours": {
+          "smoker": 1.5,
+          "oven": 0.5
+        },
+        "applianceTempC": {
+          "smoker": 120,
+          "oven": 180
+        },
+        "internalTempC": {
+          "smoker": 68,
+          "oven": 68
+        },
+        "restMinutes": 10,
+        "hasStall": {
+          "smoker": false,
+          "oven": false
+        },
+        "stallTempC": null,
+        "wrapTempC": {
+          "smoker": null,
+          "oven": null
+        },
+        "safeMinTempC": 74,
+        "rubs": [
+          "Simple salt and pepper: coarse salt, cracked black pepper. Score the skin in a diamond pattern (don't cut into the meat), apply generously. Let it rest 30 min minimum.",
+          "Five spice and orange: five spice powder, orange zest, garlic powder, salt, cracked pepper. Asian-style, works beautifully with the rich duck fat.",
+          "Herb salt: fine salt, fresh thyme, rosemary, garlic (all blended). Apply an hour before cooking. Classic French approach."
+        ],
+        "woods": [
+          "Cherry — the classic wood for duck. Mild, fruity smoke that complements the rich meat without fighting it.",
+          "Apple — lighter than cherry, very clean. Good for those who want a delicate smoke accent.",
+          "Orange wood (if available) — citrus wood is outstanding with duck. Alternatively use a strip of orange zest on the coals."
+        ],
+        "tips": [
+          "Score the fat cap in a tight crosshatch pattern before cooking — this is what renders the fat and makes crispy skin. Don't cut into the meat underneath.",
+          "Start in a cold pan skin-side down, then apply heat. This renders the fat gradually instead of seizing up. Pour off excess fat as you go.",
+          "Pull at 57-60°C for medium (pink and juicy), or 65°C for medium-well. Well-done duck breast is a tragedy. Rest 5 min before slicing."
+        ]
+      },
+      {
+        "id": "quail_whole",
+        "name": "Quail (Whole)",
+        "methods": [
+          "smoker",
+          "oven"
+        ],
+        "timeMode": {
+          "smoker": "flat",
+          "oven": "flat"
+        },
+        "hoursPerKg": {},
+        "flatCookHours": {
+          "smoker": 1,
+          "oven": 0.5
+        },
+        "applianceTempC": {
+          "smoker": 130,
+          "oven": 200
+        },
+        "internalTempC": {
+          "smoker": 74,
+          "oven": 74
+        },
+        "restMinutes": 10,
+        "hasStall": {
+          "smoker": false,
+          "oven": false
+        },
+        "stallTempC": null,
+        "wrapTempC": {
+          "smoker": null,
+          "oven": null
+        },
+        "safeMinTempC": 74,
+        "rubs": [
+          "Herb butter: softened butter with garlic, thyme, salt, cracked pepper. Rub under the skin and all over. Quail is tiny — it absorbs flavour quickly.",
+          "Spiced rub: coriander, cumin, smoked paprika, garlic powder, cayenne, salt. Middle Eastern-influenced, pairs well with pomegranate glaze.",
+          "Simple citrus: lemon zest, olive oil, garlic powder, salt, cracked pepper. Light and fresh."
+        ],
+        "woods": [
+          "Apple — very mild smoke, perfect for the small and delicate quail. One small chunk is all you need.",
+          "Cherry — subtle colour and fruitiness. Better if you want any visible smoke ring.",
+          "No wood — high heat direct cooking with just charcoal is traditional for quail. The char is the flavour."
+        ],
+        "tips": [
+          "Quail cooks in 15-20 min at high heat — don't walk away. It can go from perfect to dry very quickly given the small size.",
+          "Spatchcock the quail (press flat) for faster, even cooking and better skin contact with the grate.",
+          "Marinate overnight if possible — the small bird absorbs marinade very efficiently and benefits enormously from it."
+        ]
+      },
+      {
+        "id": "turkey_crown",
+        "name": "Turkey Crown",
+        "methods": [
+          "smoker",
+          "oven",
+          "kamado",
+          "slow_cooker",
+          "pressure_cooker"
+        ],
+        "timeMode": {
+          "smoker": "per_kg",
+          "oven": "per_kg",
+          "kamado": "per_kg",
+          "slow_cooker": "flat",
+          "pressure_cooker": "flat"
+        },
+        "hoursPerKg": {
+          "smoker": 2.2,
+          "oven": 1.5,
+          "kamado": 2.2
+        },
+        "flatCookHours": {
+          "slow_cooker": 6,
+          "pressure_cooker": 0.75
+        },
+        "applianceTempC": {
+          "smoker": 120,
+          "oven": 170,
+          "kamado": 120,
+          "slow_cooker": 90,
+          "pressure_cooker": 121
+        },
+        "internalTempC": {
+          "smoker": 74,
+          "oven": 74,
+          "kamado": 74,
+          "slow_cooker": 74,
+          "pressure_cooker": 74
+        },
+        "restMinutes": 30,
+        "hasStall": {
+          "smoker": false,
+          "oven": false,
+          "kamado": false,
+          "slow_cooker": false,
+          "pressure_cooker": false
+        },
+        "stallTempC": null,
+        "wrapTempC": {
+          "smoker": null,
+          "oven": null,
+          "kamado": null,
+          "slow_cooker": null,
+          "pressure_cooker": null
+        },
+        "safeMinTempC": 74,
+        "rubs": [
+          "Herb butter under-skin: 100g softened butter with garlic, thyme, rosemary, sage, lemon zest, salt, pepper. Push under breast skin and massage in. Apply the night before.",
+          "Classic seasoning: smoked paprika, garlic powder, onion powder, dried herbs, salt, black pepper in olive oil. Coat all over and under skin.",
+          "Maple and herb glaze: maple syrup, Dijon mustard, garlic powder, dried thyme, salt. Brush on in the last 45 min for a lacquered, golden finish."
+        ],
+        "woods": [
+          "Apple — mild, sweet smoke for turkey. Traditional choice. Won't make the meat bitter like stronger woods can.",
+          "Cherry — a touch sweeter and gives a beautiful amber colour on the skin. Great for special occasions.",
+          "Pecan — richer than apple but still mild. Best for those who want noticeable smoke without heaviness."
+        ],
+        "tips": [
+          "Crown means no legs — it cooks much more evenly and faster than a whole bird. The breast is the only thing to worry about and it gets all the exposure.",
+          "Baste every 30-45 min with butter or juices if there's no lid. Tent loosely with foil if the skin is browning too fast before the inside is done.",
+          "Rest for at least 30 min tented under foil before carving. The crown shape makes for easy, generous slices."
+        ]
+      },
+      {
+        "id": "whole_turkey",
+        "name": "Whole Turkey",
+        "methods": [
+          "smoker",
+          "oven",
+          "kamado"
+        ],
+        "timeMode": {
+          "smoker": "per_kg",
+          "oven": "per_kg",
+          "kamado": "per_kg"
+        },
+        "hoursPerKg": {
+          "smoker": 2.5,
+          "oven": 1.5,
+          "kamado": 2.5
+        },
+        "flatCookHours": {},
+        "applianceTempC": {
+          "smoker": 110,
+          "oven": 160,
+          "kamado": 110
+        },
+        "internalTempC": {
+          "smoker": 74,
+          "oven": 74,
+          "kamado": 74
+        },
+        "restMinutes": 30,
+        "hasStall": {
+          "smoker": false,
+          "oven": false,
+          "kamado": false
+        },
+        "stallTempC": null,
+        "wrapTempC": {
+          "smoker": null,
+          "oven": null,
+          "kamado": null
+        },
+        "safeMinTempC": 74,
+        "rubs": [
+          "Dry brine: 1 tbsp salt per kg of turkey, rubbed all over including the cavity and under the breast skin. Refrigerate uncovered for 24-72 hrs. This is the single biggest upgrade you can make.",
+          "Herb butter: 200g softened butter with garlic, thyme, rosemary, sage, lemon, salt. Push under breast skin and rub all over. Apply the day before.",
+          "Smoked paprika oil: smoked paprika, garlic powder, onion powder, olive oil, salt, cracked pepper. Apply all over and under skin. Great colour and flavour."
+        ],
+        "woods": [
+          "Apple — the gold standard for whole turkey. Mild, sweet smoke that complements rather than dominates. Use 3-4 chunks over the first 2-3 hours.",
+          "Cherry — slightly richer than apple, gorgeous skin colour. Great for Christmas or Thanksgiving presentation.",
+          "Pecan — nutty, mild smoke. Best if you want a noticeable smoke flavour without anything harsh."
+        ],
+        "tips": [
+          "Spatchcock the turkey if at all possible (remove backbone and flatten). This cuts cook time nearly in half and produces much more even cooking — no dry breast waiting for the thighs to cook.",
+          "Always probe the thigh, not the breast. The thigh takes longest. Pull at 74°C in the thigh (breast will be 77-80°C by then).",
+          "Tent loosely with foil for the last hour if the skin is browning too fast. Remove the foil for the last 30 min for the final colour."
+        ]
+      },
+      {
+        "id": "whole_duck",
+        "name": "Whole Duck",
+        "methods": [
+          "smoker",
+          "oven"
+        ],
+        "timeMode": {
+          "smoker": "per_kg",
+          "oven": "per_kg"
+        },
+        "hoursPerKg": {
+          "smoker": 2.5,
+          "oven": 2
+        },
+        "flatCookHours": {},
+        "applianceTempC": {
+          "smoker": 110,
+          "oven": 160
+        },
+        "internalTempC": {
+          "smoker": 74,
+          "oven": 74
+        },
+        "restMinutes": 20,
+        "hasStall": {
+          "smoker": false,
+          "oven": false
+        },
+        "stallTempC": null,
+        "wrapTempC": {
+          "smoker": null,
+          "oven": null
+        },
+        "safeMinTempC": 74,
+        "rubs": [
+          "Five spice and salt: 1 tbsp five spice, 1 tbsp coarse salt, 1 tsp cracked pepper, 1 tsp garlic powder. Score skin deeply, rub all over. Rest 4+ hrs.",
+          "Orange and herb: orange zest, fresh thyme, garlic, coarse salt, cracked pepper, olive oil. Classic French roast duck flavour profile.",
+          "Hoisin and sesame: hoisin sauce (brushed as binder), sesame seeds, garlic powder, five spice, salt. Apply in last 45 min so hoisin doesn't burn."
+        ],
+        "woods": [
+          "Cherry — the definitive wood for duck. Fruity and mild, perfect counterpoint to the richness of duck fat.",
+          "Apple and cherry — light and sweet. Beautiful pale amber colour on the skin.",
+          "Orange wood (if available) — citrus trees give incredible smoke for duck. Worth seeking out."
+        ],
+        "tips": [
+          "Prick the duck all over with a fork (or skewer) before cooking — this helps the copious fat render out. Do this every 45 min during cooking.",
+          "Duck is very fatty — expect a significant amount of rendered fat in the drip tray. This is excellent cooking fat: save it for roast potatoes.",
+          "Cook to 82°C in the thigh for full rendering and crispy skin. Whole duck at medium-rare isn't really a thing — cook it properly."
+        ]
+      },
+      {
+        "id": "cornish_hen",
+        "name": "Cornish Hen",
+        "methods": [
+          "smoker",
+          "oven"
+        ],
+        "timeMode": {
+          "smoker": "flat",
+          "oven": "flat"
+        },
+        "hoursPerKg": {},
+        "flatCookHours": {
+          "smoker": 2,
+          "oven": 1
+        },
+        "applianceTempC": {
+          "smoker": 120,
+          "oven": 200
+        },
+        "internalTempC": {
+          "smoker": 74,
+          "oven": 74
+        },
+        "restMinutes": 15,
+        "hasStall": {
+          "smoker": false,
+          "oven": false
+        },
+        "stallTempC": null,
+        "wrapTempC": {
+          "smoker": null,
+          "oven": null
+        },
+        "safeMinTempC": 74,
+        "rubs": [
+          "Herb butter: softened butter with garlic, thyme, lemon zest, salt, pepper under and over the skin. Apply 4 hrs ahead.",
+          "Moroccan-inspired: ras el hanout (or mix of cumin, coriander, cinnamon, ginger, paprika), garlic powder, salt. Apply generously, rest overnight.",
+          "Simple spice: smoked paprika, garlic powder, onion powder, olive oil, salt, cracked pepper. Fast and effective."
+        ],
+        "woods": [
+          "Apple — very mild, sweet. All you need for a small bird.",
+          "Cherry — one small chunk, beautiful colour and fruitiness.",
+          "No wood if grilling high heat — the char is enough flavour for such a quick cook."
+        ],
+        "tips": [
+          "Cornish hens are small (500-700g) and cook quickly. Don't walk away — they go from perfect to dry fast at high heat.",
+          "One hen per person makes for a stunning presentation. Serve whole on the plate — everyone gets their own bird.",
+          "Spatchcock them (split the backbone with kitchen shears and flatten) for faster, more even cooking and incredible crispy skin all over."
+        ]
+      },
+      {
+        "id": "chicken_wings",
+        "name": "Chicken Wings",
+        "methods": [
+          "smoker",
+          "oven",
+          "kamado"
+        ],
+        "timeMode": {
+          "smoker": "flat",
+          "oven": "flat",
+          "kamado": "flat"
+        },
+        "hoursPerKg": {},
+        "flatCookHours": {
+          "smoker": 1.75,
+          "oven": 0.875,
+          "kamado": 1.75
+        },
+        "applianceTempC": {
+          "smoker": 110,
+          "oven": 170,
+          "kamado": 110
+        },
+        "internalTempC": {
+          "smoker": 87,
+          "oven": 87,
+          "kamado": 87
+        },
+        "restMinutes": 5,
+        "hasStall": {
+          "smoker": false,
+          "oven": false,
+          "kamado": false
+        },
+        "stallTempC": null,
+        "wrapTempC": {
+          "smoker": null,
+          "oven": null,
+          "kamado": null
+        },
+        "safeMinTempC": 74,
+        "rubs": [
+          "Classic BBQ dry rub: smoked paprika, garlic powder, onion powder, brown sugar, salt, black pepper, cayenne. Toss wings in oil then dry rub. Rest 1+ hr.",
+          "Lemon pepper: lemon zest (dried or fresh), coarse cracked black pepper, garlic powder, salt. Toss in melted butter after cooking for the authentic diner-style finish.",
+          "Cajun: smoked paprika, garlic powder, onion powder, dried thyme, oregano, cayenne, white pepper, black pepper, salt. Bold and spicy."
+        ],
+        "woods": [
+          "Apple — classic for wings. Light smoke, doesn't overpower. Great with any rub.",
+          "Cherry — slightly sweeter with great colour. Works well with sweet rubs and glazes.",
+          "Pecan — a step up in smoke intensity. Good if you like noticeable smoke on your wings."
+        ],
+        "tips": [
+          "Pat wings completely dry with paper towels before seasoning. Dry wings = crispy skin. Wet wings steam and go rubbery.",
+          "Baking powder trick: toss in 1 tsp baking powder per 500g of wings with the rub. This raises the pH and dramatically improves crisping. It's the secret to restaurant-quality wings.",
+          "Finish over direct high heat for 5-10 min to blister and crisp the skin after the smoke. Or crank the heat to 200°C for the last 15 min."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "lamb",
+    "name": "Lamb",
+    "cuts": [
+      {
+        "id": "lamb_shoulder",
+        "name": "Lamb Shoulder (bone-in)",
+        "methods": [
+          "smoker",
+          "oven",
+          "kamado",
+          "charcoal_kettle",
+          "slow_cooker",
+          "pressure_cooker"
+        ],
+        "timeMode": {
+          "smoker": "per_kg",
+          "oven": "per_kg",
+          "kamado": "per_kg",
+          "charcoal_kettle": "per_kg",
+          "slow_cooker": "per_kg",
+          "pressure_cooker": "flat"
+        },
+        "hoursPerKg": {
+          "smoker": 3.85,
+          "oven": 2.4,
+          "kamado": 3.85,
+          "charcoal_kettle": 3.85,
+          "slow_cooker": 1.4
+        },
+        "flatCookHours": {
+          "pressure_cooker": 1
+        },
+        "applianceTempC": {
+          "smoker": 110,
+          "oven": 150,
+          "kamado": 110,
+          "charcoal_kettle": 110,
+          "slow_cooker": 90,
+          "pressure_cooker": 121
+        },
+        "internalTempC": {
+          "smoker": 92,
+          "oven": 92,
+          "kamado": 92,
+          "charcoal_kettle": 92,
+          "slow_cooker": 90,
+          "pressure_cooker": 90
+        },
+        "restMinutes": 50,
+        "hasStall": {
+          "smoker": true,
+          "oven": false,
+          "kamado": true,
+          "charcoal_kettle": true,
+          "slow_cooker": false,
+          "pressure_cooker": false
+        },
+        "stallTempC": 70,
+        "wrapTempC": {
+          "smoker": 72,
+          "oven": null,
+          "kamado": 72,
+          "charcoal_kettle": 72,
+          "slow_cooker": null,
+          "pressure_cooker": null
+        },
+        "safeMinTempC": 63,
+        "rubs": [
+          "Rosemary and garlic: 4 cloves garlic (mashed), fresh rosemary (chopped), olive oil, coarse salt, cracked black pepper. Stab deep into the shoulder with a knife and stuff garlic + rosemary into the slits.",
+          "Moroccan spice: cumin, coriander, smoked paprika, cinnamon, garlic powder, cayenne, salt, olive oil. Exotic and aromatic — pairs with couscous and pomegranate.",
+          "Simple SPG: coarse salt, black pepper, garlic powder, applied the night before. Sometimes the classic approach is all you need."
+        ],
+        "woods": [
+          "Oak — medium smoke for lamb, doesn't overpower the natural gaminess. 2 chunks over the first 2 hours.",
+          "Cherry — fruity and mild. Gives a beautiful colour and subtle smoke.",
+          "Rosemary sprigs directly on the coals — a classic Mediterranean touch. Not a wood chunk, but adds incredible aromatic smoke."
+        ],
+        "tips": [
+          "Lamb shoulder stalls just like pork at ~70°C — wrap in butcher paper and push through. Cook to 90°C for pulling.",
+          "Stab the shoulder all over with a paring knife and push slivers of garlic and sprigs of rosemary deep into the meat. It perfumes from the inside out.",
+          "Rest for at least 45 min tented under foil. The collagen in the shoulder needs time to settle. It pulls apart beautifully after a proper rest."
+        ]
+      },
+      {
+        "id": "leg_of_lamb",
+        "name": "Leg of Lamb",
+        "methods": [
+          "smoker",
+          "oven",
+          "rotisserie",
+          "kamado",
+          "charcoal_kettle",
+          "slow_cooker",
+          "pressure_cooker"
+        ],
+        "timeMode": {
+          "smoker": "per_kg",
+          "oven": "per_kg",
+          "rotisserie": "per_kg",
+          "kamado": "per_kg",
+          "charcoal_kettle": "per_kg",
+          "slow_cooker": "per_kg",
+          "pressure_cooker": "flat"
+        },
+        "hoursPerKg": {
+          "smoker": 2.4,
+          "oven": 1.9,
+          "rotisserie": 1.55,
+          "kamado": 2.4,
+          "charcoal_kettle": 2.4,
+          "slow_cooker": 1.2
+        },
+        "flatCookHours": {
+          "pressure_cooker": 1
+        },
+        "applianceTempC": {
+          "smoker": 110,
+          "oven": 150,
+          "rotisserie": 180,
+          "kamado": 110,
+          "charcoal_kettle": 110,
+          "slow_cooker": 90,
+          "pressure_cooker": 121
+        },
+        "internalTempC": {
+          "smoker": 57,
+          "oven": 57,
+          "rotisserie": 57,
+          "kamado": 57,
+          "charcoal_kettle": 57,
+          "slow_cooker": 90,
+          "pressure_cooker": 90
+        },
+        "restMinutes": 25,
+        "hasStall": {
+          "smoker": false,
+          "oven": false,
+          "rotisserie": false,
+          "kamado": false,
+          "charcoal_kettle": false,
+          "slow_cooker": false,
+          "pressure_cooker": false
+        },
+        "stallTempC": null,
+        "wrapTempC": {
+          "smoker": null,
+          "oven": null,
+          "rotisserie": null,
+          "kamado": null,
+          "charcoal_kettle": null,
+          "slow_cooker": null,
+          "pressure_cooker": null
+        },
+        "safeMinTempC": 63,
+        "rubs": [
+          "Garlic and rosemary: whole cloves of garlic and fresh rosemary pushed into deep incisions all over the leg. Coat surface with olive oil, salt, cracked black pepper.",
+          "Herb paste: fresh rosemary, thyme, garlic, lemon zest, olive oil, salt, cracked pepper — blended to a paste and slathered all over. Apply the night before.",
+          "Middle Eastern style: cumin, coriander, sumac, garlic powder, smoked paprika, olive oil, salt. Apply thick, rest overnight. Serve with flatbread and yoghurt."
+        ],
+        "woods": [
+          "Oak — the classic for leg of lamb. Complements without overpowering.",
+          "Cherry — mild smoke and a pretty colour. Works well with herb-based rubs.",
+          "Olive wood (if available) — Mediterranean wood for a Mediterranean cut. Fantastic pairing with herb-based seasonings."
+        ],
+        "tips": [
+          "A whole leg has two very different muscles: the thicker sirloin end and the smaller shank end. The shank cooks faster. Use foil on the shank tip if it's getting too dark.",
+          "For slicing, cook to 60-65°C internal (medium to medium-well). For pulling, push to 88-90°C until the leg falls apart.",
+          "Let it rest a full 20-30 minutes. A leg of lamb doesn't rest fast. The juices run everywhere if you cut it too soon."
+        ]
+      },
+      {
+        "id": "lamb_ribs",
+        "name": "Lamb Ribs",
+        "methods": [
+          "smoker",
+          "oven"
+        ],
+        "timeMode": {
+          "smoker": "flat",
+          "oven": "flat"
+        },
+        "hoursPerKg": {},
+        "flatCookHours": {
+          "smoker": 3.5,
+          "oven": 3
+        },
+        "applianceTempC": {
+          "smoker": 110,
+          "oven": 150
+        },
+        "internalTempC": {
+          "smoker": 91,
+          "oven": 91
+        },
+        "restMinutes": 25,
+        "hasStall": {
+          "smoker": false,
+          "oven": false
+        },
+        "stallTempC": null,
+        "wrapTempC": {
+          "smoker": null,
+          "oven": null
+        },
+        "safeMinTempC": 63,
+        "rubs": [
+          "Middle Eastern: cumin, coriander, cinnamon, smoked paprika, garlic powder, salt, olive oil. Apply 4 hrs ahead. Serve with tzatziki.",
+          "Sweet and spicy: brown sugar, smoked paprika, garlic powder, cumin, cayenne, salt, cracked black pepper. Great bark on small ribs.",
+          "Simple herb salt: coarse salt, dried rosemary, garlic powder, cracked pepper. Press firmly into the meat. Traditional and timeless."
+        ],
+        "woods": [
+          "Cherry — fruity and mild for small, delicate lamb ribs. Perfect match.",
+          "Apple — lighter option, keeps the lamb flavour front and centre.",
+          "Oak — if you want more pronounced smoke. Keep to one small chunk only for lamb ribs."
+        ],
+        "tips": [
+          "Lamb ribs are fatty and cook quickly — they're more like pork ribs than beef. They benefit from high heat to render the fat and crisp the exterior.",
+          "Trim excess fat from the surface but not the fat between the bones — that's where the flavour is.",
+          "Score the fat cap lightly and season aggressively. Lamb ribs can handle big flavours — don't hold back."
+        ]
+      },
+      {
+        "id": "lamb_rack",
+        "name": "Lamb Rack",
+        "methods": [
+          "smoker",
+          "oven",
+          "kamado",
+          "charcoal_kettle",
+          "wood_fire"
+        ],
+        "timeMode": {
+          "smoker": "flat",
+          "oven": "flat",
+          "kamado": "flat",
+          "charcoal_kettle": "flat",
+          "wood_fire": "flat"
+        },
+        "hoursPerKg": {},
+        "flatCookHours": {
+          "smoker": 1.5,
+          "oven": 0.75,
+          "kamado": 1.5,
+          "charcoal_kettle": 1.5,
+          "wood_fire": 0.5
+        },
+        "applianceTempC": {
+          "smoker": 120,
+          "oven": 200,
+          "kamado": 120,
+          "charcoal_kettle": 120,
+          "wood_fire": 300
+        },
+        "internalTempC": {
+          "smoker": 63,
+          "oven": 63,
+          "kamado": 63,
+          "charcoal_kettle": 63,
+          "wood_fire": 63
+        },
+        "restMinutes": 15,
+        "hasStall": {
+          "smoker": false,
+          "oven": false,
+          "kamado": false,
+          "charcoal_kettle": false,
+          "wood_fire": false
+        },
+        "stallTempC": null,
+        "wrapTempC": {
+          "smoker": null,
+          "oven": null,
+          "kamado": null,
+          "charcoal_kettle": null,
+          "wood_fire": null
+        },
+        "safeMinTempC": 63,
+        "rubs": [
+          "Dijon herb crust: coat with Dijon mustard, then press fresh breadcrumbs mixed with garlic, rosemary, thyme, parsley, salt, pepper onto the meat side. Apply right before cooking.",
+          "Simple elegance: coarse salt and cracked black pepper only. Lamb rack is premium — sometimes the best thing you can do is let the meat speak.",
+          "Moroccan spice: ras el hanout or cumin, coriander, paprika, cinnamon, garlic powder, olive oil, salt. Rest 4+ hours before cooking."
+        ],
+        "woods": [
+          "Cherry — very light touch of smoke for a premium cut. One tiny chip is all you need for a rack.",
+          "Apple — even milder. If you want the faintest hint of smoke without compromising the delicate flavour.",
+          "No wood for oven or kamado high-heat cooks — focus on the sear and the herb crust."
+        ],
+        "tips": [
+          "French the rib bones (clean them) before cooking. It looks spectacular and the clean bones don't burn. Use a paper towel to grip and scrape them clean.",
+          "Rest for 10 minutes minimum before carving. Slice between bones into individual cutlets. Serve 3-4 cutlets per person.",
+          "Sear hard before a low cook (reverse sear) or sear after. For a rack, reverse sear gives more control — low heat to 48°C internal, then a fast hot sear for the crust."
+        ]
+      },
+      {
+        "id": "lamb_leg_butterflied",
+        "name": "Lamb Leg (Butterflied)",
+        "methods": [
+          "smoker",
+          "oven"
+        ],
+        "timeMode": {
+          "smoker": "flat",
+          "oven": "flat"
+        },
+        "hoursPerKg": {},
+        "flatCookHours": {
+          "smoker": 2.5,
+          "oven": 1
+        },
+        "applianceTempC": {
+          "smoker": 120,
+          "oven": 220
+        },
+        "internalTempC": {
+          "smoker": 65,
+          "oven": 65
+        },
+        "restMinutes": 20,
+        "hasStall": {
+          "smoker": false,
+          "oven": false
+        },
+        "stallTempC": null,
+        "wrapTempC": {
+          "smoker": null,
+          "oven": null
+        },
+        "safeMinTempC": 63,
+        "rubs": [
+          "Garlic and herb marinade: olive oil, garlic (crushed), rosemary, thyme, lemon juice, salt, pepper. Marinate 4-12 hrs. Butterfly opens up the leg for this to penetrate.",
+          "Harissa paste: spread harissa over the whole surface, add garlic powder, cumin, olive oil. North African-inspired. Incredible on the BBQ.",
+          "Simple SPG with lemon: coarse salt, cracked pepper, garlic powder, lemon zest. Apply 2 hrs before cooking."
+        ],
+        "woods": [
+          "Oak — medium smoke for butterflied lamb. Good match.",
+          "Cherry — mild and fruity. Doesn't fight with the herb-heavy rubs.",
+          "Rosemary on coals — throw a sprig of fresh rosemary directly on hot charcoal. Intense aromatic smoke for 30-60 seconds that adds incredible flavour."
+        ],
+        "tips": [
+          "Butterflied leg is uneven — pin it out flat with metal skewers or tie it flat with butcher's twine. Even surface = even cooking.",
+          "Great for direct heat BBQ because it's thinner than a whole leg. Cook over medium-high heat to 62-65°C internal for medium.",
+          "Score the thicker parts with shallow cuts — this helps them cook more evenly with the thinner sections."
+        ]
+      },
+      {
+        "id": "lamb_neck_chops",
+        "name": "Lamb Neck Chops (Braised)",
+        "methods": [
+          "oven",
+          "slow_cooker",
+          "pressure_cooker"
+        ],
+        "timeMode": {
+          "oven": "flat",
+          "slow_cooker": "flat",
+          "pressure_cooker": "flat"
+        },
+        "hoursPerKg": {},
+        "flatCookHours": {
+          "oven": 2.5,
+          "slow_cooker": 6,
+          "pressure_cooker": 0.5
+        },
+        "applianceTempC": {
+          "oven": 160,
+          "slow_cooker": 90,
+          "pressure_cooker": 121
+        },
+        "internalTempC": {
+          "oven": 85,
+          "slow_cooker": 90,
+          "pressure_cooker": 90
+        },
+        "restMinutes": 10,
+        "hasStall": {
+          "oven": false,
+          "slow_cooker": false,
+          "pressure_cooker": false
+        },
+        "stallTempC": null,
+        "wrapTempC": {
+          "oven": null,
+          "slow_cooker": null,
+          "pressure_cooker": null
+        },
+        "safeMinTempC": 63,
+        "rubs": [
+          "Middle Eastern spice: cumin, coriander, smoked paprika, cinnamon, garlic powder, salt. Apply 4+ hrs ahead.",
+          "Simple herb: rosemary, garlic, olive oil, salt, cracked pepper. The neck chop is full of flavour — don't bury it.",
+          "Red wine and garlic marinade: red wine, garlic, thyme, bay leaf, olive oil, salt, pepper — 4-8 hrs. Especially good for slow cooker neck chops."
+        ],
+        "woods": [
+          "Cherry — mild and fruity, pairs with the rich neck meat.",
+          "Apple — even lighter. Lets the lamb flavour come through.",
+          "Oak — small amount for more punch if using bold rubs."
+        ],
+        "tips": [
+          "Neck chops have tons of collagen and are best cooked low and slow until the meat falls off the bone — or fast over direct high heat like a regular chop. Avoid the in-between.",
+          "Serve with the bone in — the marrow melts into the sauce during a slow cook and makes it extraordinary.",
+          "Great braised: quick sear, then low and slow in stock with tomatoes, spices, and herbs. The connective tissue becomes silky and the sauce is incredible."
+        ]
+      },
+      {
+        "id": "lamb_shoulder_rolled",
+        "name": "Lamb Shoulder (Rolled & Boneless)",
+        "methods": [
+          "smoker",
+          "oven",
+          "kamado",
+          "slow_cooker",
+          "pressure_cooker"
+        ],
+        "timeMode": {
+          "smoker": "per_kg",
+          "oven": "per_kg",
+          "kamado": "per_kg",
+          "slow_cooker": "per_kg",
+          "pressure_cooker": "flat"
+        },
+        "hoursPerKg": {
+          "smoker": 3.5,
+          "oven": 2.2,
+          "kamado": 3.5,
+          "slow_cooker": 1.4
+        },
+        "flatCookHours": {
+          "pressure_cooker": 1
+        },
+        "applianceTempC": {
+          "smoker": 110,
+          "oven": 150,
+          "kamado": 110,
+          "slow_cooker": 90,
+          "pressure_cooker": 121
+        },
+        "internalTempC": {
+          "smoker": 92,
+          "oven": 90,
+          "kamado": 92,
+          "slow_cooker": 90,
+          "pressure_cooker": 90
+        },
+        "restMinutes": 45,
+        "hasStall": {
+          "smoker": true,
+          "oven": false,
+          "kamado": true,
+          "slow_cooker": false,
+          "pressure_cooker": false
+        },
+        "stallTempC": 70,
+        "wrapTempC": {
+          "smoker": 72,
+          "oven": null,
+          "kamado": 72,
+          "slow_cooker": null,
+          "pressure_cooker": null
+        },
+        "safeMinTempC": 63,
+        "rubs": [
+          "Herb and garlic stuffed: unroll the shoulder, spread with a garlic and herb paste (garlic, rosemary, thyme, parsley, olive oil, salt), re-roll and tie. The seasoning cooks from inside out.",
+          "Simple SPG: coarse salt, black pepper, garlic powder applied to the outside. The herbs inside do the real work.",
+          "Moroccan paste: harissa, garlic, cumin, coriander, olive oil, salt spread inside the roll before tying. Serve with couscous and yoghurt."
+        ],
+        "woods": [
+          "Oak — medium smoke for the long cook. Best choice for rolled shoulder.",
+          "Cherry — mild and beautiful colour on the outside.",
+          "Apple — very mild, for those who prefer a subtle smoke background."
+        ],
+        "tips": [
+          "The rolled and tied format cooks more evenly than a flat shoulder. Tie tightly every 3-4 cm with butcher's twine before cooking.",
+          "Cook to 88-90°C internal for pull-apart tenderness. The herbs and garlic inside perfume the meat throughout the cook.",
+          "Remove the twine before pulling or slicing. If pulling, the rolled shape comes apart perfectly at the herb layers."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "fish",
+    "name": "Fish & Seafood",
+    "cuts": [
+      {
+        "id": "salmon_fillet",
+        "name": "Salmon Fillet",
+        "cutCategory": "fish",
+        "methods": [
+          "smoker"
+        ],
+        "timeMode": {
+          "smoker": "flat"
+        },
+        "hoursPerKg": {},
+        "flatCookHours": {
+          "smoker": 1.25
+        },
+        "applianceTempC": {
+          "smoker": 72
+        },
+        "internalTempC": {
+          "smoker": 63
+        },
+        "restMinutes": 3,
+        "hasStall": {
+          "smoker": false
+        },
+        "stallTempC": null,
+        "wrapTempC": {
+          "smoker": null
+        },
+        "safeMinTempC": 63,
+        "rubs": [
+          "Brown sugar and salt cure: 2:1 brown sugar to coarse salt with a pinch of black pepper and dill. Apply 2-4 hrs before smoking — this is a proper cure that firms the flesh.",
+          "Lemon and dill: olive oil, lemon zest, fresh dill (or dried), garlic powder, salt, cracked pepper. Apply 30 min before cooking.",
+          "Chilli and lime: chilli flakes, lime zest, garlic powder, smoked paprika, olive oil, salt. Apply right before cooking. Bright and spicy."
+        ],
+        "woods": [
+          "Alder — the traditional wood for salmon. Mild, slightly sweet, subtle. This is what they use in Pacific Northwest smoking traditions.",
+          "Apple — similar to alder, perhaps slightly sweeter. Widely available and works perfectly.",
+          "Cherry — a step up in intensity with beautiful colour. Good for thicker fillets."
+        ],
+        "tips": [
+          "Leave the skin on while cooking — it protects the flesh and comes off easily after. The skin side goes DOWN on the rack.",
+          "Pull at 55-60°C for just-cooked and silky, or 63°C for firmer/flakier texture. Don't go above 65°C — dry salmon is a waste.",
+          "The white stuff (albumin) that seeps out as salmon cooks is perfectly normal. If you want to minimise it, brine the salmon (3% salt solution) for 30 min before smoking."
+        ]
+      },
+      {
+        "id": "whole_trout",
+        "name": "Whole Trout",
+        "cutCategory": "fish",
+        "methods": [
+          "smoker"
+        ],
+        "timeMode": {
+          "smoker": "flat"
+        },
+        "hoursPerKg": {},
+        "flatCookHours": {
+          "smoker": 1.75
+        },
+        "applianceTempC": {
+          "smoker": 75
+        },
+        "internalTempC": {
+          "smoker": 64
+        },
+        "restMinutes": 3,
+        "hasStall": {
+          "smoker": false
+        },
+        "stallTempC": null,
+        "wrapTempC": {
+          "smoker": null
+        },
+        "safeMinTempC": 63,
+        "rubs": [
+          "Lemon and herb: lemon slices, fresh dill and parsley stuffed in the cavity, olive oil, salt and cracked pepper on the outside.",
+          "Garlic butter: softened butter with garlic, chives, parsley, salt. Stuff in the cavity and rub on the outside skin.",
+          "Simple salt and pepper: coarse salt and cracked black pepper on the skin. Score the skin 3-4 times on each side. Let the trout flavour speak."
+        ],
+        "woods": [
+          "Alder — perfect for trout. Traditional freshwater fish wood.",
+          "Apple — light and sweet. Excellent alternative to alder.",
+          "Cherry — slightly more intense, still mild enough for delicate trout."
+        ],
+        "tips": [
+          "Score the skin on both sides 3-4 times diagonally before seasoning. This helps heat penetrate and prevents the fish from curling.",
+          "Stuff the cavity generously — this is where most of the flavour from aromatics comes from on a whole fish.",
+          "Test doneness by pressing behind the dorsal fin — the flesh should flake easily and separate from the bone. Or probe the thickest part of the back; 60°C is done."
+        ]
+      },
+      {
+        "id": "mackerel_fillet",
+        "name": "Mackerel Fillet",
+        "cutCategory": "fish",
+        "methods": [
+          "smoker"
+        ],
+        "timeMode": {
+          "smoker": "flat"
+        },
+        "hoursPerKg": {},
+        "flatCookHours": {
+          "smoker": 1.5
+        },
+        "applianceTempC": {
+          "smoker": 75
+        },
+        "internalTempC": {
+          "smoker": 65
+        },
+        "restMinutes": 3,
+        "hasStall": {
+          "smoker": false
+        },
+        "stallTempC": null,
+        "wrapTempC": {
+          "smoker": null
+        },
+        "safeMinTempC": 63,
+        "rubs": [
+          "Lemon and pepper: lemon zest, coarse cracked black pepper, salt. Simple and perfect for oily mackerel.",
+          "Japanese-style: soy sauce brushed on, sesame seeds, ginger powder, a pinch of sugar. Apply 20 min before cooking.",
+          "Herb salt: coarse salt, dried thyme, dried oregano, garlic powder, cracked pepper. Press into the flesh side."
+        ],
+        "woods": [
+          "Apple — light, sweet smoke for the rich, oily mackerel. Balance is key — don't overpower.",
+          "Cherry — subtle fruitiness. Works with the natural sweetness of the fish.",
+          "No wood for hot pan sear — mackerel is oily enough that direct heat char is the flavour."
+        ],
+        "tips": [
+          "Mackerel is oily and strong-flavoured — it can handle bold seasoning. Don't be shy with the salt.",
+          "Score the skin deeply on the skin side so it doesn't buckle and curl when it hits heat. 3-4 diagonal cuts.",
+          "Mackerel cooks very fast — 3-4 minutes per side at medium heat is all it needs. Don't walk away."
+        ]
+      },
+      {
+        "id": "swordfish_steak",
+        "name": "Swordfish Steak",
+        "cutCategory": "fish",
+        "methods": [
+          "smoker"
+        ],
+        "timeMode": {
+          "smoker": "flat"
+        },
+        "hoursPerKg": {},
+        "flatCookHours": {
+          "smoker": 1.25
+        },
+        "applianceTempC": {
+          "smoker": 75
+        },
+        "internalTempC": {
+          "smoker": 64
+        },
+        "restMinutes": 3,
+        "hasStall": {
+          "smoker": false
+        },
+        "stallTempC": null,
+        "wrapTempC": {
+          "smoker": null
+        },
+        "safeMinTempC": 63,
+        "rubs": [
+          "Mediterranean: olive oil, garlic, lemon zest, dried oregano, salt, cracked pepper. Apply 30 min ahead.",
+          "Spicy herb: olive oil, garlic powder, smoked paprika, cayenne, parsley, salt. Brush on right before cooking.",
+          "Simple salt and pepper: just coarse salt and cracked pepper 45 min before. Swordfish has great flavour of its own."
+        ],
+        "woods": [
+          "Mesquite — small amount for a quick meaty fish. Bold smoke for a bold fish.",
+          "Oak — medium smoke, keeps it from going too intense.",
+          "Cherry — lighter option if you want just a hint of smoke on the swordfish."
+        ],
+        "tips": [
+          "Swordfish dries out quickly — it's a dense, meaty fish but unforgiving if overcooked. Pull at 57-60°C. Still slightly translucent in the centre is perfect.",
+          "A marinade of olive oil, garlic, lemon, and herbs for 30-60 min adds moisture and flavour protection during the hot, fast cook.",
+          "Swordfish steaks are thick enough to cook like steak. Sear 3-4 min each side on high heat, rest 2 minutes."
+        ]
+      },
+      {
+        "id": "tuna_steak",
+        "name": "Tuna Steak",
+        "cutCategory": "fish",
+        "methods": [
+          "smoker"
+        ],
+        "timeMode": {
+          "smoker": "flat"
+        },
+        "hoursPerKg": {},
+        "flatCookHours": {
+          "smoker": 1
+        },
+        "applianceTempC": {
+          "smoker": 75
+        },
+        "internalTempC": {
+          "smoker": 63
+        },
+        "restMinutes": 3,
+        "hasStall": {
+          "smoker": false
+        },
+        "stallTempC": null,
+        "wrapTempC": {
+          "smoker": null
+        },
+        "safeMinTempC": 63,
+        "rubs": [
+          "Sesame crust: white and black sesame seeds, coarse salt, cracked pepper. Roll the tuna in the mix and press in firmly. Quick sear to keep it rare in the centre.",
+          "Spicy pepper: coarse cracked black pepper, sea salt, garlic powder, chilli flakes. Press firmly into all surfaces.",
+          "Soy and ginger: brush with soy sauce and dust with ginger powder, white pepper, sesame seeds before searing."
+        ],
+        "woods": [
+          "No wood for seared tuna — this is a quick, hot cook. Smoke would overwhelm.",
+          "Light oak — only if you want a very quick smoke at high heat for sashimi-grade tuna (optional).",
+          "Charcoal char IS the flavour here — keep it focused on the sear."
+        ],
+        "tips": [
+          "Tuna steak should be served rare in the centre — pull at 43-48°C internal. Sear for 90 seconds per side maximum on a screaming-hot surface.",
+          "Get your cooking surface as hot as possible. Cast iron, plancha, or direct charcoal. The goal is maximum outside colour with minimal heat penetration.",
+          "Let the tuna come to room temperature (15-20 min) before searing. Cold centre = more overcooked outside by the time the middle is reached."
+        ]
+      },
+      {
+        "id": "whole_snapper",
+        "name": "Whole Snapper",
+        "cutCategory": "fish",
+        "methods": [
+          "smoker",
+          "kamado",
+          "wood_fire"
+        ],
+        "timeMode": {
+          "smoker": "flat",
+          "kamado": "flat",
+          "wood_fire": "flat"
+        },
+        "hoursPerKg": {},
+        "flatCookHours": {
+          "smoker": 2,
+          "kamado": 2,
+          "wood_fire": 0.35
+        },
+        "applianceTempC": {
+          "smoker": 75,
+          "kamado": 75,
+          "wood_fire": 280
+        },
+        "internalTempC": {
+          "smoker": 64,
+          "kamado": 64,
+          "wood_fire": 63
+        },
+        "restMinutes": 3,
+        "hasStall": {
+          "smoker": false,
+          "kamado": false,
+          "wood_fire": false
+        },
+        "stallTempC": null,
+        "wrapTempC": {
+          "smoker": null,
+          "kamado": null,
+          "wood_fire": null
+        },
+        "safeMinTempC": 63,
+        "rubs": [
+          "Thai-style: lemongrass (minced), garlic, chilli, lime zest, fish sauce, coriander — stuffed in the cavity and scored flesh. Whole fish absorbs aromatics beautifully.",
+          "Mediterranean: lemon slices, garlic, fresh thyme and parsley in the cavity, olive oil, salt, pepper on the outside.",
+          "Chilli and garlic: chilli flakes, garlic powder, olive oil, lemon juice, salt, cracked pepper. Apply all over the scored skin."
+        ],
+        "woods": [
+          "Alder — classic fish wood, especially for whole fish.",
+          "Apple — sweet and light, perfect for snapper.",
+          "No wood if BBQ-grilling directly — the char is enough."
+        ],
+        "tips": [
+          "Score the flesh deeply on both sides — 3-4 diagonal cuts down to the bone. Stuff aromatics into the slits and the cavity.",
+          "Cook on a well-oiled surface or use a fish basket. Whole fish sticks to the grate if you try to flip too early — wait until it releases naturally.",
+          "Test doneness by pushing behind the dorsal fin — the flesh should pull away from the spine cleanly. A probe in the thickest part should read 60°C."
+        ]
+      },
+      {
+        "id": "prawns",
+        "name": "Prawns / Shrimp",
+        "cutCategory": "fish",
+        "methods": [
+          "smoker",
+          "oven",
+          "wood_fire"
+        ],
+        "timeMode": {
+          "smoker": "flat",
+          "oven": "flat",
+          "wood_fire": "flat"
+        },
+        "hoursPerKg": {},
+        "flatCookHours": {
+          "smoker": 0.33,
+          "oven": 0.25,
+          "wood_fire": 0.2
+        },
+        "applianceTempC": {
+          "smoker": 120,
+          "oven": 200,
+          "wood_fire": 280
+        },
+        "internalTempC": {
+          "smoker": 65,
+          "oven": 65,
+          "wood_fire": 65
+        },
+        "restMinutes": 0,
+        "hasStall": {
+          "smoker": false,
+          "oven": false,
+          "wood_fire": false
+        },
+        "stallTempC": null,
+        "wrapTempC": {
+          "smoker": null,
+          "oven": null,
+          "wood_fire": null
+        },
+        "safeMinTempC": 65,
+        "rubs": [
+          "Garlic butter: melted butter, garlic (minced or powder), parsley, salt, lemon zest. Brush on generously before and during cooking.",
+          "Cajun: smoked paprika, garlic powder, onion powder, cayenne, dried thyme, salt, cracked pepper. Toss prawns in oil then the spice mix.",
+          "Chilli and lime: chilli flakes, lime zest, garlic powder, olive oil, salt. Toss and rest 20 min maximum — acid in lime starts to cook the prawn."
+        ],
+        "woods": [
+          "Apple — the only wood worth using for seafood. Very light application.",
+          "Cherry — a hint of fruitiness. Better for cold smoking or very brief exposure.",
+          "No wood for direct grilling — charcoal char is perfect for prawns."
+        ],
+        "tips": [
+          "Don't overcook prawns — they go from perfect to rubbery in under 60 seconds. They're done when they turn pink and curl slightly. Pull off heat immediately.",
+          "Leave the shells on during cooking — they protect the flesh and add flavour. Crack them at the table.",
+          "Thread on skewers (or use a skewer through head AND tail) to keep them straight and easy to flip."
+        ]
+      },
+      {
+        "id": "barramundi_fillet",
+        "name": "Barramundi Fillet",
+        "cutCategory": "fish",
+        "methods": [
+          "smoker",
+          "oven"
+        ],
+        "timeMode": {
+          "smoker": "flat",
+          "oven": "flat"
+        },
+        "hoursPerKg": {},
+        "flatCookHours": {
+          "smoker": 0.5,
+          "oven": 0.35
+        },
+        "applianceTempC": {
+          "smoker": 120,
+          "oven": 200
+        },
+        "internalTempC": {
+          "smoker": 63,
+          "oven": 63
+        },
+        "restMinutes": 5,
+        "hasStall": {
+          "smoker": false,
+          "oven": false
+        },
+        "stallTempC": null,
+        "wrapTempC": {
+          "smoker": null,
+          "oven": null
+        },
+        "safeMinTempC": 63,
+        "rubs": [
+          "Lemon and herb: lemon zest, olive oil, garlic powder, dried dill, salt, cracked pepper. Apply 20 min before cooking.",
+          "Asian-style: ginger, garlic, soy sauce (brush on skin side), sesame oil, spring onion garnish.",
+          "Simple salt and pepper: coarse salt and cracked black pepper. Barramundi has great flavour — let it come through."
+        ],
+        "woods": [
+          "Alder — light and clean for barramundi.",
+          "Apple — sweet and mild, works beautifully.",
+          "Mangrove wood (if available) — traditional Aboriginal Australian smoking wood for barramundi."
+        ],
+        "tips": [
+          "Score the skin side 3 times diagonally to prevent curling. Place skin-side down first on a hot surface.",
+          "Barramundi has thick skin that gets beautifully crispy — resist the urge to move it until it releases naturally from the cooking surface.",
+          "Pull at 60-63°C internal. Barramundi is forgiving of a degree or two — it has more fat than most white fish."
+        ]
+      },
+      {
+        "id": "ocean_trout_fillet",
+        "name": "Ocean Trout Fillet",
+        "cutCategory": "fish",
+        "methods": [
+          "smoker",
+          "oven"
+        ],
+        "timeMode": {
+          "smoker": "flat",
+          "oven": "flat"
+        },
+        "hoursPerKg": {},
+        "flatCookHours": {
+          "smoker": 1,
+          "oven": 0.5
+        },
+        "applianceTempC": {
+          "smoker": 72,
+          "oven": 180
+        },
+        "internalTempC": {
+          "smoker": 63,
+          "oven": 63
+        },
+        "restMinutes": 3,
+        "hasStall": {
+          "smoker": false,
+          "oven": false
+        },
+        "stallTempC": null,
+        "wrapTempC": {
+          "smoker": null,
+          "oven": null
+        },
+        "safeMinTempC": 63,
+        "rubs": [
+          "Brown sugar cure: 2:1 brown sugar and salt, fresh dill, cracked pepper. Apply 2-4 hrs before hot smoking. Classic cured salmon/trout approach.",
+          "Lemon and dill: fresh dill, lemon zest, olive oil, coarse salt, cracked pepper. Very light rub — apply 30 min ahead.",
+          "Miso glaze: white miso, mirin, sake (or dry sherry), sugar. Brush on and marinate 4+ hrs before cooking."
+        ],
+        "woods": [
+          "Alder — THE wood for ocean trout, as with salmon.",
+          "Apple — sweet and mild, close to alder.",
+          "Cherry — slightly stronger, beautiful colour on the pink flesh."
+        ],
+        "tips": [
+          "Ocean trout is richer and fattier than standard trout, similar to salmon. Treat it the same way — pull at 55-60°C for silky texture.",
+          "The skin side has a natural sheen when done. The flesh should be just opaque through but still slightly glassy in the very centre.",
+          "Let the cured surface dry in the fridge (uncovered on a rack) for 1-2 hrs before smoking to form a pellicle — the sticky surface that helps smoke adhere."
+        ]
+      },
+      {
+        "id": "lobster_tail",
+        "name": "Lobster Tail",
+        "cutCategory": "fish",
+        "methods": [
+          "smoker",
+          "oven",
+          "wood_fire"
+        ],
+        "timeMode": {
+          "smoker": "flat",
+          "oven": "flat",
+          "wood_fire": "flat"
+        },
+        "hoursPerKg": {},
+        "flatCookHours": {
+          "smoker": 0.75,
+          "oven": 0.35,
+          "wood_fire": 0.3
+        },
+        "applianceTempC": {
+          "smoker": 120,
+          "oven": 200,
+          "wood_fire": 280
+        },
+        "internalTempC": {
+          "smoker": 63,
+          "oven": 63,
+          "wood_fire": 63
+        },
+        "restMinutes": 5,
+        "hasStall": {
+          "smoker": false,
+          "oven": false,
+          "wood_fire": false
+        },
+        "stallTempC": null,
+        "wrapTempC": {
+          "smoker": null,
+          "oven": null,
+          "wood_fire": null
+        },
+        "safeMinTempC": 63,
+        "rubs": [
+          "Garlic butter: 100g melted butter with 3 cloves minced garlic, parsley, lemon juice, salt. Baste before and during cooking.",
+          "Herb butter: softened butter with tarragon, chives, garlic, salt, lemon zest. Push under the shell before cooking.",
+          "Old Bay style: Old Bay seasoning (or paprika, celery salt, black pepper, cayenne), garlic powder, butter. Classic New England approach."
+        ],
+        "woods": [
+          "Apple — very light and sweet, appropriate for delicate lobster.",
+          "Cherry — one tiny chip, provides a whisper of fruitiness.",
+          "No wood if grilling direct — keep charcoal and butter as the only flavours."
+        ],
+        "tips": [
+          "Butterfly the tail by cutting the shell down the middle and pulling the flesh up slightly so it cooks evenly and gets colour and basting access.",
+          "Lobster tail is done at 60-63°C internal in the thickest part. The flesh turns from translucent to opaque. Overcooking makes it rubbery and dry.",
+          "Baste frequently with garlic butter. Lobster loves butter. Don't be shy — keep brushing throughout the cook."
+        ]
+      },
+      {
+        "id": "scallops",
+        "name": "Scallops",
+        "cutCategory": "fish",
+        "methods": [
+          "smoker",
+          "oven"
+        ],
+        "timeMode": {
+          "smoker": "flat",
+          "oven": "flat"
+        },
+        "hoursPerKg": {},
+        "flatCookHours": {
+          "smoker": 0.5,
+          "oven": 0.2
+        },
+        "applianceTempC": {
+          "smoker": 120,
+          "oven": 200
+        },
+        "internalTempC": {
+          "smoker": 63,
+          "oven": 63
+        },
+        "restMinutes": 0,
+        "hasStall": {
+          "smoker": false,
+          "oven": false
+        },
+        "stallTempC": null,
+        "wrapTempC": {
+          "smoker": null,
+          "oven": null
+        },
+        "safeMinTempC": 63,
+        "donenessCue": "Opaque throughout with a light golden crust on top — flesh springs back lightly when pressed",
+        "rubs": [
+          "Simple salt and pepper: coarse sea salt, cracked black pepper. That's all. Scallops are delicate — seasoning is just support.",
+          "Garlic butter baste: melted butter, garlic, parsley, lemon juice. Brush on right before and during cooking.",
+          "Lemon and herb: lemon zest, olive oil, fresh thyme, sea salt. Very light application 10 min before cooking."
+        ],
+        "woods": [
+          "Apple — the lightest possible wood, tiny amount, only if you want any smoke at all.",
+          "No wood — scallops are so delicate that smoke overwhelms them. The Maillard crust from a hot pan is everything.",
+          "No wood for direct sear — cast iron or plancha, very hot, dry or with a drop of oil."
+        ],
+        "tips": [
+          "Pat scallops completely dry with paper towels. DRY scallops sear; wet scallops steam. This is the single most important step.",
+          "Get your pan or grill RIPPING HOT. Scallops need intense heat for a brief time — 90-120 seconds per side maximum. They should release naturally when ready to flip.",
+          "Pull at 50-55°C — slightly translucent in the centre. Serve immediately. Scallops don't wait."
+        ]
+      },
+      {
+        "id": "king_prawns_shell",
+        "name": "King Prawns (Shell-On)",
+        "cutCategory": "fish",
+        "methods": [
+          "smoker",
+          "oven",
+          "wood_fire"
+        ],
+        "timeMode": {
+          "smoker": "flat",
+          "oven": "flat",
+          "wood_fire": "flat"
+        },
+        "hoursPerKg": {},
+        "flatCookHours": {
+          "smoker": 0.42,
+          "oven": 0.25,
+          "wood_fire": 0.25
+        },
+        "applianceTempC": {
+          "smoker": 120,
+          "oven": 220,
+          "wood_fire": 280
+        },
+        "internalTempC": {
+          "smoker": 65,
+          "oven": 65,
+          "wood_fire": 65
+        },
+        "restMinutes": 0,
+        "hasStall": {
+          "smoker": false,
+          "oven": false,
+          "wood_fire": false
+        },
+        "stallTempC": null,
+        "wrapTempC": {
+          "smoker": null,
+          "oven": null,
+          "wood_fire": null
+        },
+        "safeMinTempC": 65,
+        "rubs": [
+          "Garlic and chilli butter: butter, garlic, chilli flakes, lemon juice, parsley. Brush into the split shells.",
+          "Cajun: smoked paprika, garlic powder, cayenne, onion powder, dried thyme, salt — toss to coat.",
+          "Simple lemon pepper: lemon zest, coarse cracked black pepper, sea salt, olive oil."
+        ],
+        "woods": [
+          "Apple — very light smoke for shell-on prawns.",
+          "No wood for direct grilling — charcoal char through the shell is perfect.",
+          "Cherry — a hint of fruitiness if you want some smoke flavour."
+        ],
+        "tips": [
+          "Split the shell down the back with kitchen shears and devein. Leave the shell on — it protects from the heat and holds the butter in.",
+          "Cook on very high heat for 2-3 min per side. When the shells are deep red-orange and the flesh is just pink through, they're done.",
+          "Serve with crusty bread to mop up the garlic butter. This is essential. Non-negotiable."
+        ]
+      },
+      {
+        "id": "whole_barramundi",
+        "name": "Whole Barramundi",
+        "cutCategory": "fish",
+        "methods": [
+          "smoker",
+          "oven",
+          "kamado",
+          "wood_fire"
+        ],
+        "timeMode": {
+          "smoker": "flat",
+          "oven": "flat",
+          "kamado": "flat",
+          "wood_fire": "flat"
+        },
+        "hoursPerKg": {},
+        "flatCookHours": {
+          "smoker": 1.5,
+          "oven": 0.75,
+          "kamado": 1.5,
+          "wood_fire": 0.5
+        },
+        "applianceTempC": {
+          "smoker": 120,
+          "oven": 200,
+          "kamado": 120,
+          "wood_fire": 280
+        },
+        "internalTempC": {
+          "smoker": 63,
+          "oven": 63,
+          "kamado": 63,
+          "wood_fire": 63
+        },
+        "restMinutes": 5,
+        "hasStall": {
+          "smoker": false,
+          "oven": false,
+          "kamado": false,
+          "wood_fire": false
+        },
+        "stallTempC": null,
+        "wrapTempC": {
+          "smoker": null,
+          "oven": null,
+          "kamado": null,
+          "wood_fire": null
+        },
+        "safeMinTempC": 63,
+        "rubs": [
+          "Thai: lemongrass, kaffir lime leaves, chilli, garlic, fish sauce, lime zest in the cavity. Score the flesh, stuff with aromatics. Roast whole.",
+          "Mediterranean: lemon, garlic, fresh herbs in the cavity, olive oil and salt on outside.",
+          "Simple smoke: salt and cracked pepper on scored skin, olive oil, lemon inside. Let the barramundi smoke flavour do the work."
+        ],
+        "woods": [
+          "Alder — classic for whole barramundi.",
+          "Apple — light and sweet, broadly appropriate.",
+          "Mangrove or paperbark (if available) — traditional Australian cooking method with incredible flavour."
+        ],
+        "tips": [
+          "A whole barramundi can be 1-3 kg. Scale up cook time — probe the thickest part of the back (near the head) for temp.",
+          "The head and collar are the most flavourful parts. Don't discard them.",
+          "Wrap in paperbark or banana leaves if available for a traditional cook — it steams from inside and adds aromatic flavour."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "veggies",
+    "name": "Vegetables",
+    "cuts": [
+      {
+        "id": "corn_on_cob",
+        "name": "Corn on the Cob",
+        "cutCategory": "veggie",
+        "methods": [
+          "smoker"
+        ],
+        "timeMode": {
+          "smoker": "flat"
+        },
+        "hoursPerKg": {},
+        "flatCookHours": {
+          "smoker": 1.75
+        },
+        "applianceTempC": {
+          "smoker": 120
+        },
+        "internalTempC": {
+          "smoker": null
+        },
+        "restMinutes": 0,
+        "hasStall": {
+          "smoker": false
+        },
+        "stallTempC": null,
+        "wrapTempC": {
+          "smoker": null
+        },
+        "safeMinTempC": 0,
+        "donenessCue": "Kernels are plump, tender, and slightly caramelised when pressed",
+        "rubs": [
+          "Elote-style: after cooking, coat in mayo, cotija cheese (or parmesan), chilli powder, lime juice. Mexican street corn — the absolute best way to eat smoked corn.",
+          "Herb butter: softened butter with garlic, parsley, salt, cracked pepper. Apply before cooking, let it melt in.",
+          "Smoky BBQ: smoked paprika, garlic powder, salt, cracked pepper, brush with melted butter. Classic BBQ corn."
+        ],
+        "woods": [
+          "Apple — sweet and mild, complements the natural sweetness of corn perfectly.",
+          "Cherry — light fruitiness adds dimension to the corn's sweetness.",
+          "Hickory — stronger smoke for corn. Very different flavour profile. Works if you want a savoury/BBQ finish."
+        ],
+        "tips": [
+          "Leave the husks on while cooking — they protect the corn and steam it from inside. Soak them in water for 30 min first if grilling over direct flame.",
+          "For maximum char (street corn-style), remove husks and cook directly over high heat, rotating frequently.",
+          "The toppings and seasoning applied after cooking are where corn really shines — don't hold back on the butter, cheese, and chilli."
+        ]
+      },
+      {
+        "id": "bell_peppers",
+        "name": "Bell Peppers (whole)",
+        "cutCategory": "veggie",
+        "methods": [
+          "smoker"
+        ],
+        "timeMode": {
+          "smoker": "flat"
+        },
+        "hoursPerKg": {},
+        "flatCookHours": {
+          "smoker": 1.25
+        },
+        "applianceTempC": {
+          "smoker": 120
+        },
+        "internalTempC": {
+          "smoker": null
+        },
+        "restMinutes": 0,
+        "hasStall": {
+          "smoker": false
+        },
+        "stallTempC": null,
+        "wrapTempC": {
+          "smoker": null
+        },
+        "safeMinTempC": 0,
+        "donenessCue": "Skin blisters and chars, walls are soft and starting to collapse",
+        "rubs": [
+          "Olive oil and sea salt: just a brush of olive oil and a pinch of coarse salt. Peppers have an incredible flavour when charred — nothing more needed.",
+          "Garlic and herb: olive oil, minced garlic, dried oregano, salt, cracked pepper. Apply before cooking.",
+          "Balsamic glaze finish: cook plain, then toss in balsamic vinegar and olive oil when hot. The heat absorbs the glaze beautifully."
+        ],
+        "woods": [
+          "Apple — very light smoke enhances the natural sweetness of the pepper.",
+          "Cherry — mild and fruity, great with stuffed or whole peppers.",
+          "No wood if charring directly — the char from flames creates the flavour."
+        ],
+        "tips": [
+          "Char them completely on the outside — blackened skin is the goal. Seal in a bag or covered bowl for 10 min after cooking, then peel the skin off. Sweet, silky roasted pepper underneath.",
+          "Stuffed peppers need a cap (lid) and enough moisture inside (rice, cheese, sauce) to steam and soften the pepper walls.",
+          "After peeling charred peppers, slice and dress with olive oil, garlic, parsley, and salt. These keep in the fridge for 5 days and are incredible."
+        ]
+      },
+      {
+        "id": "eggplant",
+        "name": "Eggplant (whole)",
+        "cutCategory": "veggie",
+        "methods": [
+          "smoker"
+        ],
+        "timeMode": {
+          "smoker": "flat"
+        },
+        "hoursPerKg": {},
+        "flatCookHours": {
+          "smoker": 2
+        },
+        "applianceTempC": {
+          "smoker": 120
+        },
+        "internalTempC": {
+          "smoker": null
+        },
+        "restMinutes": 5,
+        "hasStall": {
+          "smoker": false
+        },
+        "stallTempC": null,
+        "wrapTempC": {
+          "smoker": null
+        },
+        "safeMinTempC": 0,
+        "donenessCue": "Skin is wrinkled and collapsed, flesh is completely silky and soft inside",
+        "rubs": [
+          "Miso paste: white miso mixed with mirin, sake, sugar, brushed on scored flesh. Leave 1 hr, then cook. This is the famous \"dengaku\" style.",
+          "Olive oil and cumin: olive oil, ground cumin, garlic powder, salt, cracked pepper. Score the flesh and apply to scored surfaces.",
+          "Za'atar and olive oil: za'atar (or oregano, thyme, sesame, sumac), olive oil, salt. Middle Eastern and brilliant."
+        ],
+        "woods": [
+          "Apple — light smoke for eggplant. Doesn't overpower.",
+          "Cherry — subtle and pleasant. A good match.",
+          "No wood for direct char — blistered skin and smoky flesh from the flames is traditional for baba ghanoush."
+        ],
+        "tips": [
+          "For the best baba ghanoush, char the whole eggplant directly in flames until completely black and collapsed. The flesh inside will be perfectly smoky and silky.",
+          "Salt sliced eggplant and let drain 30 min before cooking to remove moisture and any bitterness. Pat dry before applying oil.",
+          "Eggplant absorbs fat like a sponge — apply oil just before cooking, not ahead of time."
+        ]
+      },
+      {
+        "id": "zucchini",
+        "name": "Zucchini (halved)",
+        "cutCategory": "veggie",
+        "methods": [
+          "smoker"
+        ],
+        "timeMode": {
+          "smoker": "flat"
+        },
+        "hoursPerKg": {},
+        "flatCookHours": {
+          "smoker": 1
+        },
+        "applianceTempC": {
+          "smoker": 120
+        },
+        "internalTempC": {
+          "smoker": null
+        },
+        "restMinutes": 0,
+        "hasStall": {
+          "smoker": false
+        },
+        "stallTempC": null,
+        "wrapTempC": {
+          "smoker": null
+        },
+        "safeMinTempC": 0,
+        "donenessCue": "A skewer passes through with little resistance — tender but still holding its shape",
+        "rubs": [
+          "Lemon and herb: olive oil, lemon zest, fresh basil or mint, salt, cracked pepper. Apply and let sit 10 min.",
+          "Simple salt and olive oil: coarse salt and good olive oil. Zucchini is delicate — let the char do the work.",
+          "Parmesan finish: cook plain with oil and salt, then grate parmesan generously over hot slices."
+        ],
+        "woods": [
+          "Apple — very light smoke, optional for zucchini.",
+          "No wood — direct grill marks and char are the flavour for zucchini.",
+          "Cherry — a hint of fruitiness if you want a subtle smoke accent."
+        ],
+        "tips": [
+          "Slice lengthways into thick slabs (1-1.5 cm), not rounds. They hold together better and get beautiful grill marks.",
+          "Zucchini is mostly water — high heat is essential to get char without making it soggy.",
+          "Don't overcook. Zucchini should still have a little resistance — soft in the centre but with a slight bite. 3-4 min per side at high heat."
+        ]
+      },
+      {
+        "id": "portobello_mushrooms",
+        "name": "Portobello Mushrooms",
+        "cutCategory": "veggie",
+        "methods": [
+          "smoker"
+        ],
+        "timeMode": {
+          "smoker": "flat"
+        },
+        "hoursPerKg": {},
+        "flatCookHours": {
+          "smoker": 1
+        },
+        "applianceTempC": {
+          "smoker": 120
+        },
+        "internalTempC": {
+          "smoker": null
+        },
+        "restMinutes": 0,
+        "hasStall": {
+          "smoker": false
+        },
+        "stallTempC": null,
+        "wrapTempC": {
+          "smoker": null
+        },
+        "safeMinTempC": 0,
+        "donenessCue": "Caps are deeply juicy, fully tender, and slightly shrunken",
+        "rubs": [
+          "Garlic butter: melted butter, garlic, parsley, thyme, salt. Apply generously to the gill side before and during cooking.",
+          "Balsamic and herb: balsamic vinegar, olive oil, garlic, thyme, rosemary, salt, cracked pepper. Marinate 30 min, gill side up so it soaks in.",
+          "Miso and butter: white miso, butter, garlic powder, soy sauce mixed together and applied to the gill side."
+        ],
+        "woods": [
+          "Oak — works well with the earthy mushroom flavour. A classic pairing.",
+          "Hickory — punchy smoke for an umami-rich mushroom. Don't overdo it.",
+          "Cherry — lighter and fruity — a pleasant contrast to the deep savoury mushroom."
+        ],
+        "tips": [
+          "Cook gill-side up the entire time. The cup fills with the garlic butter and mushroom juices — that's your sauce. Don't flip and lose it.",
+          "Portobello mushrooms are about 90% water. They release liquid as they cook — expect them to reduce in size significantly. This is normal.",
+          "These are an excellent meat substitute for burgers. Cook to the doneness cue (collapsing slightly, juices pooling), then place cap-side down on the bun."
+        ]
+      },
+      {
+        "id": "whole_garlic",
+        "name": "Whole Garlic Bulb",
+        "cutCategory": "veggie",
+        "methods": [
+          "smoker"
+        ],
+        "timeMode": {
+          "smoker": "flat"
+        },
+        "hoursPerKg": {},
+        "flatCookHours": {
+          "smoker": 2
+        },
+        "applianceTempC": {
+          "smoker": 120
+        },
+        "internalTempC": {
+          "smoker": null
+        },
+        "restMinutes": 5,
+        "hasStall": {
+          "smoker": false
+        },
+        "stallTempC": null,
+        "wrapTempC": {
+          "smoker": null
+        },
+        "safeMinTempC": 0,
+        "donenessCue": "Cloves squeeze out like paste — completely soft with no resistance",
+        "rubs": [
+          "Olive oil drizzle: cut the top off the head, drizzle with olive oil, season with salt and cracked pepper. Simple and traditional.",
+          "Herb and oil: olive oil, fresh thyme, rosemary, salt. Push herbs between the cloves before wrapping in foil.",
+          "Balsamic: drizzle of balsamic, olive oil, salt, pinch of brown sugar. Caramelises beautifully."
+        ],
+        "woods": [
+          "Oak — subtle smoke accent for garlic. Wrap in foil to control intensity.",
+          "Apple — light sweet smoke pairs with the caramelising garlic sugars.",
+          "No wood needed — the oven-roasted caramelisation at 180°C creates all the flavour you need."
+        ],
+        "tips": [
+          "Wrap tightly in foil — the steam is what softens the cloves. Loose foil means dry garlic.",
+          "Test doneness by pressing a clove through the foil — it should be completely soft. If any resistance, cook longer.",
+          "The roasted garlic squeezes out like butter and can be spread on bread, stirred into mashed potato, or blended into sauces. Store in olive oil in the fridge for 1 week."
+        ]
+      },
+      {
+        "id": "cauliflower",
+        "name": "Cauliflower (whole head)",
+        "cutCategory": "veggie",
+        "methods": [
+          "smoker"
+        ],
+        "timeMode": {
+          "smoker": "flat"
+        },
+        "hoursPerKg": {},
+        "flatCookHours": {
+          "smoker": 2.5
+        },
+        "applianceTempC": {
+          "smoker": 120
+        },
+        "internalTempC": {
+          "smoker": null
+        },
+        "restMinutes": 5,
+        "hasStall": {
+          "smoker": false
+        },
+        "stallTempC": null,
+        "wrapTempC": {
+          "smoker": null
+        },
+        "safeMinTempC": 0,
+        "donenessCue": "A skewer passes through the core with no resistance — fully tender throughout",
+        "rubs": [
+          "Smoked paprika and olive oil: smoked paprika, garlic powder, olive oil, salt, cumin. Coat the whole head — get in between the florets.",
+          "Miso and tahini: white miso, tahini, garlic, lemon juice, salt. Thick paste applied all over. Gives an extraordinary savoury bark.",
+          "Buffalo-style: hot sauce, butter, garlic powder, salt. Coat and smoke. Serve with ranch for a vegetarian showstopper."
+        ],
+        "woods": [
+          "Apple — light smoke, sweet and clean. Great with cauliflower's natural nuttiness.",
+          "Cherry — adds a hint of fruit and beautiful colour to the outer florets.",
+          "Hickory — stronger smoke for a bolder flavour. Works well with the miso rub."
+        ],
+        "tips": [
+          "Keep the head whole for the visual impact of a \"whole-roasted cauliflower.\" Smoke and serve at the table.",
+          "The outer leaves are edible — they crisp up beautifully if left on during cooking.",
+          "Probe into the very centre of the head — if a skewer passes through with little resistance, it's done. The outer section will be caramelised while the inside steams."
+        ]
+      },
+      {
+        "id": "beetroot",
+        "name": "Beetroot (whole)",
+        "cutCategory": "veggie",
+        "methods": [
+          "smoker"
+        ],
+        "timeMode": {
+          "smoker": "flat"
+        },
+        "hoursPerKg": {},
+        "flatCookHours": {
+          "smoker": 2.75
+        },
+        "applianceTempC": {
+          "smoker": 120
+        },
+        "internalTempC": {
+          "smoker": null
+        },
+        "restMinutes": 5,
+        "hasStall": {
+          "smoker": false
+        },
+        "stallTempC": null,
+        "wrapTempC": {
+          "smoker": null
+        },
+        "safeMinTempC": 0,
+        "donenessCue": "A knife or skewer passes through the centre easily with no resistance",
+        "rubs": [
+          "Olive oil and coarse salt: coat in olive oil and coarse salt. Wrap in foil. Simple.",
+          "Balsamic and honey: brush with balsamic vinegar and honey before and during cooking. Incredible caramelisation.",
+          "Herb salt: olive oil, fresh thyme, coarse salt, cracked pepper. Works beautifully."
+        ],
+        "woods": [
+          "Apple — light sweet smoke works nicely with earthy beetroot.",
+          "Cherry — fruity and bright. An interesting contrast to the deep earthiness.",
+          "Oak — if you want more smoke intensity. Small amount."
+        ],
+        "tips": [
+          "Wrap whole beets in foil with a splash of water. They steam from inside and the skin slips off easily after cooking.",
+          "After peeling, toss in balsamic vinegar, olive oil, fresh herbs. The residual heat absorbs the dressing instantly.",
+          "Smoked beet is incredible sliced and served cold on a salad with goat's cheese. The smoke flavour intensifies as it cools."
+        ]
+      },
+      {
+        "id": "sweet_potato_whole",
+        "name": "Sweet Potato (Whole)",
+        "cutCategory": "veggie",
+        "methods": [
+          "smoker",
+          "oven"
+        ],
+        "timeMode": {
+          "smoker": "flat",
+          "oven": "flat"
+        },
+        "hoursPerKg": {},
+        "flatCookHours": {
+          "smoker": 2,
+          "oven": 1
+        },
+        "applianceTempC": {
+          "smoker": 120,
+          "oven": 200
+        },
+        "internalTempC": {
+          "smoker": null,
+          "oven": null
+        },
+        "restMinutes": 5,
+        "hasStall": {
+          "smoker": false,
+          "oven": false
+        },
+        "stallTempC": null,
+        "wrapTempC": {
+          "smoker": null,
+          "oven": null
+        },
+        "safeMinTempC": 0,
+        "donenessCue": "Skin puffs and collapses slightly, a skewer passes through the centre with zero resistance",
+        "rubs": [
+          "Butter and cinnamon: split after cooking and load with butter, brown sugar, cinnamon, pinch of nutmeg. Classic.",
+          "Miso butter: miso paste, butter, ginger, garlic — split the potato and dollop inside while hot.",
+          "Smoked paprika and herb: olive oil, smoked paprika, garlic powder, fresh thyme — rub on the outside skin."
+        ],
+        "woods": [
+          "Apple — sweet wood for a sweet vegetable. Natural pairing.",
+          "Cherry — fruity and works well with sweet potato's natural sugars.",
+          "Pecan — nutty and slightly richer. A great flavour combination."
+        ],
+        "tips": [
+          "Pierce the skin several times with a fork before cooking — lets steam escape so the potato doesn't split.",
+          "The skin gets beautifully caramelised and is 100% edible. Rub with olive oil and salt for the best skin.",
+          "Sweet potato is done when completely soft all the way through — a knife or skewer should pass through with zero resistance at the thickest point."
+        ]
+      },
+      {
+        "id": "asparagus",
+        "name": "Asparagus Spears",
+        "cutCategory": "veggie",
+        "methods": [
+          "smoker",
+          "oven"
+        ],
+        "timeMode": {
+          "smoker": "flat",
+          "oven": "flat"
+        },
+        "hoursPerKg": {},
+        "flatCookHours": {
+          "smoker": 0.5,
+          "oven": 0.2
+        },
+        "applianceTempC": {
+          "smoker": 120,
+          "oven": 220
+        },
+        "internalTempC": {
+          "smoker": null,
+          "oven": null
+        },
+        "restMinutes": 0,
+        "hasStall": {
+          "smoker": false,
+          "oven": false
+        },
+        "stallTempC": null,
+        "wrapTempC": {
+          "smoker": null,
+          "oven": null
+        },
+        "safeMinTempC": 0,
+        "donenessCue": "Tender when pierced at the thickest part, tips are lightly crisped — still vibrant green, not olive-coloured",
+        "rubs": [
+          "Olive oil and parmesan: brush with olive oil, salt, cracked pepper, then shower with grated parmesan in the last 2 min.",
+          "Lemon and garlic: olive oil, lemon zest, garlic powder, salt. Apply and grill immediately.",
+          "Sesame and soy: sesame oil, soy sauce, sesame seeds, cracked pepper. Toss to coat, grill quickly."
+        ],
+        "woods": [
+          "No wood — direct high heat for asparagus. The char is the flavour.",
+          "Apple — if smoking, one small chip is the maximum.",
+          "Cherry — optional very light application."
+        ],
+        "tips": [
+          "Snap off the woody ends (they break naturally at the right point), don't cut — this ensures you're only cooking the tender part.",
+          "High heat, fast cook. 5-7 min on a hot grill, turning once or twice. Asparagus should have char marks and be tender-crisp, not limp.",
+          "Keep spears uniform in thickness — mix of thick and thin means uneven cooking. Separate them or adjust timing accordingly."
+        ]
+      },
+      {
+        "id": "whole_onion",
+        "name": "Whole Onion",
+        "cutCategory": "veggie",
+        "methods": [
+          "smoker",
+          "oven"
+        ],
+        "timeMode": {
+          "smoker": "flat",
+          "oven": "flat"
+        },
+        "hoursPerKg": {},
+        "flatCookHours": {
+          "smoker": 2,
+          "oven": 1
+        },
+        "applianceTempC": {
+          "smoker": 120,
+          "oven": 190
+        },
+        "internalTempC": {
+          "smoker": null,
+          "oven": null
+        },
+        "restMinutes": 5,
+        "hasStall": {
+          "smoker": false,
+          "oven": false
+        },
+        "stallTempC": null,
+        "wrapTempC": {
+          "smoker": null,
+          "oven": null
+        },
+        "safeMinTempC": 0,
+        "donenessCue": "Outer layers are charred and papery, inner layers completely soft, sweet, and caramelised",
+        "rubs": [
+          "Olive oil and salt: coat the outside in olive oil, coarse salt. Wrap in foil or cook directly in coals (charred exterior approach).",
+          "Balsamic glaze: halve the onion, brush cut side with balsamic and olive oil, season with salt and thyme.",
+          "Herb butter: soften butter, garlic, thyme. Stuff between the layers before wrapping in foil."
+        ],
+        "woods": [
+          "Oak — a hint of smoke for whole onions is lovely. 1 chunk.",
+          "Apple — sweet wood for a naturally sweet vegetable.",
+          "No wood if cooking directly in coals — ash and char provides all the smoke flavour needed."
+        ],
+        "tips": [
+          "For campfire-style onions: peel, wrap tightly in foil with butter and herbs, bury in coals for 1 hr. Pull out and eat like a side dish.",
+          "Caramelised onions from the slow cooker are extraordinary — they go completely soft, sweet, and dark. Use as a condiment for everything.",
+          "Halved and grilled cut-side down over direct heat gives beautiful caramelisation. Don't move them — let the cut surface char and caramelise properly."
+        ]
+      },
+      {
+        "id": "butternut_pumpkin",
+        "name": "Butternut Pumpkin (Halved)",
+        "cutCategory": "veggie",
+        "methods": [
+          "smoker",
+          "oven"
+        ],
+        "timeMode": {
+          "smoker": "flat",
+          "oven": "flat"
+        },
+        "hoursPerKg": {},
+        "flatCookHours": {
+          "smoker": 3,
+          "oven": 1.25
+        },
+        "applianceTempC": {
+          "smoker": 120,
+          "oven": 190
+        },
+        "internalTempC": {
+          "smoker": null,
+          "oven": null
+        },
+        "restMinutes": 10,
+        "hasStall": {
+          "smoker": false,
+          "oven": false
+        },
+        "stallTempC": null,
+        "wrapTempC": {
+          "smoker": null,
+          "oven": null
+        },
+        "safeMinTempC": 0,
+        "donenessCue": "A skewer passes through the thickest part of the flesh with no resistance — completely tender throughout",
+        "rubs": [
+          "Brown sugar and spice: olive oil, brown sugar, cinnamon, nutmeg, salt. Brush on cut surface before smoking. Autumn vibes.",
+          "Herb and garlic: olive oil, garlic powder, fresh thyme, salt, cracked pepper. Savory approach.",
+          "Miso and sesame: white miso, sesame oil, soy sauce, garlic. Apply to cut surface."
+        ],
+        "woods": [
+          "Apple — classic sweet wood for sweet vegetable.",
+          "Cherry — slightly richer, still mild. Works beautifully.",
+          "Pecan — nutty and mild, great with the brown sugar rub."
+        ],
+        "tips": [
+          "Halve lengthways through the stem. Scoop seeds out. Apply oil and seasoning to the cut face.",
+          "Cook cut-side up so the seasoning pools on the surface. A slight concavity helps it collect.",
+          "Butternut is fully cooked when completely tender — a knife tip slides in with zero resistance anywhere in the flesh. The narrower neck cooks faster than the round bottom."
+        ]
+      },
+      {
+        "id": "tomatoes_whole",
+        "name": "Tomatoes (Whole Smoked)",
+        "cutCategory": "veggie",
+        "methods": [
+          "smoker",
+          "oven"
+        ],
+        "timeMode": {
+          "smoker": "flat",
+          "oven": "flat"
+        },
+        "hoursPerKg": {},
+        "flatCookHours": {
+          "smoker": 1.5,
+          "oven": 0.75
+        },
+        "applianceTempC": {
+          "smoker": 120,
+          "oven": 170
+        },
+        "internalTempC": {
+          "smoker": null,
+          "oven": null
+        },
+        "restMinutes": 0,
+        "hasStall": {
+          "smoker": false,
+          "oven": false
+        },
+        "stallTempC": null,
+        "wrapTempC": {
+          "smoker": null,
+          "oven": null
+        },
+        "safeMinTempC": 0,
+        "donenessCue": "Skin splits and begins to collapse, flesh is jammy and concentrated with a deep, caramelised aroma",
+        "rubs": [
+          "Olive oil, salt, basil: coat in olive oil, coarse salt, fresh or dried basil, cracked pepper.",
+          "Balsamic and garlic: balsamic vinegar, garlic powder, olive oil, salt. Brush on before and during cooking.",
+          "Simple oil: just olive oil and sea salt. Let the tomato flavour be the star."
+        ],
+        "woods": [
+          "Apple — very light smoke for tomatoes. A small amount adds incredible depth.",
+          "Cherry — fruity smoke complements the tomato's acidity.",
+          "Hickory — if you want a more savoury, assertive smoke. Good for tomato-based sauces."
+        ],
+        "tips": [
+          "Whole tomatoes will burst if cooked over very high heat. Moderate temperature or indirect heat is best.",
+          "Smoked tomatoes make the best sauce. After smoking to collapse, blend with olive oil, garlic, basil — done.",
+          "Cherry tomatoes on a skewer over direct heat for 5-8 min until blistered are a brilliant side dish for everything."
+        ]
+      },
+      {
+        "id": "broccolini",
+        "name": "Broccolini",
+        "cutCategory": "veggie",
+        "methods": [
+          "smoker",
+          "oven"
+        ],
+        "timeMode": {
+          "smoker": "flat",
+          "oven": "flat"
+        },
+        "hoursPerKg": {},
+        "flatCookHours": {
+          "smoker": 0.5,
+          "oven": 0.25
+        },
+        "applianceTempC": {
+          "smoker": 120,
+          "oven": 220
+        },
+        "internalTempC": {
+          "smoker": null,
+          "oven": null
+        },
+        "restMinutes": 0,
+        "hasStall": {
+          "smoker": false,
+          "oven": false
+        },
+        "stallTempC": null,
+        "wrapTempC": {
+          "smoker": null,
+          "oven": null
+        },
+        "safeMinTempC": 0,
+        "donenessCue": "Stems are tender when pierced, florets have lightly charred tips — still vibrant green",
+        "rubs": [
+          "Garlic and lemon: olive oil, minced garlic, lemon zest, salt, cracked pepper.",
+          "Chilli and anchovy: chilli flakes, anchovy paste (or fish sauce), olive oil, garlic, lemon. Punchy.",
+          "Sesame: sesame oil, soy sauce, sesame seeds, pinch of chilli. Toss to coat."
+        ],
+        "woods": [
+          "No wood — direct high heat for broccolini.",
+          "Apple — very light, optional smoke.",
+          "Cherry — one tiny chip at most."
+        ],
+        "tips": [
+          "Trim the very base of the stems. The rest is completely edible.",
+          "High heat, fast — 5-8 min total, turning once. You want charred tips and tender-crisp stems.",
+          "Don't crowd them on the grill or they steam instead of char. Give them space."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "jerky",
+    "name": "Jerky & Dried",
+    "cuts": [
+      {
+        "id": "beef_jerky",
+        "name": "Beef Jerky",
+        "cutCategory": "jerky",
+        "methods": [
+          "smoker",
+          "dehydrator"
+        ],
+        "timeMode": {
+          "smoker": "flat",
+          "dehydrator": "flat"
+        },
+        "hoursPerKg": {},
+        "flatCookHours": {
+          "smoker": 6,
+          "dehydrator": 7
+        },
+        "applianceTempC": {
+          "smoker": 67,
+          "dehydrator": 57
+        },
+        "internalTempC": {
+          "smoker": null,
+          "dehydrator": null
+        },
+        "restMinutes": 0,
+        "hasStall": {
+          "smoker": false,
+          "dehydrator": false
+        },
+        "stallTempC": null,
+        "wrapTempC": {
+          "smoker": null,
+          "dehydrator": null
+        },
+        "safeMinTempC": 71,
+        "preheatTempC": 71,
+        "rubs": [
+          "Classic teriyaki marinade: soy sauce, brown sugar, garlic powder, ginger powder, sesame oil (optional). Marinate sliced beef 12-24 hrs before dehydrating.",
+          "Peppered: soy sauce, Worcestershire, garlic powder, onion powder, black pepper (lots), red pepper flakes. Bold and savoury.",
+          "Smoky sweet: soy sauce, liquid smoke, brown sugar, smoked paprika, garlic powder, cayenne. If you're not smoking it, liquid smoke in the marinade is the cheat code."
+        ],
+        "woods": [
+          "Hickory — classic bold smoke for beef jerky. 1-2 chunks only — jerky is thin and absorbs smoke fast.",
+          "Mesquite — strong and assertive. Use very sparingly. Mesquite jerky is divisive but when done right it's intense and great.",
+          "Oak — clean, medium smoke. The most balanced choice for beef jerky."
+        ],
+        "tips": [
+          "Slice against the grain for tender jerky, with the grain for chewy jerky. Both are valid — know what you prefer before you start.",
+          "Freeze the meat for 1-2 hrs before slicing — it firms up and makes uniform thin slices much easier.",
+          "Jerk is done when it bends and cracks (but doesn't snap), feels completely dry on the outside, and has lost about 60-70% of its raw weight."
+        ]
+      },
+      {
+        "id": "venison_jerky",
+        "name": "Venison Jerky",
+        "cutCategory": "jerky",
+        "methods": [
+          "smoker",
+          "dehydrator"
+        ],
+        "timeMode": {
+          "smoker": "flat",
+          "dehydrator": "flat"
+        },
+        "hoursPerKg": {},
+        "flatCookHours": {
+          "smoker": 6,
+          "dehydrator": 7
+        },
+        "applianceTempC": {
+          "smoker": 67,
+          "dehydrator": 57
+        },
+        "internalTempC": {
+          "smoker": null,
+          "dehydrator": null
+        },
+        "restMinutes": 0,
+        "hasStall": {
+          "smoker": false,
+          "dehydrator": false
+        },
+        "stallTempC": null,
+        "wrapTempC": {
+          "smoker": null,
+          "dehydrator": null
+        },
+        "safeMinTempC": 71,
+        "preheatTempC": 71,
+        "rubs": [
+          "Peppered venison: soy sauce, Worcestershire, garlic powder, onion powder, coarse black pepper, red chilli flakes. Classic jerky marinade for game.",
+          "Wild spice: juniper berries (crushed), black pepper, garlic, dried thyme, soy sauce, red wine. Matches the gamey venison flavour beautifully.",
+          "Teriyaki base: soy sauce, mirin, brown sugar, ginger, garlic, sesame oil. Mellows the gaminess and makes an approachable jerky."
+        ],
+        "woods": [
+          "Oak — clean, neutral smoke. Doesn't fight with the venison flavour.",
+          "Cherry — mild fruitiness that balances the gaminess. Recommended.",
+          "Apple — very light option. Good for those who find venison strong."
+        ],
+        "tips": [
+          "Venison is very lean — it dries faster than beef. Check earlier and don't over-dry.",
+          "Remove all silver skin and sinew before slicing — venison silver skin doesn't soften and makes jerky impossible to eat.",
+          "Soaking in a mild brine (3% salt solution with a tbsp of sugar) for 1-2 hrs before the main marinade removes some gaminess and firms the meat."
+        ]
+      },
+      {
+        "id": "chicken_jerky",
+        "name": "Chicken Jerky",
+        "cutCategory": "jerky",
+        "methods": [
+          "smoker",
+          "dehydrator"
+        ],
+        "timeMode": {
+          "smoker": "flat",
+          "dehydrator": "flat"
+        },
+        "hoursPerKg": {},
+        "flatCookHours": {
+          "smoker": 7,
+          "dehydrator": 8
+        },
+        "applianceTempC": {
+          "smoker": 67,
+          "dehydrator": 57
+        },
+        "internalTempC": {
+          "smoker": null,
+          "dehydrator": null
+        },
+        "restMinutes": 0,
+        "hasStall": {
+          "smoker": false,
+          "dehydrator": false
+        },
+        "stallTempC": null,
+        "wrapTempC": {
+          "smoker": null,
+          "dehydrator": null
+        },
+        "safeMinTempC": 74,
+        "preheatTempC": 74,
+        "rubs": [
+          "Sweet chilli: soy sauce, sweet chilli sauce, garlic powder, ginger powder, sesame oil. Popular flavour profile for chicken jerky.",
+          "BBQ style: soy sauce, Worcestershire, liquid smoke, smoked paprika, garlic powder, brown sugar, cayenne.",
+          "Teriyaki: soy sauce, mirin, sake, brown sugar, garlic, ginger. Classic and broadly appealing."
+        ],
+        "woods": [
+          "Apple — the only wood to consider for chicken jerky. Very light application.",
+          "Cherry — similar to apple, subtle fruitiness.",
+          "No wood if dehydrating — liquid smoke in marinade gives the smoke note without the equipment."
+        ],
+        "tips": [
+          "CRITICAL: chicken jerky MUST be brought to 74°C internal before or during drying. This is a food safety requirement, not a suggestion. Pre-heat in an oven at 165°C for 10 min if your dehydrator can't reach this temperature.",
+          "Use breast meat for cleaner jerky (no fat), or thighs for more flavour at the cost of shorter shelf life (fat goes rancid faster).",
+          "Refrigerate chicken jerky — it doesn't have the same shelf stability as beef or venison jerky. Consume within 1 week or freeze."
+        ]
+      },
+      {
+        "id": "salmon_jerky",
+        "name": "Salmon Jerky",
+        "cutCategory": "jerky",
+        "methods": [
+          "smoker",
+          "dehydrator"
+        ],
+        "timeMode": {
+          "smoker": "flat",
+          "dehydrator": "flat"
+        },
+        "hoursPerKg": {},
+        "flatCookHours": {
+          "smoker": 8,
+          "dehydrator": 9
+        },
+        "applianceTempC": {
+          "smoker": 67,
+          "dehydrator": 57
+        },
+        "internalTempC": {
+          "smoker": null,
+          "dehydrator": null
+        },
+        "restMinutes": 0,
+        "hasStall": {
+          "smoker": false,
+          "dehydrator": false
+        },
+        "stallTempC": null,
+        "wrapTempC": {
+          "smoker": null,
+          "dehydrator": null
+        },
+        "safeMinTempC": 63,
+        "preheatTempC": 63,
+        "rubs": [
+          "Sweet soy cure: soy sauce, brown sugar, garlic, ginger, black pepper. Marinate skin-off fillets 4-8 hrs before drying.",
+          "Maple and pepper: maple syrup, cracked black pepper, soy sauce, garlic powder. Apply as a glaze before and during drying.",
+          "Lemon and dill cure: lemon juice, dill, salt, brown sugar, cracked pepper. Classic Scandinavian approach."
+        ],
+        "woods": [
+          "Alder — traditional wood for smoked salmon. If hot-smoking before dehydrating, alder is the choice.",
+          "Apple — lighter alternative, broadly available.",
+          "Cherry — slightly richer than apple. Good option."
+        ],
+        "tips": [
+          "Salmon jerky is actually smoked and then dried (or dried fully). The fat content means it won't have the long shelf life of lean-meat jerky — refrigerate and consume within 3 days.",
+          "Remove pin bones before slicing. Run your fingers along the fillet to find them, then pull out with tweezers or pliers.",
+          "Slice on an angle against the grain into strips 0.5-1 cm thick. The oil in salmon helps it stay more pliable than lean meat jerky."
+        ]
+      },
+      {
+        "id": "pork_jerky",
+        "name": "Pork Jerky",
+        "cutCategory": "jerky",
+        "methods": [
+          "smoker",
+          "dehydrator"
+        ],
+        "timeMode": {
+          "smoker": "flat",
+          "dehydrator": "flat"
+        },
+        "hoursPerKg": {},
+        "flatCookHours": {
+          "smoker": 6.5,
+          "dehydrator": 7.5
+        },
+        "applianceTempC": {
+          "smoker": 67,
+          "dehydrator": 57
+        },
+        "internalTempC": {
+          "smoker": null,
+          "dehydrator": null
+        },
+        "restMinutes": 0,
+        "hasStall": {
+          "smoker": false,
+          "dehydrator": false
+        },
+        "stallTempC": null,
+        "wrapTempC": {
+          "smoker": null,
+          "dehydrator": null
+        },
+        "safeMinTempC": 71,
+        "preheatTempC": 71,
+        "rubs": [
+          "Honey soy: soy sauce, honey, garlic, ginger, five spice, sesame oil. Asian-influenced and outstanding.",
+          "BBQ classic: soy sauce, Worcestershire, smoked paprika, garlic powder, brown sugar, black pepper, cayenne.",
+          "Teriyaki: soy, mirin, sake, sugar, garlic, ginger. Can't go wrong."
+        ],
+        "woods": [
+          "Apple — naturally pairs with pork jerky. Sweet and mild.",
+          "Cherry — slightly richer, beautiful colour.",
+          "Hickory — for bold BBQ-flavoured pork jerky. Use sparingly."
+        ],
+        "tips": [
+          "Use loin or tenderloin for the leanest pork jerky. Like chicken, fat in pork jerky reduces shelf life significantly.",
+          "Pork jerky must reach 71°C internal at some point during the process. This is a food safety requirement for pork.",
+          "Slice uniformly at 3-5mm thick — use a deli slicer if you have access to one, or partially freeze the pork for easier hand-slicing."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "game",
+    "name": "Game & Exotic",
+    "cuts": [
+      {
+        "id": "venison_leg",
+        "name": "Venison Leg",
+        "methods": [
+          "smoker",
+          "oven",
+          "slow_cooker",
+          "pressure_cooker"
+        ],
+        "timeMode": {
+          "smoker": "per_kg",
+          "oven": "per_kg",
+          "slow_cooker": "per_kg",
+          "pressure_cooker": "flat"
+        },
+        "hoursPerKg": {
+          "smoker": 3.5,
+          "oven": 2.2,
+          "slow_cooker": 1.2
+        },
+        "flatCookHours": {
+          "pressure_cooker": 1
+        },
+        "applianceTempC": {
+          "smoker": 110,
+          "oven": 160,
+          "slow_cooker": 90,
+          "pressure_cooker": 121
+        },
+        "internalTempC": {
+          "smoker": 70,
+          "oven": 65,
+          "slow_cooker": 71,
+          "pressure_cooker": 71
+        },
+        "restMinutes": 30,
+        "hasStall": {
+          "smoker": false,
+          "oven": false,
+          "slow_cooker": false,
+          "pressure_cooker": false
+        },
+        "stallTempC": null,
+        "wrapTempC": {
+          "smoker": null,
+          "oven": null,
+          "slow_cooker": null,
+          "pressure_cooker": null
+        },
+        "safeMinTempC": 63,
+        "rubs": [
+          "Herb and juniper: juniper berries (crushed), garlic, rosemary, thyme, coarse salt, cracked black pepper, olive oil. Traditional game herb combination.",
+          "Red wine marinade: red wine, garlic, rosemary, thyme, juniper, bay leaf, olive oil, salt, pepper — 12-24 hr marinade that also tenderises.",
+          "SPG with paprika: coarse salt, black pepper, garlic powder, smoked paprika. Simple and effective — lets the venison flavour shine."
+        ],
+        "woods": [
+          "Cherry — mild fruity smoke is the classic choice for venison. Doesn't fight with the gamey flavour.",
+          "Oak — clean and honest, good backbone for a long leg cook.",
+          "Apple — lighter than cherry, very clean. Good for those who find venison strong."
+        ],
+        "tips": [
+          "Venison is very lean — it dries out faster than beef or lamb. Don't push past 71°C for the leg; it's best at 63-65°C for slicing (still pink).",
+          "A fat cover or barding (wrapping in bacon or fat) during the cook helps keep the lean meat moist.",
+          "The gamey flavour intensifies if the meat is stressed during slaughter or handled poorly. Good quality, properly hung venison shouldn't need aggressive de-gaming."
+        ]
+      },
+      {
+        "id": "venison_shoulder_pulled",
+        "name": "Venison Shoulder (Pulled)",
+        "methods": [
+          "smoker",
+          "oven",
+          "kamado",
+          "slow_cooker",
+          "pressure_cooker"
+        ],
+        "timeMode": {
+          "smoker": "per_kg",
+          "oven": "per_kg",
+          "kamado": "per_kg",
+          "slow_cooker": "per_kg",
+          "pressure_cooker": "flat"
+        },
+        "hoursPerKg": {
+          "smoker": 4,
+          "oven": 2.5,
+          "kamado": 4,
+          "slow_cooker": 1.2
+        },
+        "flatCookHours": {
+          "pressure_cooker": 1
+        },
+        "applianceTempC": {
+          "smoker": 110,
+          "oven": 150,
+          "kamado": 110,
+          "slow_cooker": 90,
+          "pressure_cooker": 121
+        },
+        "internalTempC": {
+          "smoker": 90,
+          "oven": 90,
+          "kamado": 90,
+          "slow_cooker": 90,
+          "pressure_cooker": 90
+        },
+        "restMinutes": 45,
+        "hasStall": {
+          "smoker": true,
+          "oven": false,
+          "kamado": true,
+          "slow_cooker": false,
+          "pressure_cooker": false
+        },
+        "stallTempC": 68,
+        "wrapTempC": {
+          "smoker": 70,
+          "oven": null,
+          "kamado": 70,
+          "slow_cooker": null,
+          "pressure_cooker": null
+        },
+        "safeMinTempC": 63,
+        "rubs": [
+          "SPG plus: coarse salt, black pepper, garlic powder, smoked paprika. Apply 12+ hrs ahead for the long cook.",
+          "Wild spice: juniper, black pepper, garlic, dried thyme, caraway, salt. A gamey cut needs a bold rub.",
+          "Coffee and cocoa: espresso, cocoa, garlic powder, smoked paprika, coarse salt, black pepper. Rich and complex — excellent on venison shoulder."
+        ],
+        "woods": [
+          "Oak — the best for a long pulled venison cook. Clean and reliable.",
+          "Cherry — beautiful colour and mild fruitiness. A great pairing.",
+          "Hickory — only if you like bold smoke AND bold game flavour together. Not for everyone."
+        ],
+        "tips": [
+          "Venison shoulder has little fat — moisture is the challenge. Wrap in butcher paper earlier than pork shoulder (at 65°C) to protect from drying out.",
+          "Add a butter and beef stock baste when wrapping to compensate for the lack of natural fat.",
+          "For pulling, cook to 90-93°C. The collagen in shoulder is just enough to give the pulled meat texture without turning greasy."
+        ]
+      },
+      {
+        "id": "kangaroo_rump",
+        "name": "Kangaroo Rump Steak",
+        "methods": [
+          "smoker",
+          "oven"
+        ],
+        "timeMode": {
+          "smoker": "per_kg",
+          "oven": "per_kg"
+        },
+        "hoursPerKg": {
+          "smoker": 1.5,
+          "oven": 1
+        },
+        "flatCookHours": {},
+        "applianceTempC": {
+          "smoker": 120,
+          "oven": 180
+        },
+        "internalTempC": {
+          "smoker": 60,
+          "oven": 58
+        },
+        "restMinutes": 15,
+        "hasStall": {
+          "smoker": false,
+          "oven": false
+        },
+        "stallTempC": null,
+        "wrapTempC": {
+          "smoker": null,
+          "oven": null
+        },
+        "safeMinTempC": 63,
+        "rubs": [
+          "Bush spice: native pepperberry (or black pepper), lemon myrtle, garlic powder, salt, olive oil. Use Australian native spices for authenticity.",
+          "Coffee rub: espresso powder, garlic powder, smoked paprika, salt, cracked black pepper. Kangaroo is lean and gamey — strong flavours work.",
+          "Simple salt and pepper: coarse salt, cracked black pepper. Pull at 55°C rare. The lean meat needs nothing more."
+        ],
+        "woods": [
+          "Wattleseed wood (or similar Australian native hardwood) — if available, unbeatable pairing for kangaroo.",
+          "Cherry — mild fruity smoke, very appropriate for lean game meat.",
+          "Apple — light and clean. Preserves the unique kangaroo flavour."
+        ],
+        "tips": [
+          "Kangaroo is extremely lean — the leanest of all game meats. Cook to medium-rare (55°C) MAXIMUM or it becomes tough and dry.",
+          "Marinate in olive oil, garlic, and herbs for 2-4 hrs to help with moisture retention during cooking.",
+          "Rest for 10-15 min after cooking. Slice thinly across the grain. Serve immediately."
+        ]
+      },
+      {
+        "id": "wild_boar_shoulder",
+        "name": "Wild Boar Shoulder",
+        "methods": [
+          "smoker",
+          "oven",
+          "kamado",
+          "slow_cooker",
+          "pressure_cooker"
+        ],
+        "timeMode": {
+          "smoker": "per_kg",
+          "oven": "per_kg",
+          "kamado": "per_kg",
+          "slow_cooker": "per_kg",
+          "pressure_cooker": "flat"
+        },
+        "hoursPerKg": {
+          "smoker": 3.85,
+          "oven": 2.4,
+          "kamado": 3.85,
+          "slow_cooker": 1.4
+        },
+        "flatCookHours": {
+          "pressure_cooker": 1.25
+        },
+        "applianceTempC": {
+          "smoker": 110,
+          "oven": 150,
+          "kamado": 110,
+          "slow_cooker": 90,
+          "pressure_cooker": 121
+        },
+        "internalTempC": {
+          "smoker": 93,
+          "oven": 93,
+          "kamado": 93,
+          "slow_cooker": 90,
+          "pressure_cooker": 90
+        },
+        "restMinutes": 60,
+        "hasStall": {
+          "smoker": true,
+          "oven": false,
+          "kamado": true,
+          "slow_cooker": false,
+          "pressure_cooker": false
+        },
+        "stallTempC": 70,
+        "wrapTempC": {
+          "smoker": 72,
+          "oven": 67,
+          "kamado": 72,
+          "slow_cooker": null,
+          "pressure_cooker": null
+        },
+        "safeMinTempC": 71,
+        "rubs": [
+          "Tuscan herbs: rosemary, fennel seeds (crushed), garlic, sage, salt, cracked pepper, olive oil. Classic Italian approach to wild boar.",
+          "Spicy paprika: smoked paprika, garlic powder, cumin, cayenne, brown sugar, salt, cracked pepper. BBQ-style rub for a long smoke.",
+          "Wine and herb: red wine reduction, garlic, thyme, rosemary, salt, black pepper as a marinade/rub. Softens the game flavour."
+        ],
+        "woods": [
+          "Oak — best for wild boar. Medium smoke that holds up to the rich, gamey meat.",
+          "Hickory — bold and assertive. Works if you embrace the game flavour.",
+          "Cherry — softer option with beautiful colour. Good for those who want milder smoke."
+        ],
+        "tips": [
+          "Wild boar is gamier and leaner than domestic pork. Marinating for 12-24 hrs is highly recommended to tenderise and moderate the game flavour.",
+          "Cook like a pork shoulder to 90-95°C for pulling. The collagen content varies but generally it needs the full treatment.",
+          "Serve with bold accompaniments — polenta, gremolata, mustard, pickled vegetables. Wild boar can handle strong flavours."
+        ]
+      },
+      {
+        "id": "duck_legs_game",
+        "name": "Duck Legs (Smoked)",
+        "methods": [
+          "smoker",
+          "oven",
+          "kamado",
+          "slow_cooker",
+          "pressure_cooker"
+        ],
+        "timeMode": {
+          "smoker": "flat",
+          "oven": "flat",
+          "kamado": "flat",
+          "slow_cooker": "flat",
+          "pressure_cooker": "flat"
+        },
+        "hoursPerKg": {},
+        "flatCookHours": {
+          "smoker": 3.5,
+          "oven": 2,
+          "kamado": 3.5,
+          "slow_cooker": 5,
+          "pressure_cooker": 0.5
+        },
+        "applianceTempC": {
+          "smoker": 120,
+          "oven": 160,
+          "kamado": 120,
+          "slow_cooker": 90,
+          "pressure_cooker": 121
+        },
+        "internalTempC": {
+          "smoker": 82,
+          "oven": 82,
+          "kamado": 82,
+          "slow_cooker": 82,
+          "pressure_cooker": 82
+        },
+        "restMinutes": 20,
+        "hasStall": {
+          "smoker": false,
+          "oven": false,
+          "kamado": false,
+          "slow_cooker": false,
+          "pressure_cooker": false
+        },
+        "stallTempC": null,
+        "wrapTempC": {
+          "smoker": null,
+          "oven": null,
+          "kamado": null,
+          "slow_cooker": null,
+          "pressure_cooker": null
+        },
+        "safeMinTempC": 74,
+        "rubs": [
+          "Five spice and soy: five spice, soy sauce, garlic, ginger, sesame oil, brown sugar. Chinese BBQ-inspired. Outstanding.",
+          "Duck confit seasoning: coarse salt, black pepper, fresh thyme, garlic, bay leaf — cure overnight, then cook slow.",
+          "Simple herb: garlic, rosemary, thyme, olive oil, salt, cracked pepper. Let the duck flavour come through."
+        ],
+        "woods": [
+          "Cherry — the definitive wood for duck legs. Fruity and mild.",
+          "Apple — lighter cherry alternative. Beautiful pairing.",
+          "Orange wood or orange peel on coals — traditional and incredible with duck."
+        ],
+        "tips": [
+          "Score the skin in a crosshatch pattern to help the fat render. Duck legs have a lot of subcutaneous fat — this needs to go during cooking.",
+          "The fat that renders off is excellent duck fat — catch it in a drip tray and save it for roasting potatoes.",
+          "Duck legs are forgiving — push to 82-85°C for fully rendered fat and very tender meat. They don't dry out like breast meat."
+        ]
+      },
+      {
+        "id": "rabbit_whole",
+        "name": "Rabbit (Whole)",
+        "methods": [
+          "smoker",
+          "oven",
+          "slow_cooker",
+          "pressure_cooker"
+        ],
+        "timeMode": {
+          "smoker": "per_kg",
+          "oven": "per_kg",
+          "slow_cooker": "flat",
+          "pressure_cooker": "flat"
+        },
+        "hoursPerKg": {
+          "smoker": 2.5,
+          "oven": 2
+        },
+        "flatCookHours": {
+          "slow_cooker": 5,
+          "pressure_cooker": 0.5
+        },
+        "applianceTempC": {
+          "smoker": 110,
+          "oven": 160,
+          "slow_cooker": 90,
+          "pressure_cooker": 121
+        },
+        "internalTempC": {
+          "smoker": 74,
+          "oven": 74,
+          "slow_cooker": 74,
+          "pressure_cooker": 74
+        },
+        "restMinutes": 20,
+        "hasStall": {
+          "smoker": false,
+          "oven": false,
+          "slow_cooker": false,
+          "pressure_cooker": false
+        },
+        "stallTempC": null,
+        "wrapTempC": {
+          "smoker": null,
+          "oven": null,
+          "slow_cooker": null,
+          "pressure_cooker": null
+        },
+        "safeMinTempC": 74,
+        "rubs": [
+          "Herb and mustard: Dijon mustard as a binder, then fresh thyme, rosemary, garlic, salt, cracked pepper. Classic French approach.",
+          "Mediterranean: olive oil, lemon zest, garlic, dried oregano, fresh parsley, salt, cracked pepper. Simple and fresh.",
+          "Paprika and garlic: smoked paprika, garlic powder, olive oil, salt, cracked black pepper, pinch of cayenne. Spanish-style."
+        ],
+        "woods": [
+          "Apple — mild and sweet, ideal for delicate rabbit.",
+          "Cherry — slight fruitiness, works beautifully.",
+          "Pecan — slightly nutty, good match for rabbit."
+        ],
+        "tips": [
+          "Rabbit is lean and dries out quickly. Basting every 30 min with butter or oil is important. Consider barding (wrapping) with bacon strips.",
+          "The saddle (back loin) cooks faster than the legs and shoulders. If cooking whole, shield the saddle with foil if it's getting ahead of the rest.",
+          "Rabbit loves a braising finish: smoke for 1-2 hrs for colour and smoke, then braise in wine and stock until fall-apart tender."
+        ]
+      },
+      {
+        "id": "pheasant_whole",
+        "name": "Pheasant (Whole)",
+        "methods": [
+          "smoker",
+          "oven"
+        ],
+        "timeMode": {
+          "smoker": "per_kg",
+          "oven": "per_kg"
+        },
+        "hoursPerKg": {
+          "smoker": 2,
+          "oven": 1.5
+        },
+        "flatCookHours": {},
+        "applianceTempC": {
+          "smoker": 120,
+          "oven": 170
+        },
+        "internalTempC": {
+          "smoker": 74,
+          "oven": 74
+        },
+        "restMinutes": 15,
+        "hasStall": {
+          "smoker": false,
+          "oven": false
+        },
+        "stallTempC": null,
+        "wrapTempC": {
+          "smoker": null,
+          "oven": null
+        },
+        "safeMinTempC": 74,
+        "rubs": [
+          "Herb butter under skin: softened butter, garlic, thyme, sage, salt, pepper pushed under the breast skin. Essential for a lean bird.",
+          "Bacon wrap: no rub needed — wrap the entire breast in overlapping bacon rashers before cooking. This bastes the lean meat from the outside.",
+          "Simple herb oil: olive oil, garlic, thyme, rosemary, salt, pepper applied all over."
+        ],
+        "woods": [
+          "Apple — gentle smoke for a delicate game bird.",
+          "Cherry — mild fruitiness, good balance.",
+          "Pecan — slightly richer option, still mild enough for pheasant."
+        ],
+        "tips": [
+          "Pheasant is extremely lean — it dries out faster than chicken. Barding with bacon or using butter under the skin is not optional for a moist result.",
+          "Pull at 74°C internal in the thigh. Rest 15 min. The breast will be very well done at this point — that's the nature of a lean game bird.",
+          "Best results come from a slow cook method (slow cooker or covered low oven) with liquid. Pure smoking a whole pheasant requires constant basting."
+        ]
+      },
+      {
+        "id": "emu_steak",
+        "name": "Emu Steak",
+        "methods": [
+          "smoker",
+          "oven"
+        ],
+        "timeMode": {
+          "smoker": "per_kg",
+          "oven": "per_kg"
+        },
+        "hoursPerKg": {
+          "smoker": 1.5,
+          "oven": 1
+        },
+        "flatCookHours": {},
+        "applianceTempC": {
+          "smoker": 120,
+          "oven": 180
+        },
+        "internalTempC": {
+          "smoker": 58,
+          "oven": 55
+        },
+        "restMinutes": 15,
+        "hasStall": {
+          "smoker": false,
+          "oven": false
+        },
+        "stallTempC": null,
+        "wrapTempC": {
+          "smoker": null,
+          "oven": null
+        },
+        "safeMinTempC": 63,
+        "rubs": [
+          "Bush pepper and salt: native pepperberry (or black pepper), sea salt, garlic powder, olive oil. Let the unique emu flavour speak.",
+          "Red wine marinade: red wine, garlic, rosemary, olive oil, salt, black pepper — 4-8 hrs. Tenderises this lean, muscular meat.",
+          "Simple coffee rub: espresso powder, garlic powder, smoked paprika, coarse salt, cracked black pepper. Bold flavours for a bold meat."
+        ],
+        "woods": [
+          "Cherry — mild fruitiness is the best match for emu.",
+          "Apple — clean and light, preserves the unique flavour.",
+          "Wattleseed wood (if available) — the ultimate Australian native pairing."
+        ],
+        "tips": [
+          "Emu is very lean, dark, and strong-flavoured. Cook to medium-rare (55-60°C) ONLY — anything beyond medium makes it tough and gamey.",
+          "Marinate for 4-8 hrs minimum — the dense muscle fibres benefit enormously from a marinade.",
+          "Slice very thinly across the grain for the best texture. Emu steak is best served as a thin carpaccio-style slice rather than a thick cut."
+        ]
+      }
+    ]
+  }
+]

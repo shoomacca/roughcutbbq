@@ -1,0 +1,18 @@
+{
+  "appId": "com.roughcut.bbq",
+  "appName": "RoughCut BBQ",
+  "webDir": "public",
+  "server": {
+    "url": "https://roughcut-bbq.vercel.app",
+    "androidScheme": "https",
+    "allowNavigation": [
+      "roughcut-bbq.vercel.app",
+      "app.roughcut.com.au",
+      "*.supabase.co"
+    ],
+    "errorPath": "/offline.html"
+  },
+  "android": {
+    "backgroundColor": "#1a1a1a"
+  }
+}

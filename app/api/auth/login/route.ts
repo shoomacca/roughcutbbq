@@ -1,0 +1,40 @@
+import { NextResponse } from 'next/server';
+import { cookies } from 'next/headers';
+import { getSupabase } from '@/lib/supabase';
+import { verifyPassword, signToken } from '@/lib/auth';
+
+export async function POST(req: Request) {
+  try {
+    const { email, password } = await req.json();
+    if (!email || !password) {
+      return NextResponse.json({ error: 'invalid_input' }, { status: 400 });
+    }
+
+    const supabase = getSupabase();
+    const { data: user, error } = await supabase
+      .from('users')
+      .select('id, password_hash')
+      .eq('email', String(email).toLowerCase().trim())
+      .maybeSingle();
+
+    if (error) throw error;
+    if (!user || !verifyPassword(password, user.password_hash)) {
+      return NextResponse.json({ error: 'invalid_credentials' }, { status: 401 });
+    }
+
+    const token = signToken({ userId: user.id, email });
+    const cookieStore = await cookies();
+    cookieStore.set('session', token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax',
+      maxAge: 30 * 24 * 60 * 60,
+      path: '/',
+    });
+
+    return NextResponse.json({ success: true, user: { id: user.id, email } });
+  } catch (error) {
+    console.error('Login error:', error);
+    return NextResponse.json({ error: 'server_error' }, { status: 500 });
+  }
+}

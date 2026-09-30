@@ -1,0 +1,19 @@
+CREATE TABLE IF NOT EXISTS post_stars (
+  user_id INT NOT NULL,
+  post_id VARCHAR(21) NOT NULL,
+  PRIMARY KEY (user_id, post_id),
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+  FOREIGN KEY (post_id) REFERENCES gallery_posts(id) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS post_comments (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  post_id VARCHAR(21) NOT NULL,
+  user_id INT NOT NULL,
+  comment_text TEXT NOT NULL,
+  created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (post_id) REFERENCES gallery_posts(id) ON DELETE CASCADE,
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
+
+ALTER TABLE gallery_posts ADD COLUMN IF NOT EXISTS user_id INT NULL;
