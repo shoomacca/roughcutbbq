@@ -17,12 +17,18 @@ const abrilFatface = Abril_Fatface({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? 'https://app.roughcut.com.au'),
   title: {
     template: '%s | RoughCut BBQ',
     default: 'RoughCut BBQ — Know Exactly When Your BBQ Is Done',
   },
   description:
     'Free BBQ & slow-cook calculator. Enter your meat, weight, and cooking method — get a precise cook plan. No ads, no account needed. Share your before & after cooks with the community.',
+  openGraph: {
+    siteName: 'RoughCut BBQ',
+    type: 'website',
+    locale: 'en_AU',
+  },
 };
 
 export default function RootLayout({

@@ -13,13 +13,30 @@ export default function Footer() {
 
   return (
     <footer className="bg-brand-surface border-t border-brand-muted/20 py-6">
-      <div className="max-w-6xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-3 text-sm text-brand-muted">
-        <p>© {year} Metric BBQ Calculator — kg &amp; °C only</p>
-        <nav className="flex gap-4">
-          <Link href="/" className="hover:text-brand-text transition-colors">
-            Home
-          </Link>
-        </nav>
+      <div className="max-w-6xl mx-auto px-4 flex flex-col gap-3 text-sm text-brand-muted">
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-3">
+          <p>© {year} RoughCut BBQ — metric-first, kg &amp; °C only</p>
+          <nav className="flex flex-wrap justify-center gap-4">
+            <Link href="/" className="hover:text-brand-text transition-colors">
+              Home
+            </Link>
+            <Link href="/cook" className="hover:text-brand-text transition-colors">
+              Cooking Times
+            </Link>
+            <Link href="/guides" className="hover:text-brand-text transition-colors">
+              Guides
+            </Link>
+            <Link href="/gear" className="hover:text-brand-text transition-colors">
+              Gear
+            </Link>
+            <Link href="/gallery" className="hover:text-brand-text transition-colors">
+              Gallery
+            </Link>
+          </nav>
+        </div>
+        <p className="text-xs text-brand-muted/70 text-center sm:text-left">
+          As an Amazon Associate, RoughCut BBQ earns from qualifying purchases.
+        </p>
       </div>
     </footer>
   );

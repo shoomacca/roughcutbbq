@@ -58,6 +58,9 @@ export default function Header() {
           <Link href="/ideas" className={linkClass("/ideas")}>
             Cook Ideas
           </Link>
+          <Link href="/cook" className={linkClass("/cook")}>
+            Cook Times
+          </Link>
           <Link href="/recipes" className={linkClass("/recipes")}>
             Recipes
           </Link>
@@ -153,6 +156,13 @@ export default function Header() {
             onClick={() => setMenuOpen(false)}
           >
             Cook Ideas
+          </Link>
+          <Link
+            href="/cook"
+            className={linkClass("/cook")}
+            onClick={() => setMenuOpen(false)}
+          >
+            Cook Times
           </Link>
           <Link
             href="/recipes"
