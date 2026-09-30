@@ -1,4 +1,5 @@
 import crypto from 'crypto';
+import { cookies } from 'next/headers';
 import { cfg } from './runtime-config';
 
 const JWT_SECRET = cfg('JWT_SECRET') || 'fallback-secret-for-local-dev-please-change-it-in-production-1234567890';
@@ -48,6 +49,39 @@ export function verifyPassword(password: string, storedHash: string): boolean {
   if (!salt || !hash) return false;
   const verifyHash = crypto.scryptSync(password, salt, 64).toString('hex');
   return hash === verifyHash;
+}
+
+// -- Admin session tokens (httpOnly cookie, verified server-side) --
+export const ADMIN_COOKIE = 'admin_token';
+export const ADMIN_TOKEN_TTL_MS = 24 * 60 * 60 * 1000; // 24 hours
+
+export function signAdminToken(): string {
+  const exp = Date.now() + ADMIN_TOKEN_TTL_MS;
+  const body = Buffer.from(JSON.stringify({ role: 'admin', exp })).toString('base64url');
+  const signature = crypto.createHmac('sha256', JWT_SECRET).update(`admin.${body}`).digest('base64url');
+  return `${body}.${signature}`;
+}
+
+export function verifyAdminToken(token: string | undefined): boolean {
+  if (!token) return false;
+  try {
+    const [body, signature] = token.split('.');
+    if (!body || !signature) return false;
+    const expected = crypto.createHmac('sha256', JWT_SECRET).update(`admin.${body}`).digest('base64url');
+    const a = Buffer.from(signature);
+    const b = Buffer.from(expected);
+    if (a.length !== b.length || !crypto.timingSafeEqual(a, b)) return false;
+    const decoded = JSON.parse(Buffer.from(body, 'base64url').toString('utf8'));
+    return decoded.role === 'admin' && decoded.exp > Date.now();
+  } catch {
+    return false;
+  }
+}
+
+/** True when the incoming request carries a valid admin_token cookie. */
+export async function isAdminRequest(): Promise<boolean> {
+  const cookieStore = await cookies();
+  return verifyAdminToken(cookieStore.get(ADMIN_COOKIE)?.value);
 }
 
 export function getAnonymousName(userId: number): string {

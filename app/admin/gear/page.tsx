@@ -2,8 +2,6 @@
 
 import { useEffect, useState } from 'react';
 
-const SESSION_KEY = 'bbq_admin_authed';
-
 interface GearRow {
   id: number;
   slug: string;
@@ -34,8 +32,12 @@ export default function AdminGearPage() {
   const [newItem, setNewItem] = useState({ ...EMPTY_NEW });
   const [showNew, setShowNew] = useState(false);
 
+  // Restore auth from the server-side admin cookie
   useEffect(() => {
-    if (sessionStorage.getItem(SESSION_KEY) === '1') setAuthed(true);
+    fetch('/api/admin/login')
+      .then((r) => r.json())
+      .then(({ authed }) => { if (authed) setAuthed(true); })
+      .catch(() => {});
   }, []);
 
   useEffect(() => {
@@ -46,21 +48,34 @@ export default function AdminGearPage() {
       .catch(() => setLoading(false));
   }, [authed]);
 
-  function handleLogin(e: React.FormEvent) {
+  async function handleLogin(e: React.FormEvent) {
     e.preventDefault();
-    if (password === process.env.NEXT_PUBLIC_ADMIN_PASSWORD) {
-      sessionStorage.setItem(SESSION_KEY, '1');
-      setAuthed(true);
-      setAuthError('');
-    } else {
-      setAuthError('Incorrect password');
+    try {
+      const res = await fetch('/api/admin/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ password }),
+      });
+      if (res.ok) {
+        setAuthed(true);
+        setAuthError('');
+        setPassword('');
+      } else {
+        const { error } = await res.json().catch(() => ({ error: '' }));
+        setAuthError(error || 'Incorrect password');
+      }
+    } catch {
+      setAuthError('Could not reach the server');
     }
   }
 
-  const adminHeaders = {
-    'Content-Type': 'application/json',
-    'x-admin-password': process.env.NEXT_PUBLIC_ADMIN_PASSWORD ?? '',
-  };
+  async function handleSignOut() {
+    await fetch('/api/admin/login', { method: 'DELETE' }).catch(() => {});
+    setAuthed(false);
+  }
+
+  // Auth travels in the httpOnly admin_token cookie (same-origin fetch sends it).
+  const adminHeaders = { 'Content-Type': 'application/json' };
 
   const draftFor = (row: GearRow): GearRow => drafts[row.id] ?? row;
 
@@ -160,6 +175,12 @@ export default function AdminGearPage() {
             className="bg-brand-primary hover:bg-brand-secondary text-white font-bold px-4 py-2 rounded-xl text-sm transition-all"
           >
             {showNew ? 'Cancel' : '+ Add product'}
+          </button>
+          <button
+            onClick={handleSignOut}
+            className="text-brand-muted text-sm hover:text-brand-text transition-colors"
+          >
+            Sign out
           </button>
         </div>
       </div>

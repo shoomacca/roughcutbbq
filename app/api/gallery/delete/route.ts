@@ -1,12 +1,10 @@
 import { NextResponse } from 'next/server';
 import { getSupabase } from '@/lib/supabase';
-import { cfg } from '@/lib/runtime-config';
+import { isAdminRequest } from '@/lib/auth';
 
-export async function POST(req: Request) {
-  // Admin-only: require the admin password header
-  const adminPassword = cfg('ADMIN_PASSWORD') || cfg('NEXT_PUBLIC_ADMIN_PASSWORD');
-  const provided = req.headers.get('x-admin-password');
-  if (!adminPassword || provided !== adminPassword) {
+export async function DELETE(req: Request) {
+  // Admin-only: require a valid httpOnly admin_token cookie (set by /api/admin/login)
+  if (!(await isAdminRequest())) {
     return NextResponse.json({ error: 'unauthorized' }, { status: 401 });
   }
 

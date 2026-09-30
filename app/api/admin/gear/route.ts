@@ -1,11 +1,6 @@
 import { NextResponse } from 'next/server';
 import { getSupabase } from '@/lib/supabase';
-import { cfg } from '@/lib/runtime-config';
-
-function authorized(req: Request): boolean {
-  const pw = cfg('ADMIN_PASSWORD') || cfg('NEXT_PUBLIC_ADMIN_PASSWORD');
-  return !!pw && req.headers.get('x-admin-password') === pw;
-}
+import { isAdminRequest } from '@/lib/auth';
 
 const FIELDS = ['slug', 'name', 'category', 'description', 'affiliate_url', 'recommended_for', 'sort_order'] as const;
 
@@ -18,7 +13,7 @@ function pickFields(body: Record<string, unknown>) {
 }
 
 export async function POST(req: Request) {
-  if (!authorized(req)) return NextResponse.json({ error: 'unauthorized' }, { status: 401 });
+  if (!(await isAdminRequest())) return NextResponse.json({ error: 'unauthorized' }, { status: 401 });
   try {
     const body = await req.json();
     if (!body.slug || !body.name || !body.category || !body.affiliate_url) {
@@ -38,7 +33,7 @@ export async function POST(req: Request) {
 }
 
 export async function PATCH(req: Request) {
-  if (!authorized(req)) return NextResponse.json({ error: 'unauthorized' }, { status: 401 });
+  if (!(await isAdminRequest())) return NextResponse.json({ error: 'unauthorized' }, { status: 401 });
   try {
     const body = await req.json();
     if (!body.id) return NextResponse.json({ error: 'id required' }, { status: 400 });
@@ -55,7 +50,7 @@ export async function PATCH(req: Request) {
 }
 
 export async function DELETE(req: Request) {
-  if (!authorized(req)) return NextResponse.json({ error: 'unauthorized' }, { status: 401 });
+  if (!(await isAdminRequest())) return NextResponse.json({ error: 'unauthorized' }, { status: 401 });
   try {
     const { searchParams } = new URL(req.url);
     const id = searchParams.get('id');
