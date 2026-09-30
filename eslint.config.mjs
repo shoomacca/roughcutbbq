@@ -17,6 +17,8 @@ const eslintConfig = defineConfig([
     "tmp/**",
     "split_images.js",
     "android/**",
+    // Planning docs + one-off audit scripts, not app source
+    ".planning/**",
   ]),
 ]);
 
