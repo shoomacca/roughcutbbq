@@ -50,7 +50,7 @@ Decide D1–D8 (BLUEPRINT §5) and record the answers in BLUEPRINT §5.
 
 **RC-0.5 Test harness + CI** · risk-safe-fix · M
 - Add Vitest (engine goldens from the current output, a zod schema test for `meats.json`).
-- Add a Playwright smoke test: home → calculator → results, `/cook/smoker/pork_shoulder`, `/gear`.
+- Add a Playwright smoke test: home → calculator → results, `/cook/smoker/pork-shoulder`, `/gear`.
 - Add a GitHub Actions workflow running tsc, lint, vitest, build and Playwright against `next start`.
 
 **Accept:**
@@ -73,7 +73,7 @@ Ref AC §7.
 - Archive the `bbq-calculator` project and repo.
 
 **Accept:**
-- Live `/privacy`, `/account/delete` and `/cook/smoker/pork_shoulder` return 200 on both domains.
+- Live `/privacy`, `/account/delete` and `/cook/smoker/pork-shoulder` return 200 on both domains.
 - The old admin password is rejected by `/api/admin/login`.
 - `grep kd84` over the live JS returns 0.
 
@@ -680,5 +680,5 @@ Ref AC SE3, SE4.
 - **Accept:** the production track is live; the store link works.
 
 ---
-**Done:** RC-0.4 (05ec731, verified 2026-09-30).
+**Done:** RC-0.4 (05ec731), RC-0.5 (1d4a689), both verified 2026-09-30.
 **Next:** RC-0.1 (Chris: decisions). Can run meanwhile without decisions: RC-0.4 → RC-0.5 → RC-1.1 → RC-1.2 → RC-1.3 (all code-only, no prod state).
