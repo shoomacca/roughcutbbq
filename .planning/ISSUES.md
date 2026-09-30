@@ -2,6 +2,9 @@
 
 Execute strictly in order, one issue per subagent, verified before the next starts (BLUEPRINT §7).
 
+**Linear:** project "RoughCut BBQ — 10x" (team New Genesis, label `RoughCut BBQ`): https://linear.app/bitsbotsbytes/project/roughcut-bbq-10x-a73d51bcabb2
+RC ids map 1:1 in document order to **BOTS-661 … BOTS-734** (RC-0.1 = BOTS-661, RC-1.1 = BOTS-670, RC-2.1 = BOTS-680, RC-3.1 = BOTS-684, RC-4.1 = BOTS-690, RC-5.1 = BOTS-695, RC-6.1 = BOTS-699, RC-7.1 = BOTS-704, RC-8.1 = BOTS-710, RC-9.1 = BOTS-716, RC-10.1 = BOTS-721, RC-11.1 = BOTS-727, RC-12.1 = BOTS-730, RC-12.5 = BOTS-734). Blockers are set as Linear relations.
+
 **Labels**
 - **Size:** XS <1h · S half day · M 1–2 days · L 3+ days
 - **Risk:** `risk-safe-fix` (code only; runs through the subagent pipeline) · `risk-prod-state` (touches live DB, env, deploy or domains; needs Chris's go) · `HUMAN` (Chris does it) · `needs-decision`
