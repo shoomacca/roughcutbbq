@@ -680,5 +680,5 @@ Ref AC SE3, SE4.
 - **Accept:** the production track is live; the store link works.
 
 ---
-**Done:** RC-0.4 (05ec731), RC-0.5 (1d4a689), both verified 2026-09-30.
+**Done (verified 2026-09-30):** RC-0.4 (05ec731), RC-0.5 (1d4a689), RC-1.1 (fdcbc54), RC-1.2 (f7d0c2a), RC-1.3 (8f9aedc).
 **Next:** RC-0.1 (Chris: decisions). Can run meanwhile without decisions: RC-0.4 → RC-0.5 → RC-1.1 → RC-1.2 → RC-1.3 (all code-only, no prod state).
