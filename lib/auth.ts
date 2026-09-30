@@ -2,7 +2,29 @@ import crypto from 'crypto';
 import { cookies } from 'next/headers';
 import { cfg } from './runtime-config';
 
-const JWT_SECRET = cfg('JWT_SECRET') || 'fallback-secret-for-local-dev-please-change-it-in-production-1234567890';
+// Resolved lazily (at sign/verify time, not import time) so `next build`
+// can collect page data without secrets present.
+function getJwtSecret(): string {
+  const secret = cfg('JWT_SECRET');
+  if (secret) return secret;
+  if (process.env.NODE_ENV === 'production') {
+    // Never sign tokens with a known secret in production - anyone could forge sessions.
+    throw new Error('JWT_SECRET must be set in production.');
+  }
+  return 'local-dev-only-secret';
+}
+
+/** Constant-time string comparison (length mismatch returns false). */
+function timingSafeCompare(a: string, b: string): boolean {
+  const bufA = Buffer.from(a, 'utf8');
+  const bufB = Buffer.from(b, 'utf8');
+  if (bufA.length !== bufB.length) {
+    // Compare with self to keep timing uniform
+    crypto.timingSafeEqual(bufA, bufA);
+    return false;
+  }
+  return crypto.timingSafeEqual(bufA, bufB);
+}
 
 export function signToken(payload: { userId: number; email: string }): string {
   const header = Buffer.from(JSON.stringify({ alg: 'HS256', typ: 'JWT' })).toString('base64url');
@@ -10,7 +32,7 @@ export function signToken(payload: { userId: number; email: string }): string {
   const body = Buffer.from(JSON.stringify({ ...payload, exp })).toString('base64url');
   
   const signature = crypto
-    .createHmac('sha256', JWT_SECRET)
+    .createHmac('sha256', getJwtSecret())
     .update(`${header}.${body}`)
     .digest('base64url');
     
@@ -23,11 +45,11 @@ export function verifyToken(token: string): { userId: number; email: string } | 
     if (!header || !body || !signature) return null;
     
     const expectedSignature = crypto
-      .createHmac('sha256', JWT_SECRET)
+      .createHmac('sha256', getJwtSecret())
       .update(`${header}.${body}`)
       .digest('base64url');
       
-    if (signature !== expectedSignature) return null;
+    if (!timingSafeCompare(signature, expectedSignature)) return null;
     
     const decodedBody = JSON.parse(Buffer.from(body, 'base64url').toString('utf8'));
     if (decodedBody.exp < Date.now()) return null; // Expired
@@ -48,7 +70,7 @@ export function verifyPassword(password: string, storedHash: string): boolean {
   const [salt, hash] = storedHash.split(':');
   if (!salt || !hash) return false;
   const verifyHash = crypto.scryptSync(password, salt, 64).toString('hex');
-  return hash === verifyHash;
+  return timingSafeCompare(hash, verifyHash);
 }
 
 // -- Admin session tokens (httpOnly cookie, verified server-side) --
@@ -58,7 +80,7 @@ export const ADMIN_TOKEN_TTL_MS = 24 * 60 * 60 * 1000; // 24 hours
 export function signAdminToken(): string {
   const exp = Date.now() + ADMIN_TOKEN_TTL_MS;
   const body = Buffer.from(JSON.stringify({ role: 'admin', exp })).toString('base64url');
-  const signature = crypto.createHmac('sha256', JWT_SECRET).update(`admin.${body}`).digest('base64url');
+  const signature = crypto.createHmac('sha256', getJwtSecret()).update(`admin.${body}`).digest('base64url');
   return `${body}.${signature}`;
 }
 
@@ -67,10 +89,8 @@ export function verifyAdminToken(token: string | undefined): boolean {
   try {
     const [body, signature] = token.split('.');
     if (!body || !signature) return false;
-    const expected = crypto.createHmac('sha256', JWT_SECRET).update(`admin.${body}`).digest('base64url');
-    const a = Buffer.from(signature);
-    const b = Buffer.from(expected);
-    if (a.length !== b.length || !crypto.timingSafeEqual(a, b)) return false;
+    const expected = crypto.createHmac('sha256', getJwtSecret()).update(`admin.${body}`).digest('base64url');
+    if (!timingSafeCompare(signature, expected)) return false;
     const decoded = JSON.parse(Buffer.from(body, 'base64url').toString('utf8'));
     return decoded.role === 'admin' && decoded.exp > Date.now();
   } catch {
