@@ -1,3 +1,49 @@
+export function faqJsonLd(faqs: { question: string; answer: string }[]) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map((f) => ({
+      '@type': 'Question',
+      name: f.question,
+      acceptedAnswer: { '@type': 'Answer', text: f.answer },
+    })),
+  };
+}
+
+export function breadcrumbJsonLd(items: { name: string; url: string }[]) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: items.map((item, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      name: item.name,
+      item: item.url,
+    })),
+  };
+}
+
+export function recipeJsonLd(opts: {
+  name: string;
+  description: string;
+  category: string;
+  method: string;
+  cut: string;
+  url: string;
+}) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Recipe',
+    name: opts.name,
+    description: opts.description,
+    recipeCategory: opts.category,
+    recipeCuisine: 'Barbecue',
+    keywords: `${opts.cut}, ${opts.method}, BBQ, low and slow, metric`,
+    author: { '@type': 'Organization', name: 'Rough Cut BBQ' },
+    url: opts.url,
+  };
+}
+
 export function cookPlanJsonLd(
   cut: string,
   method: string,

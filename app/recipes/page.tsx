@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useMemo } from 'react';
+import Link from 'next/link';
 import { RECIPES, RECIPE_CATEGORIES, type Recipe } from '@/data/recipes';
 
 const CAT_EMOJI: Record<string, string> = {
@@ -55,6 +56,14 @@ function RecipeRow({ item }: { item: Recipe }) {
           {item.wood !== 'N/A' && <Detail label="Wood" value={item.wood} />}
           <div className="sm:col-span-2">
             <Detail label="Notes" value={item.notes} />
+          </div>
+          <div className="sm:col-span-2">
+            <Link
+              href={`/recipes/${item.slug}`}
+              className="text-brand-secondary text-xs font-semibold hover:underline"
+            >
+              Full recipe page &rarr;
+            </Link>
           </div>
         </div>
       )}
