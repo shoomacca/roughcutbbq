@@ -54,6 +54,10 @@ export default function ScrollCarousel({
   const [centeredIdx, setCenteredIdx] = useState(0);
   // The label only animates on later changes: first paint ships fully visible.
   const [textChanged, setTextChanged] = useState(false);
+  // Set by the user's own pointer/wheel/tap/dot click; the initial positioning and the
+  // entrance glide also move the centre, and must not restart the text animation.
+  const userMoved = useRef(false);
+  const markUserMoved = () => { userMoved.current = true; };
   const centeredIdxRef = useRef(0);
 
   const clickTimer   = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -94,7 +98,7 @@ export default function ScrollCarousel({
     if (closestIdx !== centeredIdxRef.current) {
       centeredIdxRef.current = closestIdx;
       setCenteredIdx(closestIdx);
-      setTextChanged(true);
+      if (userMoved.current) setTextChanged(true);
     }
   }, [STRIDE]);
 
@@ -133,6 +137,7 @@ export default function ScrollCarousel({
   });
 
   const scrollToIdx = (idx: number) => {
+    markUserMoved();
     const container = containerRef.current;
     const el = itemRefs.current[idx];
     if (!container || !el) return;
@@ -153,6 +158,7 @@ export default function ScrollCarousel({
   }, []);
 
   const handleCardClick = (i: number) => {
+    markUserMoved();
     if (isTouch()) {
       if (i === centeredIdxRef.current) onSelect(items[i].id);
       else scrollToIdx(i);
@@ -213,6 +219,10 @@ export default function ScrollCarousel({
       {/* ── Carousel — full width ─────────────────────────────────────────── */}
       <div
         ref={containerRef}
+        onPointerDown={markUserMoved}
+        onWheel={markUserMoved}
+        onTouchStart={markUserMoved}
+        onKeyDown={markUserMoved}
         className="flex overflow-x-auto no-scrollbar cursor-grab active:cursor-grabbing select-none"
         style={{
           scrollSnapType: 'x mandatory',
@@ -262,14 +272,16 @@ export default function ScrollCarousel({
           <>
             <p
               key={centeredItem.id}
-              className={`text-brand-text font-black text-xl italic leading-tight ${textChanged ? 'animate-fade-up duration-(--motion-base)' : ''}`}
+              className={`text-brand-text font-black text-xl italic leading-tight ${textChanged ? 'animate-fade-up' : ''}`}
+              style={textChanged ? { animationDuration: 'var(--motion-base)' } : undefined}
             >
               {centeredItem.label}
             </p>
             {centeredItem.sublabel && (
               <p
                 key={`${centeredItem.id}-sub`}
-                className={`text-brand-muted text-sm mt-1 ${textChanged ? 'animate-fade-in delay-50' : ''}`}
+                className={`text-brand-muted text-sm mt-1 ${textChanged ? 'animate-fade-in' : ''}`}
+                style={textChanged ? { animationDelay: '50ms' } : undefined}
               >
                 {centeredItem.sublabel}
               </p>

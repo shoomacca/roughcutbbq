@@ -46,6 +46,10 @@ export default function HeroCarousel() {
   const [centeredIdx, setCenteredIdx] = useState(0);
   // The headline only animates on later changes: server HTML must ship fully visible.
   const [textChanged, setTextChanged] = useState(false);
+  // Set by the user's own pointer/wheel/tap/dot click; the initial positioning and the
+  // entrance glide also move the centre, and must not restart the text animation.
+  const userMoved = useRef(false);
+  const markUserMoved = () => { userMoved.current = true; };
   const centeredIdxRef = useRef(0);
 
   // Double-click state
@@ -91,7 +95,7 @@ export default function HeroCarousel() {
     if (closestIdx !== centeredIdxRef.current) {
       centeredIdxRef.current = closestIdx;
       setCenteredIdx(closestIdx);
-      setTextChanged(true);
+      if (userMoved.current) setTextChanged(true);
     }
   }, [STRIDE]);
 
@@ -132,6 +136,7 @@ export default function HeroCarousel() {
   });
 
   const scrollToIdx = (idx: number) => {
+    markUserMoved();
     const container = containerRef.current;
     const el = itemRefs.current[idx];
     if (!container || !el) return;
@@ -158,6 +163,7 @@ export default function HeroCarousel() {
   }, [router]);
 
   const handleCardClick = (i: number) => {
+    markUserMoved();
     if (isTouch()) {
       // Touch: single tap = centre it; if already centred, proceed
       if (i === centeredIdxRef.current) {
@@ -205,6 +211,10 @@ export default function HeroCarousel() {
       {/* Carousel */}
       <div
         ref={containerRef}
+        onPointerDown={markUserMoved}
+        onWheel={markUserMoved}
+        onTouchStart={markUserMoved}
+        onKeyDown={markUserMoved}
         className="flex overflow-x-auto no-scrollbar cursor-grab active:cursor-grabbing select-none"
         style={{
           scrollSnapType: 'x mandatory',
@@ -256,13 +266,15 @@ export default function HeroCarousel() {
       <div className="flex flex-col items-center text-center px-6 pt-2 pb-6 gap-2 min-h-[80px]">
         <h2
           key={centered.id}
-          className={`text-2xl sm:text-3xl font-black text-brand-text italic leading-tight ${textChanged ? 'animate-fade-up duration-(--motion-base)' : ''}`}
+          className={`text-2xl sm:text-3xl font-black text-brand-text italic leading-tight ${textChanged ? 'animate-fade-up' : ''}`}
+          style={textChanged ? { animationDuration: 'var(--motion-base)' } : undefined}
         >
           {centered.headline}
         </h2>
         <p
           key={`${centered.id}-body`}
-          className={`text-brand-muted text-sm ${textChanged ? 'animate-fade-in delay-50' : ''}`}
+          className={`text-brand-muted text-sm ${textChanged ? 'animate-fade-in' : ''}`}
+          style={textChanged ? { animationDelay: '50ms' } : undefined}
         >
           {centered.body}
         </p>
