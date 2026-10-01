@@ -105,6 +105,8 @@ export default function Header() {
         <button
           className="md:hidden text-brand-muted hover:text-brand-text transition-ui p-1"
           aria-label="Toggle menu"
+          aria-expanded={menuOpen}
+          aria-controls="mobile-menu"
           onClick={() => setMenuOpen((o) => !o)}
         >
           <svg
@@ -135,8 +137,9 @@ export default function Header() {
       </div>
 
       {/* Mobile menu — stays mounted; the CSS collapse-box animates open and closed */}
-      <div className="md:hidden collapse-box" data-open={menuOpen ? '' : undefined} aria-hidden={!menuOpen}>
-       <div>
+      <div id="mobile-menu" className="md:hidden collapse-box" data-open={menuOpen ? '' : undefined} aria-hidden={!menuOpen}>
+       {/* inert from the moment it closes: unreachable by Tab while the close animates */}
+       <div inert={!menuOpen}>
         <nav className={`bg-brand-surface border-t border-brand-muted/20 px-4 py-3 flex flex-col gap-3 text-sm font-medium`}>
           <Link
             href="/"

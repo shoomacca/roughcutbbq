@@ -190,6 +190,8 @@ export default function SavesPage() {
                   <div className="z-10 border-t border-white/5 pt-2 mt-2">
                     <button 
                       onClick={() => setExpandedId(isExpanded ? null : save.saveId)}
+                      aria-expanded={isExpanded}
+                      aria-controls={`save-details-${save.saveId}`}
                       className="flex items-center gap-2 text-sm text-[#5A9B6A] hover:text-[#FAF6E9] transition-ui w-full"
                     >
                       <svg 
@@ -201,8 +203,8 @@ export default function SavesPage() {
                       {isExpanded ? 'Hide Details' : 'View Cook Details'}
                     </button>
                     
-                    <div className="collapse-box" data-open={isExpanded ? '' : undefined}>
-                     <div>
+                    <div id={`save-details-${save.saveId}`} className="collapse-box" data-open={isExpanded ? '' : undefined}>
+                     <div inert={!isExpanded}>
                           <div className="flex flex-wrap items-center gap-3 text-sm text-white/60 mt-4 bg-black/20 p-4 rounded-xl border border-white/5">
                             <div className="flex items-center gap-1.5">
                               <span className="text-xl">⚖️</span> 

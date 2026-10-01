@@ -25,6 +25,8 @@ function RecipeRow({ item }: { item: Recipe }) {
       {/* Summary row — always visible */}
       <button
         onClick={() => setOpen((o) => !o)}
+        aria-expanded={open}
+        aria-controls={`recipe-${item.slug}`}
         className="w-full flex items-center gap-4 px-4 py-4 text-left group"
       >
         {/* Category emoji tile */}
@@ -48,44 +50,26 @@ function RecipeRow({ item }: { item: Recipe }) {
       </button>
 
       {/* Expanded details */}
-      <div className="collapse-box" data-open={open ? '' : undefined}>
-       <div>
+      <div id={`recipe-${item.slug}`} className="collapse-box" data-open={open ? '' : undefined}>
+       <div inert={!open}>
         <div className="border-t border-white/8 px-4 py-4 grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
-
           <Detail label="Cut" value={item.cut} />
-
           <Detail label="Method" value={item.method} />
-
           <Detail label="Style / Rub" value={item.style} />
-
           <Detail label="Target Internal" value={item.targetInternal} />
-
           <Detail label="Time" value={item.time} />
-
           {item.wood !== 'N/A' && <Detail label="Wood" value={item.wood} />}
-
           <div className="sm:col-span-2">
-
             <Detail label="Notes" value={item.notes} />
-
           </div>
-
           <div className="sm:col-span-2">
-
             <Link
-
               href={`/recipes/${item.slug}`}
-
               className="text-brand-secondary text-xs font-semibold hover:underline"
-
             >
-
               Full recipe page &rarr;
-
             </Link>
-
           </div>
-
         </div>
        </div>
       </div>
