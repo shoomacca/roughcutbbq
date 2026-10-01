@@ -184,10 +184,15 @@ describe('auth routes', () => {
 });
 
 describe('gallery upload (multipart)', () => {
+  let tiny: Buffer;
+  beforeAll(async () => {
+    const sharp = (await import('sharp')).default;
+    tiny = await sharp({ create: { width: 4, height: 4, channels: 3, background: '#f00' } }).jpeg().toBuffer();
+  });
   function form(fields: Record<string, string>) {
     const f = new FormData();
-    f.append('before', new File(['x'], 'b.jpg', { type: 'image/jpeg' }));
-    f.append('after', new File(['x'], 'a.jpg', { type: 'image/jpeg' }));
+    f.append('before', new File([new Uint8Array(tiny)], 'b.jpg', { type: 'image/jpeg' }));
+    f.append('after', new File([new Uint8Array(tiny)], 'a.jpg', { type: 'image/jpeg' }));
     for (const [k, v] of Object.entries(fields)) f.append(k, v);
     return new Request(U, { method: 'POST', body: f });
   }

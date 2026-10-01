@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { getSupabase } from '@/lib/supabase';
 import { getAnonymousName } from '@/lib/auth';
-import { optionalUser, parseQuery } from '@/lib/api';
+import { optionalUser, parseQuery, requireAdmin } from '@/lib/api';
 import { galleryQuery } from '@/lib/api-schemas';
 
 interface GalleryRow {
@@ -25,6 +25,11 @@ export async function GET(req: Request) {
   if (!q.ok) return q.res;
   const { method, cut } = q.data;
   const flagged = q.data.flagged === 'true';
+
+  if (flagged) {
+    const admin = await requireAdmin();
+    if (!admin.ok) return admin.res;
+  }
 
   try {
     const supabase = getSupabase();
