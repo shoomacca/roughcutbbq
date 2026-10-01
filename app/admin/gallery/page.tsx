@@ -123,7 +123,7 @@ export default function AdminGalleryPage() {
         </div>
         <button
           onClick={handleSignOut}
-          className="text-brand-muted text-sm hover:text-brand-text transition-colors"
+          className="text-brand-muted text-sm hover:text-brand-text transition-ui"
         >
           Sign out
         </button>
@@ -181,7 +181,7 @@ export default function AdminGalleryPage() {
                     <button
                       onClick={() => handleDelete(post.id)}
                       disabled={deleting === post.id}
-                      className="px-3 py-1.5 rounded-lg text-xs font-semibold text-white bg-red-600/80 hover:bg-red-600 disabled:opacity-40 transition-colors"
+                      className="px-3 py-1.5 rounded-lg text-xs font-semibold text-white bg-red-600/80 hover:bg-red-600 disabled:opacity-40 transition-ui"
                     >
                       {deleting === post.id ? 'Deleting...' : 'Delete'}
                     </button>

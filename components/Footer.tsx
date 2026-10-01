@@ -17,19 +17,19 @@ export default function Footer() {
         <div className="flex flex-col sm:flex-row items-center justify-between gap-3">
           <p>© {year} RoughCut BBQ — metric-first, kg &amp; °C only</p>
           <nav className="flex flex-wrap justify-center gap-4">
-            <Link href="/" className="hover:text-brand-text transition-colors">
+            <Link href="/" className="hover:text-brand-text transition-ui">
               Home
             </Link>
-            <Link href="/cook" className="hover:text-brand-text transition-colors">
+            <Link href="/cook" className="hover:text-brand-text transition-ui">
               Cooking Times
             </Link>
-            <Link href="/guides" className="hover:text-brand-text transition-colors">
+            <Link href="/guides" className="hover:text-brand-text transition-ui">
               Guides
             </Link>
-            <Link href="/gear" className="hover:text-brand-text transition-colors">
+            <Link href="/gear" className="hover:text-brand-text transition-ui">
               Gear
             </Link>
-            <Link href="/gallery" className="hover:text-brand-text transition-colors">
+            <Link href="/gallery" className="hover:text-brand-text transition-ui">
               Gallery
             </Link>
           </nav>

@@ -255,7 +255,7 @@ export default async function CookPage({ params }: PageProps) {
           </Link>
           <Link
             href="/calculator"
-            className="px-4 py-2.5 rounded-xl font-bold text-sm text-brand-text border border-white/15 hover:border-white/30 transition-colors"
+            className="px-4 py-2.5 rounded-xl font-bold text-sm text-brand-text border border-white/15 hover:border-white/30 transition-ui"
           >
             Open the calculator
           </Link>
@@ -273,7 +273,7 @@ export default async function CookPage({ params }: PageProps) {
                 href={`/go/${g.slug}`}
                 target="_blank"
                 rel="noopener noreferrer sponsored"
-                className="bg-brand-surface border border-white/8 rounded-xl p-4 hover:border-white/20 transition-colors"
+                className="bg-brand-surface border border-white/8 rounded-xl p-4 hover:border-white/20 transition-ui"
               >
                 <p className="text-brand-text font-semibold text-sm">{g.name}</p>
                 <p className="text-brand-muted text-xs mt-1 leading-relaxed">{g.description}</p>
@@ -311,7 +311,7 @@ export default async function CookPage({ params }: PageProps) {
               <Link
                 key={m}
                 href={`/cook/${METHOD_INFO[m].slug}/${cutToSlug(cut.id)}`}
-                className="px-3 py-1.5 rounded-lg text-xs font-semibold text-brand-text border border-white/15 hover:border-white/30 transition-colors"
+                className="px-3 py-1.5 rounded-lg text-xs font-semibold text-brand-text border border-white/15 hover:border-white/30 transition-ui"
               >
                 {METHOD_INFO[m].label}
               </Link>

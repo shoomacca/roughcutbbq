@@ -11,6 +11,23 @@
 
   --font-sans: 'Inter', system-ui, sans-serif;
   --font-display: var(--font-display, 'Georgia', serif);
+
+  /* ── Motion tokens (CSS side; lib/motion.ts mirrors these numbers for JS) ──
+     fast  = hover/press feedback          base = most UI state changes
+     slow  = reveals, step changes          hero = one-off entrance moments */
+  --motion-fast: 150ms;
+  --motion-base: 220ms;
+  --motion-slow: 320ms;
+  --motion-hero: 650ms;
+  --motion-dist: 16px;      /* enter/reveal travel distance */
+  --motion-dist-sm: 8px;    /* small items: alerts, chips, labels */
+  --ease-out-soft: cubic-bezier(0.2, 0, 0, 1);       /* decelerate: things arriving */
+  --ease-in-soft: cubic-bezier(0.4, 0, 1, 1);        /* accelerate: things leaving */
+  --ease-spring: cubic-bezier(0.34, 1.3, 0.64, 1);   /* slight overshoot: press release, badges */
+
+  --animate-fade-in: fade-in var(--motion-base) var(--ease-out-soft) both;
+  --animate-fade-up: fade-up var(--motion-slow) var(--ease-out-soft) both;
+  --animate-shimmer: shimmer 1.4s linear infinite;
 }
 
 body {
@@ -25,6 +42,20 @@ body {
 }
 .no-scrollbar::-webkit-scrollbar {
   display: none;
+}
+
+/* ── Keyframes ────────────────────────────────────────────────────────────── */
+@keyframes fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(var(--motion-dist)); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes shimmer {
+  from { background-position: 200% 0; }
+  to   { background-position: -200% 0; }
 }
 
 @keyframes ember-pulse {
@@ -44,6 +75,119 @@ body {
 
 .smoke-wisp {
   animation: smoke-rise 4s ease-out infinite;
+}
+
+/* ── Interactive feedback ─────────────────────────────────────────────────────
+   Every button gets a press (scale) response. The scale transition lives here so
+   it works even without a transition utility on the element. */
+@layer base {
+  button:not(:disabled) {
+    transition: scale var(--motion-fast) var(--ease-out-soft);
+  }
+  button:not(:disabled):active {
+    scale: 0.97;
+  }
+}
+
+/* One transition utility for the whole app: compositor-friendly properties only,
+   token-driven duration and easing. Replaces ad-hoc transition-colors/-all. */
+@utility transition-ui {
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke,
+    opacity, box-shadow, transform, translate, scale, rotate, filter;
+  transition-timing-function: var(--ease-out-soft);
+  transition-duration: var(--motion-base);
+}
+
+/* Cards and rows: lift on hover (translate only, no layout work). */
+@utility lift {
+  &:hover {
+    translate: 0 -2px;
+  }
+}
+
+/* Sliding tab/nav indicator (lib/useSlidingIndicator.ts positions it). */
+.slide-indicator {
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  transform-origin: top left;
+  will-change: transform;
+  transition:
+    transform var(--motion-base) var(--ease-out-soft),
+    width var(--motion-base) var(--ease-out-soft),
+    height var(--motion-base) var(--ease-out-soft),
+    opacity var(--motion-fast) var(--ease-out-soft);
+}
+
+/* Loading placeholder: a moving sheen instead of a blinking block. */
+@utility skeleton {
+  background: linear-gradient(
+    100deg,
+    rgba(255, 255, 255, 0.05) 30%,
+    rgba(255, 255, 255, 0.12) 50%,
+    rgba(255, 255, 255, 0.05) 70%
+  );
+  background-size: 200% 100%;
+  animation: var(--animate-shimmer);
+}
+
+/* ── Scroll reveal (components/Reveal.tsx) ─────────────────────────────────────
+   Hidden only when scripting is on, so no-JS clients and crawlers see everything.
+   The IntersectionObserver sets data-inview once; the animation then runs once. */
+@media (scripting: enabled) {
+  .reveal {
+    opacity: 0;
+  }
+  .reveal[data-inview] {
+    animation: fade-up var(--motion-slow) var(--ease-out-soft) both;
+    animation-delay: var(--reveal-delay, 0ms);
+  }
+}
+
+/* ── Route transitions (app/template.tsx, React <ViewTransition>) ─────────────
+   Old page fades out quickly, new page fades up a little later. Header is outside
+   the boundary and never moves. The overlay never blocks input. */
+::view-transition {
+  pointer-events: none;
+}
+::view-transition-old(.page-exit) {
+  animation: var(--motion-fast) var(--ease-in-soft) both fade-in reverse;
+}
+::view-transition-new(.page-enter) {
+  animation: var(--motion-slow) var(--ease-out-soft) both fade-up;
+}
+
+/* ── REDUCED MOTION POLICY (the one place) ───────────────────────────────────
+   Direct manipulation (drag, wheel, carousel glide in lib/useDragScroll.ts) is NOT
+   gated: it answers the user's own hand. framer-motion follows the same policy via
+   <MotionConfig reducedMotion="user"> in components/MotionProvider.tsx, which keeps
+   opacity animations and drops transform ones. Here, decorative movement becomes a
+   quick opacity fade instead of nothing, so pages still feel alive but nothing travels. */
+@media (prefers-reduced-motion: reduce) {
+  .reveal[data-inview] {
+    animation-name: fade-in;
+    animation-duration: var(--motion-base);
+    animation-delay: 0ms;
+  }
+  ::view-transition-old(.page-exit),
+  ::view-transition-new(.page-enter) {
+    animation-name: fade-in;
+    animation-duration: var(--motion-fast);
+  }
+  .lift:hover {
+    translate: none;
+  }
+  .slide-indicator {
+    transition-duration: 0ms; /* a position change: instant is the honest no-motion version */
+  }
+  .animate-fade-up {
+    animation-name: fade-in;
+  }
+  .ember-glow,
+  .smoke-wisp {
+    animation: none;
+  }
 }
 
 @media print {

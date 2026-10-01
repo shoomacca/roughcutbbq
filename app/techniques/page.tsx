@@ -35,7 +35,7 @@ export default function TechniquesPage() {
                 {category.cuts.map((cut: Cut) => (
                   <div 
                     key={cut.id} 
-                    className="p-6 rounded-3xl flex flex-col transition-all duration-300 hover:-translate-y-1 relative overflow-hidden group"
+                    className="p-6 rounded-3xl flex flex-col transition-ui duration-300 hover:-translate-y-1 relative overflow-hidden group"
                     style={{
                       background: 'rgba(255,255,255,0.02)',
                       border: '1px solid rgba(255,255,255,0.05)',
@@ -43,7 +43,7 @@ export default function TechniquesPage() {
                       backdropFilter: 'blur(10px)',
                     }}
                   >
-                    <div className="absolute inset-0 bg-gradient-to-br from-[#5A9B6A]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                    <div className="absolute inset-0 bg-gradient-to-br from-[#5A9B6A]/5 to-transparent opacity-0 group-hover:opacity-100 transition-ui duration-500" />
                     <h3 className="text-xl font-bold text-[#FAF6E9] mb-1 relative z-10">{cut.name}</h3>
                     
                     <div className="mt-4 grid grid-cols-2 gap-4 text-sm relative z-10 flex-1">
@@ -81,7 +81,7 @@ export default function TechniquesPage() {
                     
                     {cut.tips && cut.tips.length > 0 && (
                       <div className="mt-6 pt-4 border-t border-white/5 relative z-10">
-                        <p className="text-white/50 text-xs leading-relaxed line-clamp-3 group-hover:line-clamp-none transition-all duration-300">
+                        <p className="text-white/50 text-xs leading-relaxed line-clamp-3 group-hover:line-clamp-none transition-ui duration-300">
                           {cut.tips[0]}
                         </p>
                       </div>

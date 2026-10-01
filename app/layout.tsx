@@ -3,6 +3,7 @@ import { Inter, Abril_Fatface } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import MotionProvider from "@/components/MotionProvider";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -39,9 +40,11 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.className} ${abrilFatface.variable}`}>
       <body className="bg-brand-dark text-brand-text min-h-screen flex flex-col">
-        <Header />
-        <main className="flex-1 flex flex-col">{children}</main>
-        <Footer />
+        <MotionProvider>
+          <Header />
+          <main className="flex-1 flex flex-col">{children}</main>
+          <Footer />
+        </MotionProvider>
       </body>
     </html>
   );

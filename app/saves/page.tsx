@@ -3,7 +3,9 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { getHistory, deleteFromHistory, saveResult, updateHistory, type SavedCook } from '@/lib/resultStorage';
-import { motion, AnimatePresence } from 'framer-motion';
+import { m, AnimatePresence } from 'framer-motion';
+import Reveal from '@/components/Reveal';
+import { collapse } from '@/lib/motion';
 
 export default function SavesPage() {
   const router = useRouter();
@@ -118,7 +120,7 @@ export default function SavesPage() {
             <p className="text-white/60 mb-6">Calculate a cook plan and save it to see it here.</p>
             <button
               onClick={() => router.push('/calculator')}
-              className="bg-[#3A4A3E] hover:bg-[#4A5A4E] transition-colors text-white font-bold px-6 py-3 rounded-xl text-sm"
+              className="bg-[#3A4A3E] hover:bg-[#4A5A4E] transition-ui text-white font-bold px-6 py-3 rounded-xl text-sm"
             >
               Start a new cook
             </button>
@@ -132,9 +134,9 @@ export default function SavesPage() {
               const isExpanded = expandedId === save.saveId;
               
               return (
-                <div 
-                  key={save.saveId}
-                  className={`relative bg-[#1C2A1E] border transition-colors rounded-2xl p-5 flex flex-col gap-4 overflow-hidden ${isExpanded ? 'border-[#5A9B6A]/50 bg-[#243627]' : 'border-white/5 hover:border-white/20'}`}
+                <Reveal key={save.saveId} index={index}>
+                <div
+                  className={`relative bg-[#1C2A1E] border transition-ui rounded-2xl p-5 flex flex-col gap-4 overflow-hidden ${isExpanded ? 'border-[#5A9B6A]/50 bg-[#243627]' : 'border-white/5 hover:border-white/20'}`}
                 >
                   {/* Leaderboard Rank Icon (for top 3 rated) */}
                   {(save.rating === 5 || save.rating === 4) && index < 3 && (
@@ -152,7 +154,7 @@ export default function SavesPage() {
                     
                     <button 
                       onClick={(e) => handleDelete(e, save.saveId)}
-                      className="text-white/20 hover:text-red-400 transition-colors p-2 -mt-2 -mr-2 z-20"
+                      className="text-white/20 hover:text-red-400 transition-ui p-2 -mt-2 -mr-2 z-20"
                       aria-label="Delete save"
                     >
                       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 6h18M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2M10 11v6M14 11v6"/></svg>
@@ -165,7 +167,7 @@ export default function SavesPage() {
                       <button
                         key={star}
                         onClick={(e) => handleRating(e, save.saveId, star)}
-                        className={`text-2xl transition-transform hover:scale-110 active:scale-90 ${star <= (save.rating || 0) ? 'text-yellow-400 drop-shadow-[0_0_8px_rgba(250,204,21,0.5)]' : 'text-white/10 hover:text-white/30'}`}
+                        className={`text-2xl transition-ui hover:scale-110 active:scale-90 ${star <= (save.rating || 0) ? 'text-yellow-400 drop-shadow-[0_0_8px_rgba(250,204,21,0.5)]' : 'text-white/10 hover:text-white/30'}`}
                       >
                         ★
                       </button>
@@ -181,7 +183,7 @@ export default function SavesPage() {
                       placeholder="Add notes about this cook... (e.g., 'Used cherry wood, guests loved it!')"
                       value={save.notes || ''}
                       onChange={(e) => handleNotes(save.saveId, e.target.value)}
-                      className="w-full bg-black/20 border border-white/5 rounded-xl p-3 text-sm text-white/80 placeholder:text-white/20 focus:outline-none focus:border-[#5A9B6A]/50 focus:bg-black/40 transition-all resize-none"
+                      className="w-full bg-black/20 border border-white/5 rounded-xl p-3 text-sm text-white/80 placeholder:text-white/20 focus:outline-none focus:border-[#5A9B6A]/50 focus:bg-black/40 transition-ui resize-none"
                       rows={2}
                     />
                   </div>
@@ -190,11 +192,11 @@ export default function SavesPage() {
                   <div className="z-10 border-t border-white/5 pt-2 mt-2">
                     <button 
                       onClick={() => setExpandedId(isExpanded ? null : save.saveId)}
-                      className="flex items-center gap-2 text-sm text-[#5A9B6A] hover:text-[#FAF6E9] transition-colors w-full"
+                      className="flex items-center gap-2 text-sm text-[#5A9B6A] hover:text-[#FAF6E9] transition-ui w-full"
                     >
                       <svg 
                         width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
-                        className={`transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''}`}
+                        className={`transition-ui duration-300 ${isExpanded ? 'rotate-180' : ''}`}
                       >
                         <polyline points="6 9 12 15 18 9"></polyline>
                       </svg>
@@ -203,10 +205,11 @@ export default function SavesPage() {
                     
                     <AnimatePresence>
                       {isExpanded && (
-                        <motion.div
-                          initial={{ height: 0, opacity: 0 }}
-                          animate={{ height: 'auto', opacity: 1 }}
-                          exit={{ height: 0, opacity: 0 }}
+                        <m.div
+                          variants={collapse}
+                          initial="hidden"
+                          animate="show"
+                          exit="exit"
                           className="overflow-hidden"
                         >
                           <div className="flex flex-wrap items-center gap-3 text-sm text-white/60 mt-4 bg-black/20 p-4 rounded-xl border border-white/5">
@@ -227,17 +230,18 @@ export default function SavesPage() {
                              <div className="w-full mt-2">
                                 <button 
                                   onClick={() => handleLoad(save)}
-                                  className="text-xs text-[#FAF6E9] bg-white/5 hover:bg-white/10 px-3 py-1.5 rounded-lg transition-colors border border-white/10"
+                                  className="text-xs text-[#FAF6E9] bg-white/5 hover:bg-white/10 px-3 py-1.5 rounded-lg transition-ui border border-white/10"
                                 >
                                   Load this exact plan &rarr;
                                 </button>
                              </div>
                           </div>
-                        </motion.div>
+                        </m.div>
                       )}
                     </AnimatePresence>
                   </div>
                 </div>
+                </Reveal>
               );
             })}
           </div>

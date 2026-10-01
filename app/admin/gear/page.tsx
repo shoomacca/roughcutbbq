@@ -153,7 +153,7 @@ export default function AdminGearPage() {
             className="bg-brand-surface border border-white/10 rounded-xl px-4 py-3 text-sm outline-none focus:border-brand-secondary"
           />
           {authError && <p className="text-red-400 text-sm">{authError}</p>}
-          <button className="bg-brand-primary hover:bg-brand-secondary text-white font-bold py-3 rounded-xl text-sm transition-all">
+          <button className="bg-brand-primary hover:bg-brand-secondary text-white font-bold py-3 rounded-xl text-sm transition-ui">
             Unlock
           </button>
         </form>
@@ -172,13 +172,13 @@ export default function AdminGearPage() {
           {message && <span className="text-brand-secondary text-sm font-bold">{message}</span>}
           <button
             onClick={() => setShowNew((s) => !s)}
-            className="bg-brand-primary hover:bg-brand-secondary text-white font-bold px-4 py-2 rounded-xl text-sm transition-all"
+            className="bg-brand-primary hover:bg-brand-secondary text-white font-bold px-4 py-2 rounded-xl text-sm transition-ui"
           >
             {showNew ? 'Cancel' : '+ Add product'}
           </button>
           <button
             onClick={handleSignOut}
-            className="text-brand-muted text-sm hover:text-brand-text transition-colors"
+            className="text-brand-muted text-sm hover:text-brand-text transition-ui"
           >
             Sign out
           </button>
@@ -198,7 +198,7 @@ export default function AdminGearPage() {
           <input className={inputCls} placeholder="Sort order" type="number" value={newItem.sort_order} onChange={(e) => setNewItem({ ...newItem, sort_order: parseInt(e.target.value || '100', 10) })} />
           <input className={`${inputCls} md:col-span-2`} placeholder="Amazon affiliate URL * (include tag=bsbsbs0f-22)" value={newItem.affiliate_url} onChange={(e) => setNewItem({ ...newItem, affiliate_url: e.target.value })} required />
           <input className={`${inputCls} md:col-span-2`} placeholder="Description / tagline" value={newItem.description} onChange={(e) => setNewItem({ ...newItem, description: e.target.value })} />
-          <button disabled={busy === 'new'} className="bg-brand-secondary hover:opacity-90 text-white font-bold py-2.5 rounded-xl text-sm transition-all md:col-span-2">
+          <button disabled={busy === 'new'} className="bg-brand-secondary hover:opacity-90 text-white font-bold py-2.5 rounded-xl text-sm transition-ui md:col-span-2">
             {busy === 'new' ? 'Adding…' : 'Add product'}
           </button>
         </form>
@@ -224,18 +224,18 @@ export default function AdminGearPage() {
                   <input className={`${inputCls} md:col-span-2`} value={d.description ?? ''} placeholder="Description" onChange={(e) => setDraft(row.id, { description: e.target.value })} />
                   <div className="md:col-span-2 flex items-center gap-1.5 justify-end">
                     <input className={`${inputCls} !w-14 text-center`} type="number" value={d.sort_order} onChange={(e) => setDraft(row.id, { sort_order: parseInt(e.target.value || '0', 10) })} />
-                    <a href={d.affiliate_url} target="_blank" rel="noopener noreferrer" className="text-xs px-2 py-1.5 rounded-lg bg-white/5 hover:bg-white/15 transition-all" title="Test link">↗</a>
+                    <a href={d.affiliate_url} target="_blank" rel="noopener noreferrer" className="text-xs px-2 py-1.5 rounded-lg bg-white/5 hover:bg-white/15 transition-ui" title="Test link">↗</a>
                     <button
                       onClick={() => saveRow(row.id)}
                       disabled={!dirty || busy === row.id}
-                      className={`text-xs font-bold px-2.5 py-1.5 rounded-lg transition-all ${dirty ? 'bg-brand-secondary text-white hover:opacity-90' : 'bg-white/5 text-brand-muted cursor-default'}`}
+                      className={`text-xs font-bold px-2.5 py-1.5 rounded-lg transition-ui ${dirty ? 'bg-brand-secondary text-white hover:opacity-90' : 'bg-white/5 text-brand-muted cursor-default'}`}
                     >
                       {busy === row.id ? '…' : 'Save'}
                     </button>
                     <button
                       onClick={() => deleteRow(row.id, row.name)}
                       disabled={busy === row.id}
-                      className="text-xs font-bold px-2 py-1.5 rounded-lg bg-red-500/10 text-red-400 hover:bg-red-500/25 transition-all"
+                      className="text-xs font-bold px-2 py-1.5 rounded-lg bg-red-500/10 text-red-400 hover:bg-red-500/25 transition-ui"
                     >
                       ✕
                     </button>

@@ -57,7 +57,7 @@ export default async function UnsubscribePage({ searchParams }: Props) {
         <div className="pt-2">
           <Link
             href="/calculator"
-            className="inline-block px-6 py-3 bg-brand-primary hover:bg-brand-secondary transition-colors text-white font-semibold rounded-xl text-sm"
+            className="inline-block px-6 py-3 bg-brand-primary hover:bg-brand-secondary transition-ui text-white font-semibold rounded-xl text-sm"
           >
             Back to calculator
           </Link>

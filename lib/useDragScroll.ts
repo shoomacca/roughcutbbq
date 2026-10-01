@@ -220,7 +220,5 @@ export function useDragScroll(ref: RefObject<HTMLElement | null>, options: Optio
   return { animateTo };
 }
 
-/** True when the OS asks for less motion (Windows: Settings > Accessibility > Animation effects off). */
-export function prefersReducedMotion(): boolean {
-  return typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-}
+// Kept for existing importers; the single definition lives with the motion tokens.
+export { prefersReducedMotion } from './motion';

@@ -136,7 +136,7 @@ export default function DeleteAccountPage() {
             <button
               type="submit"
               disabled={submitting}
-              className="w-full bg-brand-primary hover:bg-red-700 disabled:opacity-50 transition-colors text-white font-bold py-3.5 rounded-xl text-sm cursor-pointer"
+              className="w-full bg-brand-primary hover:bg-red-700 disabled:opacity-50 transition-ui text-white font-bold py-3.5 rounded-xl text-sm cursor-pointer"
             >
               {submitting ? 'Deleting Account...' : 'Permanently Delete My Account'}
             </button>
@@ -148,7 +148,7 @@ export default function DeleteAccountPage() {
             </div>
             <Link
               href="/login"
-              className="inline-block w-full bg-brand-primary hover:bg-brand-secondary text-white font-bold py-3.5 rounded-xl text-sm transition-colors"
+              className="inline-block w-full bg-brand-primary hover:bg-brand-secondary text-white font-bold py-3.5 rounded-xl text-sm transition-ui"
             >
               Log In
             </Link>

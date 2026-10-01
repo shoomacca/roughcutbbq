@@ -64,7 +64,7 @@ export default function GearRecommendation({ method, limit = 1, title = 'Recomme
               target="_blank"
               rel="noopener noreferrer"
               onClick={() => trackEvent('gear_clicked', { slug: item.slug, name: item.name, method })}
-              className="flex-none inline-flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-bold text-white transition-opacity hover:opacity-80 whitespace-nowrap"
+              className="flex-none inline-flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-bold text-white transition-ui hover:opacity-80 whitespace-nowrap"
               style={{ background: '#f97316' }}
             >
               Shop →
