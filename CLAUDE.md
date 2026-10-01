@@ -4,7 +4,7 @@
 (`../roughcut-bbq-v2`, `../roughcutbbq-main`, `../../bbq-pro*`, `../../bbq-calculator`)
 is history. Do not edit them and do not copy from them without checking this repo first.
 
-- Plan and status: `.planning/BLUEPRINT.md` (milestones M0–M8, decisions D1–D6).
+- Plan and status: `.planning/BLUEPRINT.md` (milestones M0–M12, decisions D1–D8, answered 2026-10-01 in §5).
 - Git identity (repo-local, already set): `shoomacca <shoomacca@gmail.com>`. Vercel blocks
   deploys from any other author.
 - Production: Vercel project `roughcut-bbq`; DB and storage: Supabase `yvavflxtjzlbatrqdyai`.

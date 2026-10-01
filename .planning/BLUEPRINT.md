@@ -134,6 +134,16 @@ Definition of done for the programme:
 
 ## 5. Decisions only Chris can make (issue RC-0.1)
 
+**Answered by Chris on 2026-10-01:**
+- **Go-live:** yes. Rotate secrets, push (August work kept on `archive/aug-2026`), create a staging Supabase project, deploy. **Confirm with Chris before each domain move.**
+- **D1:** `app.roughcut.com.au` is the one home. The journal site's content moves into the app and the apex redirects there.
+- **D2:** overwrite GitHub `roughcutbbq` `main`, keeping August on `archive/aug-2026`.
+- **D3:** Supabase Auth (magic link + Google) for users and the superadmin. RC-1.6 folds into RC-7.1.
+- **D5:** "RoughCut BBQ".
+- **D8:** charcoal + ember ("Pit Journal" direction) with real food photos.
+- **Still open:** D4 (Android, decided after the RC-12.1 device test), D6 (delete stale folders; ask at the time), D7 (meaning of "sponsors"; recommendation stands until Chris says otherwise).
+
+
 | # | Decision | Recommendation |
 |---|---|---|
 | D1 | Canonical domain; fate of the `roughcut.com.au` Hostinger site | App on `app.roughcut.com.au`; port the site's content into the app; 301 the apex |
