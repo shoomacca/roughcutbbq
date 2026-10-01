@@ -1,10 +1,10 @@
 # supabase/
 
-Database schema for RoughCut BBQ (Supabase project `yvavflxtjzlbatrqdyai`).
+Database schema for RoughCut BBQ (production Supabase project `xdiapmnocyibpfrfgdcw`, Sydney, since RC-6.6 on 2026-10-01. There is no staging project until RC-0.6 creates one).
 
 ## How the baseline was captured
 
-`migrations/0001_baseline.sql` was reconstructed on 2026-09-30 from the live database using read-only catalog queries (`pg_class`, `pg_attribute`, `pg_constraint`, `pg_indexes`, `pg_proc`/`pg_get_functiondef`, `pg_views`, `pg_policies`, ACLs, `storage.buckets`). No DDL or DML was run against live and no user rows were read. It replaces the old MySQL-era `lib/migrations/`.
+`migrations/0001_baseline.sql` was reconstructed on 2026-09-30 from the then-live database (the retired Seoul project `yvavflxtjzlbatrqdyai`; Sydney received the identical schema in RC-6.6) using read-only catalog queries (`pg_class`, `pg_attribute`, `pg_constraint`, `pg_indexes`, `pg_proc`/`pg_get_functiondef`, `pg_views`, `pg_policies`, ACLs, `storage.buckets`). No DDL or DML was run against live and no user rows were read. It replaces the old MySQL-era `lib/migrations/`.
 
 It covers the `public` tables, the `gallery_with_counts` view (`security_invoker`), the `increment_cook_tally` and `rls_auto_enable` functions plus the `ensure_rls` event trigger, RLS flags, grants, and the `gallery` storage bucket. Live has no RLS policies at all (public or storage), so none are in the file.
 

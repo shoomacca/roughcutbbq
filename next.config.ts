@@ -3,9 +3,9 @@ import createMDX from '@next/mdx';
 
 const withMDX = createMDX({});
 
-// Supabase project host (yvavflxtjzlbatrqdyai). Derived from SUPABASE_URL when set;
+// Supabase project host (xdiapmnocyibpfrfgdcw, Sydney). Derived from SUPABASE_URL when set;
 // falls back to the known host because CI builds run without env.
-const FALLBACK_SUPABASE_HOST = 'yvavflxtjzlbatrqdyai.supabase.co';
+const FALLBACK_SUPABASE_HOST = 'xdiapmnocyibpfrfgdcw.supabase.co';
 
 function supabaseHost(): string {
   const raw = process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL;

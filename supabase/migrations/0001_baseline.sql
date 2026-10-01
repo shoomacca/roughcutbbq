@@ -1,6 +1,7 @@
 -- =============================================================================
 -- 0001_baseline.sql : RoughCut BBQ, baseline schema
--- Captured from the LIVE Supabase project yvavflxtjzlbatrqdyai on 2026-09-30
+-- Production is Supabase project xdiapmnocyibpfrfgdcw (Sydney) since RC-6.6.
+-- Captured on 2026-09-30 from the then-live project yvavflxtjzlbatrqdyai (Seoul, retired)
 -- (read-only catalog queries: pg_class / pg_attribute / pg_constraint /
 -- pg_indexes / pg_proc / pg_views / pg_policies / storage.buckets / ACLs).
 -- Ticket: BOTS-664 / RC-0.4.
