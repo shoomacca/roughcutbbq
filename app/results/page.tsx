@@ -19,6 +19,8 @@ import EmailCapture from '@/components/results/EmailCapture';
 import { cookPlanJsonLd } from '@/lib/jsonld';
 import { trackEvent } from '@/lib/posthog';
 import type { CalculatorInput, CalculatorResult } from '@/types/calculator';
+import { AnimatePresence, m } from 'framer-motion';
+import { fadeUp, stagger } from '@/lib/motion';
 
 function ResultsInner() {
   const router = useRouter();
@@ -156,7 +158,12 @@ function ResultsInner() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <div className="max-w-2xl mx-auto py-6 px-4 flex flex-col gap-8">
+      <m.div
+        variants={stagger(0.08, 0.25)}
+        initial="hidden"
+        animate="show"
+        className="max-w-2xl mx-auto py-6 px-4 flex flex-col gap-8"
+      >
 
         {/* Print-only title — hidden on screen */}
         <div className="print-title hidden">
@@ -172,47 +179,47 @@ function ResultsInner() {
         <ResultsCard result={result} />
 
         {/* Tally social proof */}
-        <p className="no-print text-center text-xs text-brand-muted">
+        <m.p variants={fadeUp} className="no-print text-center text-xs text-brand-muted">
           🔥 Join <TallyCounter suffix="" inline /> pitmasters who&apos;ve planned their cook
-        </p>
+        </m.p>
 
         {/* Action buttons */}
-        <div className="no-print flex flex-wrap gap-3">
+        <m.div variants={fadeUp} className="no-print flex flex-wrap gap-3">
           <button
             onClick={handleSaveCook}
             disabled={saveStatus === 'saving'}
-            className="flex-1 min-w-[140px] bg-brand-primary hover:bg-brand-secondary disabled:opacity-50 transition-colors text-white font-bold px-6 py-3 rounded-xl text-sm cursor-pointer"
+            className="flex-1 min-w-[140px] bg-brand-primary hover:bg-brand-secondary disabled:opacity-50 transition-ui text-white font-bold px-6 py-3 rounded-xl text-sm cursor-pointer"
           >
             {saveStatus === 'saving' ? '⏳ Saving...' : saveStatus === 'saved' ? '✅ Saved!' : saveStatus === 'error' ? '🔁 Retry save' : '🔖 Save this cook'}
           </button>
           <button
             onClick={() => window.print()}
-            className="flex items-center justify-center gap-2 px-4 py-3 border border-brand-muted/30 rounded-xl text-sm text-brand-muted hover:bg-brand-surface hover:text-brand-text transition-colors"
+            className="flex items-center justify-center gap-2 px-4 py-3 border border-brand-muted/30 rounded-xl text-sm text-brand-muted hover:bg-brand-surface hover:text-brand-text transition-ui"
           >
             🖨️ Print
           </button>
           <button
             onClick={handleShare}
-            className="flex items-center justify-center gap-2 px-4 py-3 border border-brand-muted/30 rounded-xl text-sm text-brand-muted hover:bg-brand-surface hover:text-brand-text transition-colors"
+            className="flex items-center justify-center gap-2 px-4 py-3 border border-brand-muted/30 rounded-xl text-sm text-brand-muted hover:bg-brand-surface hover:text-brand-text transition-ui"
           >
             {copied ? '✅ Copied!' : '🔗 Share'}
           </button>
           <button
             onClick={() => setShowUpload(true)}
-            className="flex items-center justify-center gap-2 px-4 py-3 border border-brand-muted/30 rounded-xl text-sm text-brand-muted hover:bg-brand-surface hover:text-brand-text transition-colors"
+            className="flex items-center justify-center gap-2 px-4 py-3 border border-brand-muted/30 rounded-xl text-sm text-brand-muted hover:bg-brand-surface hover:text-brand-text transition-ui"
           >
             📸 Share your cook
           </button>
-        </div>
+        </m.div>
 
         {saveStatus === 'error' && (
-          <p role="alert" className="no-print text-sm text-red-400 -mt-4">
+          <p role="alert" className="no-print text-sm text-red-400 -mt-4 animate-fade-up">
             {saveError}
           </p>
         )}
 
         {/* Start time picker */}
-        <div className="no-print bg-brand-dark rounded-xl px-4 py-4 flex flex-col sm:flex-row sm:items-center gap-3">
+        <m.div variants={fadeUp} className="no-print bg-brand-dark rounded-xl px-4 py-4 flex flex-col sm:flex-row sm:items-center gap-3">
           <div className="flex-1">
             <p className="text-xs text-brand-muted font-medium uppercase tracking-wide mb-0.5">Start time</p>
             <input
@@ -230,15 +237,15 @@ function ResultsInner() {
               </p>
             </div>
           )}
-        </div>
+        </m.div>
 
-        {/* Cook Timeline */}
-        <div>
+        {/* Cook Timeline — each step lands one after another */}
+        <m.div variants={fadeUp}>
           <h3 className="text-base font-bold text-brand-text mb-4">Cook Timeline</h3>
           {result.milestones.length > 0 ? (
-            <div className="flex flex-col">
+            <m.div variants={stagger(0.07)} className="flex flex-col">
               {result.milestones.map((milestone, i) => (
-                <div key={i} className="milestone-card">
+                <m.div key={i} variants={fadeUp} className="milestone-card">
                   <MilestoneCard
                     milestone={milestone}
                     index={i}
@@ -246,23 +253,23 @@ function ResultsInner() {
                     clockTime={startTime ? addHours(startTime, milestone.timeOffsetHours) : undefined}
                     isLast={i === result.milestones.length - 1}
                   />
-                </div>
+                </m.div>
               ))}
-            </div>
+            </m.div>
           ) : (
             <p className="text-brand-muted text-sm bg-brand-dark rounded-xl px-4 py-4 text-center">
               No specific milestones for this cook — watch the clock and probe for doneness.
             </p>
           )}
-        </div>
+        </m.div>
 
         {/* Contextual gear recommendation */}
-        <div className="no-print">
+        <m.div variants={fadeUp} className="no-print">
           <GearRecommendation method={result.method} limit={1} title="Recommended Gear" />
-        </div>
+        </m.div>
 
         {/* Email capture */}
-        <div className="no-print">
+        <m.div variants={fadeUp} className="no-print">
           <EmailCapture
             cut={result.cutName}
             method={result.method}
@@ -271,26 +278,29 @@ function ResultsInner() {
             appliance_temp_c={result.applianceTempC}
             internal_temp_c={result.internalTempC ?? 0}
           />
-        </div>
+        </m.div>
 
         {/* Start new cook */}
-        <button
+        <m.button
+          variants={fadeUp}
           onClick={() => { clearResult(); router.push('/calculator'); }}
-          className="no-print w-full border-2 border-brand-muted/20 hover:border-brand-muted/50 text-brand-muted hover:text-brand-text transition-colors font-semibold px-6 py-3 rounded-xl text-sm"
+          className="no-print w-full border-2 border-brand-muted/20 hover:border-brand-muted/50 text-brand-muted hover:text-brand-text transition-ui font-semibold px-6 py-3 rounded-xl text-sm"
         >
           ← Start new cook
-        </button>
+        </m.button>
 
-      </div>
+      </m.div>
 
       <SaveModal open={showSaveModal} onClose={() => setShowSaveModal(false)} />
-      {showUpload && (
-        <UploadFlow
-          cutName={result.cutName}
-          method={result.method}
-          onClose={() => setShowUpload(false)}
-        />
-      )}
+      <AnimatePresence>
+        {showUpload && (
+          <UploadFlow
+            cutName={result.cutName}
+            method={result.method}
+            onClose={() => setShowUpload(false)}
+          />
+        )}
+      </AnimatePresence>
     </>
   );
 }

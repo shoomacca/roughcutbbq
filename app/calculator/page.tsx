@@ -1,6 +1,8 @@
 'use client';
 
 import { useState, Suspense } from 'react';
+import { AnimatePresence, m } from 'framer-motion';
+import { slideStep } from '@/lib/motion';
 import { useRouter } from 'next/navigation';
 import { useCalculator } from '@/lib/useCalculator';
 import { calculateCook, getMeatCategories } from '@/lib/calculator';
@@ -24,6 +26,10 @@ function CalculatorInner() {
 
   const pre = state.categoryPreSelected;
 
+  // Direction of the last step change (1 forward, -1 back) drives the slide.
+  const [dir, setDir] = useState<1 | -1>(1);
+  const forward = <T,>(fn: (v: T) => void) => (v: T) => { setDir(1); fn(v); };
+
   const handleWeightSubmit = (weightKg: number) => {
     if (!state.method || !state.categoryId || !state.cutId) return;
     const input = { method: state.method, categoryId: state.categoryId, cutId: state.cutId, weightKg };
@@ -41,6 +47,7 @@ function CalculatorInner() {
   })();
 
   const handleBack = () => {
+    setDir(-1);
     if (pre && state.step === 1) router.push('/');
     else goBack();
   };
@@ -55,14 +62,24 @@ function CalculatorInner() {
       {/* ── Step content — vertically centred in remaining page space ──── */}
       {/* Carousel steps: full width so calc(50% - halfCard) = 50% of viewport */}
       {/* Weight step: constrained and centred */}
-      <div className="flex-1 flex flex-col justify-center">
+      <div className="flex-1 flex flex-col justify-center overflow-x-clip">
+       <AnimatePresence mode="wait" custom={dir} initial={false}>
+        <m.div
+          key={state.step}
+          custom={dir}
+          variants={slideStep}
+          initial="enter"
+          animate="center"
+          exit="exit"
+          className="flex flex-col flex-1 justify-center"
+        >
 
         {/* Step 1 (free mode): category carousel — full width */}
         {!pre && state.step === 1 && (
           <CategoryStep
             method={null}
             selected={state.categoryId}
-            onSelect={setCategory}
+            onSelect={forward(setCategory)}
             onBack={() => router.push('/')}
           />
         )}
@@ -72,7 +89,7 @@ function CalculatorInner() {
           <MethodStep
             selected={state.method}
             categoryId={state.categoryId}
-            onSelect={setMethod}
+            onSelect={forward(setMethod)}
             onBack={handleBack}
           />
         )}
@@ -83,7 +100,7 @@ function CalculatorInner() {
             method={state.method}
             categoryId={state.categoryId}
             selected={state.cutId}
-            onSelect={setCut}
+            onSelect={forward(setCut)}
             onBack={handleBack}
           />
         )}
@@ -99,6 +116,8 @@ function CalculatorInner() {
             />
           </div>
         )}
+        </m.div>
+       </AnimatePresence>
       </div>
     </div>
   );

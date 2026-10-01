@@ -3,6 +3,8 @@
 import { useRef, useState, useCallback, useEffect } from 'react';
 import { formatCookTime } from '@/lib/calculator';
 import { useDragScroll } from '@/lib/useDragScroll';
+import { m } from 'framer-motion';
+import { fadeUp, stagger, useCountUp } from '@/lib/motion';
 import type { CalculatorResult, CookingMethod } from '@/types/calculator';
 
 const METHOD_LABELS: Record<CookingMethod, string> = {
@@ -71,7 +73,7 @@ function OptionSwiper({ title, icon, items }: { title: string; icon: string; ite
     : `${icon} ${title}`;
 
   return (
-    <div className="bg-brand-surface rounded-xl overflow-hidden">
+    <m.div variants={fadeUp} className="bg-brand-surface rounded-xl overflow-hidden">
       {/* Header row */}
       <div className="px-4 pt-3 pb-1 flex items-center justify-between">
         <span className="font-semibold text-brand-text text-xs uppercase tracking-wide">
@@ -106,25 +108,36 @@ function OptionSwiper({ title, icon, items }: { title: string; icon: string; ite
             <button
               key={i}
               onClick={() => goTo(i)}
-              className={`rounded-full transition-all duration-200 ${
+              className={`rounded-full transition-[width,background-color] duration-(--motion-base) ease-(--ease-out-soft) ${
                 i === idx ? 'w-5 h-1.5 bg-brand-primary' : 'w-1.5 h-1.5 bg-brand-muted/30 hover:bg-brand-muted/60'
               }`}
             />
           ))}
         </div>
       )}
-    </div>
+    </m.div>
   );
 }
 
 /* ─── Stat tile ───────────────────────────────────────────────────────────── */
+const COUNTABLE = /^(\d+)(°C| min)$/;
+
+/** "95°C" / "60 min" count up from 0; anything else ("~4 hrs 30 min", "LOW setting") is shown as-is. */
+function CountUpValue({ value }: { value: string }) {
+  const match = value.match(COUNTABLE);
+  const target = match ? Number(match[1]) : 0;
+  const n = useCountUp(target);
+  if (!match) return <>{value}</>;
+  return <>{n}{match[2]}</>;
+}
+
 function Stat({ label, value, sub }: { label: string; value: string; sub?: string }) {
   return (
-    <div className="flex flex-col gap-0.5 bg-brand-dark rounded-xl p-4">
+    <m.div variants={fadeUp} className="flex flex-col gap-0.5 bg-brand-dark rounded-xl p-4">
       <span className="text-brand-muted text-xs font-medium uppercase tracking-wide">{label}</span>
-      <span className="text-brand-text text-2xl font-bold">{value}</span>
+      <span className="text-brand-text text-2xl font-bold tabular-nums"><CountUpValue value={value} /></span>
       {sub && <span className="text-brand-muted text-xs">{sub}</span>}
-    </div>
+    </m.div>
   );
 }
 
@@ -146,28 +159,35 @@ export default function ResultsCard({ result }: Props) {
   const showWood = SMOKE_METHODS.includes(method);
 
   return (
-    <div className="flex flex-col gap-4">
+    <m.div variants={stagger(0.06)} initial="hidden" animate="show" className="flex flex-col gap-4">
       {/* Header */}
-      <div className="flex items-center gap-3">
-        <span className="text-3xl">{METHOD_ICONS[method]}</span>
+      <m.div variants={fadeUp} className="flex items-center gap-3">
+        <m.span
+          className="text-3xl inline-block"
+          initial={{ scale: 0.6, rotate: -12 }}
+          animate={{ scale: 1, rotate: 0 }}
+          transition={{ type: 'spring', stiffness: 400, damping: 18 }}
+        >
+          {METHOD_ICONS[method]}
+        </m.span>
         <div>
           <h2 className="text-xl font-bold text-brand-text">{cutName}</h2>
           <span className="inline-block bg-brand-primary/20 text-brand-primary text-xs font-semibold px-2 py-0.5 rounded-full">
             {METHOD_LABELS[method]}
           </span>
         </div>
-      </div>
+      </m.div>
 
       {/* Jerky safety warning */}
       {isJerky && preheatTempC && (
-        <div className="bg-red-500/10 border border-red-500/30 rounded-xl px-4 py-3 text-xs text-red-400">
+        <m.div variants={fadeUp} className="bg-red-500/10 border border-red-500/30 rounded-xl px-4 py-3 text-xs text-red-400">
           🌡️ <span className="font-semibold">Safety step required:</span> Bring strips to{' '}
           {preheatTempC}°C internal before or at the start of drying.
-        </div>
+        </m.div>
       )}
 
-      {/* Stats grid */}
-      <div className="grid grid-cols-2 gap-3">
+      {/* Stats grid — each tile is its own stagger child */}
+      <m.div variants={stagger(0.05)} className="grid grid-cols-2 gap-3">
         <Stat
           label={isJerky ? 'Drying Time' : 'Cook Time'}
           value={`~${formatCookTime(cookTimeHours)}`}
@@ -188,12 +208,12 @@ export default function ResultsCard({ result }: Props) {
         />
 
         {isVeggie ? (
-          <div className="col-span-2 flex flex-col gap-0.5 bg-brand-dark rounded-xl p-4">
+          <m.div variants={fadeUp} className="col-span-2 flex flex-col gap-0.5 bg-brand-dark rounded-xl p-4">
             <span className="text-brand-muted text-xs font-medium uppercase tracking-wide">Doneness Cue</span>
             <span className="text-brand-text text-sm font-semibold leading-snug mt-1">
               {donenessCue ?? "Test with a skewer — no resistance means it's ready"}
             </span>
-          </div>
+          </m.div>
         ) : isJerky ? (
           <>
             <Stat label="Pre-heat To" value={`${preheatTempC}°C`} sub="internal — required safety step" />
@@ -209,11 +229,11 @@ export default function ResultsCard({ result }: Props) {
             />
           </>
         )}
-      </div>
+      </m.div>
 
       {/* Wood — prominently visible for smoke methods, right after stats */}
       {showWood && woods.length > 0 && (
-        <div className="bg-brand-dark rounded-xl px-4 py-3 flex items-start gap-3">
+        <m.div variants={fadeUp} className="bg-brand-dark rounded-xl px-4 py-3 flex items-start gap-3">
           <span className="text-xl leading-none mt-0.5">🪵</span>
           <div>
             <span className="text-brand-muted text-xs font-medium uppercase tracking-wide block mb-1">Recommended Wood</span>
@@ -221,15 +241,15 @@ export default function ResultsCard({ result }: Props) {
               {woods[0].split('.')[0]}.
             </span>
           </div>
-        </div>
+        </m.div>
       )}
 
       {/* Safety note */}
       {showSafetyNote && (
-        <div className="bg-amber-500/10 border border-amber-500/30 rounded-xl px-4 py-3 text-xs text-amber-400">
+        <m.div variants={fadeUp} className="bg-amber-500/10 border border-amber-500/30 rounded-xl px-4 py-3 text-xs text-amber-400">
           ⚠️ Food safety minimum is {safeMinTempC}°C — the pull temp above is for ideal doneness
           on intact whole cuts. Always rest for at least 3 minutes after pulling.
-        </div>
+        </m.div>
       )}
 
       {/* 3 swipeable sections — each slide is a DIFFERENT option */}
@@ -240,13 +260,13 @@ export default function ResultsCard({ result }: Props) {
       )}
 
       {showWood && woods.length === 0 && (
-        <div className="bg-brand-surface rounded-xl px-4 py-3 text-xs text-brand-muted">
+        <m.div variants={fadeUp} className="bg-brand-surface rounded-xl px-4 py-3 text-xs text-brand-muted">
           <span className="font-semibold text-brand-text">🪵 Wood: </span>
           No wood recommendation for this cut — use a mild fruitwood if desired.
-        </div>
+        </m.div>
       )}
 
       <OptionSwiper title="Pit Tips" icon="💡" items={tips} />
-    </div>
+    </m.div>
   );
 }

@@ -2,6 +2,8 @@
 
 import { useRef, useState, useCallback, useEffect, useLayoutEffect } from 'react';
 import { useDragScroll, prefersReducedMotion } from '@/lib/useDragScroll';
+import { m } from 'framer-motion';
+import { DIST, uiTransition } from '@/lib/motion';
 
 export interface CarouselItem {
   id: string;
@@ -185,7 +187,7 @@ export default function ScrollCarousel({
         <div className="px-6 pb-1">
           <button
             onClick={onBack}
-            className="text-brand-muted hover:text-brand-text text-sm flex items-center gap-1 transition-colors"
+            className="text-brand-muted hover:text-brand-text text-sm flex items-center gap-1 transition-ui"
           >
             ← Back
           </button>
@@ -198,7 +200,7 @@ export default function ScrollCarousel({
           <button
             key={i}
             onClick={() => scrollToIdx(i)}
-            className={`rounded-full transition-all duration-200 ${
+            className={`rounded-full transition-[width,background-color] duration-(--motion-base) ease-(--ease-out-soft) ${
               i === centeredIdx
                 ? 'w-6 h-2 bg-brand-secondary'
                 : 'w-2 h-2 bg-white/25 hover:bg-white/50'
@@ -243,7 +245,7 @@ export default function ScrollCarousel({
                   boxShadow: i === centeredIdx
                     ? '0 24px 64px rgba(230,126,34,0.35), 0 8px 24px rgba(0,0,0,0.5)'
                     : '0 4px 16px rgba(0,0,0,0.35)',
-                  transition: 'border 0.2s ease, box-shadow 0.2s ease',
+                  transition: 'border var(--motion-base) var(--ease-out-soft), box-shadow var(--motion-base) var(--ease-out-soft)',
                 }}
               >
                 <span style={{ fontSize: emojiSize, lineHeight: 1 }}>{item.icon}</span>
@@ -257,11 +259,25 @@ export default function ScrollCarousel({
       <div className="flex flex-col items-center text-center px-6 pt-1 pb-4 min-h-[60px]">
         {centeredItem && (
           <>
-            <p className="text-brand-text font-black text-xl italic leading-tight">
+            <m.p
+              key={centeredItem.id}
+              initial={{ opacity: 0, y: DIST.sm }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={uiTransition}
+              className="text-brand-text font-black text-xl italic leading-tight"
+            >
               {centeredItem.label}
-            </p>
+            </m.p>
             {centeredItem.sublabel && (
-              <p className="text-brand-muted text-sm mt-1">{centeredItem.sublabel}</p>
+              <m.p
+                key={`${centeredItem.id}-sub`}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ ...uiTransition, delay: 0.05 }}
+                className="text-brand-muted text-sm mt-1"
+              >
+                {centeredItem.sublabel}
+              </m.p>
             )}
           </>
         )}
@@ -272,7 +288,7 @@ export default function ScrollCarousel({
         <div className="px-6 pt-0 pb-6">
           <button
             onClick={() => onSelect(centeredItem.id)}
-            className="w-full bg-brand-secondary hover:bg-brand-primary transition-colors text-white font-black text-lg px-8 py-4 rounded-2xl tracking-wide"
+            className="w-full bg-brand-secondary hover:bg-brand-primary transition-ui text-white font-black text-lg px-8 py-4 rounded-2xl tracking-wide"
           >
             {ctaPrefix} {centeredItem.label} →
           </button>

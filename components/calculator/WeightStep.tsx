@@ -25,7 +25,7 @@ export default function WeightStep({ cutName, initialWeight, onSubmit, onBack }:
       <div>
         <button
           onClick={onBack}
-          className="text-brand-muted hover:text-brand-text text-sm mb-3 flex items-center gap-1 transition-colors"
+          className="text-brand-muted hover:text-brand-text text-sm mb-3 flex items-center gap-1 transition-ui"
         >
           ← Back
         </button>
@@ -48,20 +48,20 @@ export default function WeightStep({ cutName, initialWeight, onSubmit, onBack }:
               value={value}
               onChange={(e) => setValue(e.target.value)}
               placeholder="e.g. 2.5"
-              className="w-full bg-brand-surface border-2 border-brand-muted/20 rounded-xl px-4 py-4 text-brand-text text-2xl font-bold focus:outline-none focus:border-brand-primary transition-colors"
+              className="w-full bg-brand-surface border-2 border-brand-muted/20 rounded-xl px-4 py-4 text-brand-text text-2xl font-bold focus:outline-none focus:border-brand-primary transition-ui"
               autoFocus
             />
             <span className="text-brand-muted font-semibold text-xl">kg</span>
           </div>
           {value && !isValid && (
-            <p className="text-red-400 text-xs">Enter a weight between 0.1 and 30 kg</p>
+            <p className="text-red-400 text-xs animate-fade-up">Enter a weight between 0.1 and 30 kg</p>
           )}
         </div>
 
         <button
           type="submit"
           disabled={!isValid}
-          className="w-full bg-brand-primary hover:bg-brand-secondary disabled:opacity-40 disabled:cursor-not-allowed transition-colors text-white font-semibold px-6 py-4 rounded-xl text-base"
+          className="w-full bg-brand-primary hover:bg-brand-secondary disabled:opacity-40 disabled:cursor-not-allowed transition-ui text-white font-semibold px-6 py-4 rounded-xl text-base"
         >
           Calculate My Cook Plan →
         </button>

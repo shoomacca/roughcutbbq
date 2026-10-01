@@ -3,6 +3,8 @@
 import { useRef, useState, useCallback, useEffect, useLayoutEffect } from 'react';
 import { useDragScroll, prefersReducedMotion } from '@/lib/useDragScroll';
 import { useRouter } from 'next/navigation';
+import { m } from 'framer-motion';
+import { DIST, uiTransition } from '@/lib/motion';
 
 const CATEGORIES = [
   { id: 'pork',    icon: '🐷', label: 'Pork',         headline: 'Low & slow pork glory',      body: 'Shoulder, ribs, belly — all day in the smoke.' },
@@ -192,7 +194,7 @@ export default function HeroCarousel() {
           <button
             key={i}
             onClick={() => scrollToIdx(i)}
-            className={`rounded-full transition-all duration-200 ${
+            className={`rounded-full transition-[width,background-color] duration-(--motion-base) ease-(--ease-out-soft) ${
               i === centeredIdx ? 'w-6 h-2 bg-brand-secondary' : 'w-2 h-2 bg-white/25 hover:bg-white/50'
             }`}
           />
@@ -238,7 +240,7 @@ export default function HeroCarousel() {
                   boxShadow: i === centeredIdx
                     ? '0 24px 64px rgba(230,126,34,0.35), 0 8px 24px rgba(0,0,0,0.5)'
                     : '0 4px 16px rgba(0,0,0,0.35)',
-                  transition: 'border 0.2s ease, box-shadow 0.2s ease',
+                  transition: 'border var(--motion-base) var(--ease-out-soft), box-shadow var(--motion-base) var(--ease-out-soft)',
                 }}
               >
                 <span style={{ fontSize: emojiSize, lineHeight: 1 }}>{cat.icon}</span>
@@ -251,10 +253,24 @@ export default function HeroCarousel() {
 
       {/* Dynamic headline */}
       <div className="flex flex-col items-center text-center px-6 pt-2 pb-6 gap-2 min-h-[80px]">
-        <h2 className="text-2xl sm:text-3xl font-black text-brand-text italic leading-tight">
+        <m.h2
+          key={centered.id}
+          initial={{ opacity: 0, y: DIST.sm }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={uiTransition}
+          className="text-2xl sm:text-3xl font-black text-brand-text italic leading-tight"
+        >
           {centered.headline}
-        </h2>
-        <p className="text-brand-muted text-sm">{centered.body}</p>
+        </m.h2>
+        <m.p
+          key={`${centered.id}-body`}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ ...uiTransition, delay: 0.05 }}
+          className="text-brand-muted text-sm"
+        >
+          {centered.body}
+        </m.p>
         {!isTouch() && (
           <p className="text-brand-muted/50 text-xs mt-1">Double-click to start cooking</p>
         )}
@@ -264,7 +280,7 @@ export default function HeroCarousel() {
       <div className="px-6 pt-2 pb-6">
         <button
           onClick={proceed}
-          className="w-full bg-brand-secondary hover:bg-brand-primary transition-colors text-white font-black text-lg px-8 py-4 rounded-2xl tracking-wide"
+          className="w-full bg-brand-secondary hover:bg-brand-primary transition-ui text-white font-black text-lg px-8 py-4 rounded-2xl tracking-wide"
         >
           Cook {centered.label} →
         </button>
