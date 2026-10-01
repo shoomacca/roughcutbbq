@@ -23,3 +23,10 @@ There is no data in the baseline except two structural rows: `cook_tally` id=1 (
 ## Not verified
 
 Applying the file to an empty database has not been tested (no local Postgres was available when it was written). Do that on a throwaway branch/project before relying on it (RC-0.6).
+
+## Staging
+
+- Supabase project `xdiapmnocyibpfrfgdcw` ("roughcutBBQ-staging"), region `ap-southeast-2` (Sydney). Prod stays `yvavflxtjzlbatrqdyai` (Seoul).
+- Git branch `staging` deploys to Vercel **Preview** (`https://roughcut-bbq-git-staging-shoomacca.vercel.app`). Its env vars are Preview-scoped to the `staging` branch only; Production env vars are separate and unchanged. Pushing `main` is a production deploy; pushing `staging` is not.
+- 2026-10-01 (RC-0.6): `0001_baseline.sql` then `seed/gear.sql` applied to the empty staging project without errors. Checked after: 9 tables with RLS, `ensure_rls` trigger, `gallery` bucket, 52 gear rows (md5 of the gear rows matches prod), `increment_cook_tally()` returned 1 then 2 (reset to 0). This answers the "Not verified" note above.
+- Staging holds test data only. Never copy prod user data into it.
