@@ -6,12 +6,14 @@ import type {
   MeatCategory,
 } from '@/types/calculator';
 import meatsData from '@/data/meats.json';
+import { calculatorInputSchema } from '@/lib/calculatorSchema';
 
 const meats = meatsData as MeatCategory[];
 
 export function formatCookTime(hours: number): string {
-  const h = Math.floor(hours);
-  const m = Math.round((hours - h) * 60);
+  const total = Math.round(hours * 60);
+  const h = Math.floor(total / 60);
+  const m = total % 60;
   if (h === 0) return `${m} min`;
   if (m === 0) return `${h} hr${h !== 1 ? 's' : ''}`;
   return `${h} hr${h !== 1 ? 's' : ''} ${m} min`;
@@ -41,6 +43,10 @@ export function getCategoriesForMethod(method: CalculatorInput['method']): MeatC
 }
 
 export function calculateCook(input: CalculatorInput): CalculatorResult {
+  const checked = calculatorInputSchema.safeParse(input);
+  if (!checked.success) {
+    throw new Error(checked.error.issues[0]?.message ?? 'Invalid calculator input');
+  }
   const { method, categoryId, cutId, weightKg } = input;
 
   const category = meats.find((c) => c.id === categoryId);
@@ -102,7 +108,8 @@ export function calculateCook(input: CalculatorInput): CalculatorResult {
     });
   } else {
     // BBQ / Fish: standard milestones
-    if (hasStall && cut.stallTempC) {
+    // A stall only happens on long cooks; skip the milestone under 4 h.
+    if (hasStall && cut.stallTempC && cookTimeHours >= 4) {
       const stallTime = formatCookTime(cookTimeHours * 0.6);
       milestones.push({
         icon: '🌡️',

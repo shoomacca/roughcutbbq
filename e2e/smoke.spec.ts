@@ -42,3 +42,30 @@ test('/gear returns 200', async ({ page }) => {
   expect(res?.status()).toBe(200);
   await expect(page.getByRole('heading', { name: 'BBQ Gear' })).toBeVisible();
 });
+
+test('/results with kg=1000 redirects to /calculator', async ({ page }) => {
+  await page.goto('/results?method=smoker&cat=pork&cut=pork_shoulder&kg=1000');
+  await expect(page).toHaveURL(/\/calculator$/);
+});
+
+test('/cook "Open in calculator" link beats a previously stored cook in sessionStorage', async ({ page }) => {
+  // Store a different cook (whole chicken) the way the calculator does.
+  await page.goto('/gear');
+  await page.evaluate(() => {
+    const input = { method: 'smoker', categoryId: 'chicken', cutId: 'whole_chicken', weightKg: 2 };
+    sessionStorage.setItem('bbq_input', JSON.stringify(input));
+    sessionStorage.setItem(
+      'bbq_result',
+      JSON.stringify({
+        cutName: 'Whole Chicken', categoryName: 'Chicken', method: 'smoker', weightKg: 2,
+        cookTimeHours: 3, applianceTempC: 120, internalTempC: 74, safeMinTempC: 74, restMinutes: 10,
+        isFlat: false, cutCategory: 'bbq', milestones: [], rubs: [], woods: [], tips: [],
+      })
+    );
+  });
+  await page.goto('/cook/smoker/pork-shoulder');
+  await page.getByRole('link', { name: /Plan a 2 kg cook/ }).click();
+  await expect(page).toHaveURL(/\/results\?/);
+  await expect(page.getByText(/Pork Shoulder/).filter({ visible: true }).first()).toBeVisible();
+  await expect(page.getByText(/Whole Chicken/)).toHaveCount(0);
+});

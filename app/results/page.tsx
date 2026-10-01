@@ -1,9 +1,10 @@
 'use client';
 
-import { useState, useEffect, Suspense } from 'react';
+import { useState, useEffect, useRef, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { loadResult, loadInput, clearResult, addToHistory } from '@/lib/resultStorage';
 import { calculateCook } from '@/lib/calculator';
+import { hasCalculatorParams, parseCalculatorParams } from '@/lib/calculatorSchema';
 import { buildShareUrl, copyToClipboard } from '@/lib/shareUtils';
 import { nowTimeString, addHours } from '@/lib/timeUtils';
 import { formatCookTime } from '@/lib/calculator';
@@ -31,42 +32,51 @@ function ResultsInner() {
   const [showSaveModal, setShowSaveModal] = useState(false);
   const [showUpload, setShowUpload] = useState(false);
   const [copied, setCopied] = useState(false);
-  const [saveStatus, setSaveStatus] = useState<'idle' | 'saving' | 'saved'>('idle');
+  const [saveStatus, setSaveStatus] = useState<'idle' | 'saving' | 'saved' | 'error'>('idle');
+  const [saveError, setSaveError] = useState('');
+  const localSavedRef = useRef(false);
+
+  const saveLocally = (r: CalculatorResult) => {
+    if (localSavedRef.current) return;
+    addToHistory(r);
+    localSavedRef.current = true;
+  };
 
   const handleSaveCook = async () => {
-    if (saveStatus !== 'idle' || !result) return;
+    if ((saveStatus !== 'idle' && saveStatus !== 'error') || !result) return;
     setSaveStatus('saving');
+    setSaveError('');
+    const markSaved = () => {
+      setSaveStatus('saved');
+      setTimeout(() => setSaveStatus('idle'), 3000);
+    };
     try {
       const res = await fetch('/api/auth/me');
       const { user } = await res.json();
-      
-      if (user) {
-        const saveRes = await fetch('/api/saves', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(result),
-        });
-        if (saveRes.ok) {
-          addToHistory(result);
-          setSaveStatus('saved');
-          setTimeout(() => setSaveStatus('idle'), 3000);
-        } else {
-          addToHistory(result);
-          setSaveStatus('saved');
-          setTimeout(() => setSaveStatus('idle'), 3000);
-          setShowSaveModal(true);
-        }
-      } else {
-        addToHistory(result);
-        setSaveStatus('saved');
-        setTimeout(() => setSaveStatus('idle'), 3000);
+
+      if (!user) {
+        // Genuinely saved on this device; prompt to create an account.
+        saveLocally(result);
+        markSaved();
         setShowSaveModal(true);
+        return;
+      }
+      const saveRes = await fetch('/api/saves', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(result),
+      });
+      if (saveRes.ok) {
+        saveLocally(result);
+        markSaved();
+      } else {
+        setSaveStatus('error');
+        setSaveError("We couldn't save this cook to your account. Please try again.");
       }
     } catch {
-      addToHistory(result);
-      setSaveStatus('saved');
-      setTimeout(() => setSaveStatus('idle'), 3000);
-      setShowSaveModal(true);
+      saveLocally(result);
+      setSaveStatus('error');
+      setSaveError("Couldn't reach the server. Saved on this device only; try again to save to your account.");
     }
   };
 
@@ -90,7 +100,21 @@ function ResultsInner() {
   }, [result]);
 
   useEffect(() => {
-    // Try sessionStorage first
+    // URL params (shared / /cook links) always win over sessionStorage.
+    if (hasCalculatorParams(searchParams)) {
+      const urlInput = parseCalculatorParams(searchParams);
+      if (!urlInput) {
+        router.replace('/calculator');
+        return;
+      }
+      const urlResult = calculateCook(urlInput);
+      Promise.resolve().then(() => {
+        setResult(urlResult);
+        setInput(urlInput);
+      });
+      return;
+    }
+
     const stored = loadResult();
     const storedInput = loadInput();
     if (stored && storedInput) {
@@ -98,31 +122,6 @@ function ResultsInner() {
         setResult(stored);
         setInput(storedInput);
       });
-      return;
-    }
-
-    // Fall back to URL params (shared link)
-    const method = searchParams.get('method');
-    const cat = searchParams.get('cat');
-    const cut = searchParams.get('cut');
-    const kg = searchParams.get('kg');
-
-    if (method && cat && cut && kg) {
-      try {
-        const urlInput: CalculatorInput = {
-          method: method as CalculatorInput['method'],
-          categoryId: cat,
-          cutId: cut,
-          weightKg: parseFloat(kg),
-        };
-        const urlResult = calculateCook(urlInput);
-        Promise.resolve().then(() => {
-          setResult(urlResult);
-          setInput(urlInput);
-        });
-      } catch {
-        router.replace('/calculator');
-      }
       return;
     }
 
@@ -184,7 +183,7 @@ function ResultsInner() {
             disabled={saveStatus === 'saving'}
             className="flex-1 min-w-[140px] bg-brand-primary hover:bg-brand-secondary disabled:opacity-50 transition-colors text-white font-bold px-6 py-3 rounded-xl text-sm cursor-pointer"
           >
-            {saveStatus === 'saving' ? '⏳ Saving...' : saveStatus === 'saved' ? '✅ Saved!' : '🔖 Save this cook'}
+            {saveStatus === 'saving' ? '⏳ Saving...' : saveStatus === 'saved' ? '✅ Saved!' : saveStatus === 'error' ? '🔁 Retry save' : '🔖 Save this cook'}
           </button>
           <button
             onClick={() => window.print()}
@@ -205,6 +204,12 @@ function ResultsInner() {
             📸 Share your cook
           </button>
         </div>
+
+        {saveStatus === 'error' && (
+          <p role="alert" className="no-print text-sm text-red-400 -mt-4">
+            {saveError}
+          </p>
+        )}
 
         {/* Start time picker */}
         <div className="no-print bg-brand-dark rounded-xl px-4 py-4 flex flex-col sm:flex-row sm:items-center gap-3">

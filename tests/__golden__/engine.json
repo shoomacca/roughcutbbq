@@ -6,10 +6,6 @@
     "restMinutes": 60,
     "milestones": [
       {
-        "label": "Expect the stall (~70°C internal)",
-        "timeOffsetHours": 2.31
-      },
-      {
         "label": "Wrap at 72°C internal",
         "timeOffsetHours": 2.5025
       },
@@ -114,10 +110,6 @@
     "restMinutes": 60,
     "milestones": [
       {
-        "label": "Expect the stall (~70°C internal)",
-        "timeOffsetHours": 2.31
-      },
-      {
         "label": "Wrap at 72°C internal",
         "timeOffsetHours": 2.5025
       },
@@ -173,10 +165,6 @@
     "internalTempC": 95,
     "restMinutes": 60,
     "milestones": [
-      {
-        "label": "Expect the stall (~70°C internal)",
-        "timeOffsetHours": 2.31
-      },
       {
         "label": "Wrap at 72°C internal",
         "timeOffsetHours": 2.5025
@@ -774,10 +762,6 @@
     "restMinutes": 60,
     "milestones": [
       {
-        "label": "Expect the stall (~70°C internal)",
-        "timeOffsetHours": 2.31
-      },
-      {
         "label": "Wrap at 72°C internal",
         "timeOffsetHours": 2.5025
       },
@@ -881,10 +865,6 @@
     "internalTempC": 92,
     "restMinutes": 60,
     "milestones": [
-      {
-        "label": "Expect the stall (~70°C internal)",
-        "timeOffsetHours": 2.31
-      },
       {
         "label": "Wrap at 72°C internal",
         "timeOffsetHours": 2.5025
@@ -1338,10 +1318,6 @@
     "restMinutes": 30,
     "milestones": [
       {
-        "label": "Expect the stall (~68°C internal)",
-        "timeOffsetHours": 2.31
-      },
-      {
         "label": "Wrap at 70°C internal",
         "timeOffsetHours": 2.5025
       },
@@ -1433,10 +1409,6 @@
     "internalTempC": 90,
     "restMinutes": 30,
     "milestones": [
-      {
-        "label": "Expect the stall (~68°C internal)",
-        "timeOffsetHours": 2.31
-      },
       {
         "label": "Wrap at 70°C internal",
         "timeOffsetHours": 2.5025
@@ -1710,10 +1682,6 @@
     "restMinutes": 45,
     "milestones": [
       {
-        "label": "Expect the stall (~70°C internal)",
-        "timeOffsetHours": 2.1
-      },
-      {
         "label": "Wrap at 72°C internal",
         "timeOffsetHours": 2.275
       },
@@ -1806,10 +1774,6 @@
     "restMinutes": 45,
     "milestones": [
       {
-        "label": "Expect the stall (~70°C internal)",
-        "timeOffsetHours": 2.1
-      },
-      {
         "label": "Wrap at 72°C internal",
         "timeOffsetHours": 2.275
       },
@@ -1865,10 +1829,6 @@
     "internalTempC": 90,
     "restMinutes": 45,
     "milestones": [
-      {
-        "label": "Expect the stall (~70°C internal)",
-        "timeOffsetHours": 2.1
-      },
       {
         "label": "Wrap at 72°C internal",
         "timeOffsetHours": 2.275
@@ -2322,10 +2282,6 @@
     "restMinutes": 90,
     "milestones": [
       {
-        "label": "Expect the stall (~70°C internal)",
-        "timeOffsetHours": 1.65
-      },
-      {
         "label": "Wrap at 72°C internal",
         "timeOffsetHours": 1.7875
       },
@@ -2418,10 +2374,6 @@
     "restMinutes": 90,
     "milestones": [
       {
-        "label": "Expect the stall (~70°C internal)",
-        "timeOffsetHours": 1.65
-      },
-      {
         "label": "Wrap at 72°C internal",
         "timeOffsetHours": 1.7875
       },
@@ -2477,10 +2429,6 @@
     "internalTempC": 95,
     "restMinutes": 90,
     "milestones": [
-      {
-        "label": "Expect the stall (~70°C internal)",
-        "timeOffsetHours": 1.65
-      },
       {
         "label": "Wrap at 72°C internal",
         "timeOffsetHours": 1.7875
@@ -2610,10 +2558,6 @@
     "restMinutes": 45,
     "milestones": [
       {
-        "label": "Expect the stall (~70°C internal)",
-        "timeOffsetHours": 1.98
-      },
-      {
         "label": "Wrap at 72°C internal",
         "timeOffsetHours": 2.145
       },
@@ -2706,10 +2650,6 @@
     "restMinutes": 45,
     "milestones": [
       {
-        "label": "Expect the stall (~70°C internal)",
-        "timeOffsetHours": 1.98
-      },
-      {
         "label": "Wrap at 72°C internal",
         "timeOffsetHours": 2.145
       },
@@ -2765,10 +2705,6 @@
     "internalTempC": 95,
     "restMinutes": 45,
     "milestones": [
-      {
-        "label": "Expect the stall (~70°C internal)",
-        "timeOffsetHours": 1.98
-      },
       {
         "label": "Wrap at 72°C internal",
         "timeOffsetHours": 2.145
@@ -2898,10 +2834,6 @@
     "restMinutes": 60,
     "milestones": [
       {
-        "label": "Expect the stall (~70°C internal)",
-        "timeOffsetHours": 2.31
-      },
-      {
         "label": "Wrap at 72°C internal",
         "timeOffsetHours": 2.5025
       },
@@ -2994,10 +2926,6 @@
     "restMinutes": 60,
     "milestones": [
       {
-        "label": "Expect the stall (~70°C internal)",
-        "timeOffsetHours": 2.31
-      },
-      {
         "label": "Wrap at 72°C internal",
         "timeOffsetHours": 2.5025
       },
@@ -3053,10 +2981,6 @@
     "internalTempC": 95,
     "restMinutes": 60,
     "milestones": [
-      {
-        "label": "Expect the stall (~70°C internal)",
-        "timeOffsetHours": 2.31
-      },
       {
         "label": "Wrap at 72°C internal",
         "timeOffsetHours": 2.5025
@@ -4062,10 +3986,6 @@
     "restMinutes": 45,
     "milestones": [
       {
-        "label": "Expect the stall (~70°C internal)",
-        "timeOffsetHours": 2.1
-      },
-      {
         "label": "Wrap at 72°C internal",
         "timeOffsetHours": 2.275
       },
@@ -4157,10 +4077,6 @@
     "internalTempC": 90,
     "restMinutes": 45,
     "milestones": [
-      {
-        "label": "Expect the stall (~70°C internal)",
-        "timeOffsetHours": 2.1
-      },
       {
         "label": "Wrap at 72°C internal",
         "timeOffsetHours": 2.275
@@ -5730,10 +5646,6 @@
     "restMinutes": 50,
     "milestones": [
       {
-        "label": "Expect the stall (~70°C internal)",
-        "timeOffsetHours": 2.31
-      },
-      {
         "label": "Wrap at 72°C internal",
         "timeOffsetHours": 2.5025
       },
@@ -5826,10 +5738,6 @@
     "restMinutes": 50,
     "milestones": [
       {
-        "label": "Expect the stall (~70°C internal)",
-        "timeOffsetHours": 2.31
-      },
-      {
         "label": "Wrap at 72°C internal",
         "timeOffsetHours": 2.5025
       },
@@ -5885,10 +5793,6 @@
     "internalTempC": 92,
     "restMinutes": 50,
     "milestones": [
-      {
-        "label": "Expect the stall (~70°C internal)",
-        "timeOffsetHours": 2.31
-      },
       {
         "label": "Wrap at 72°C internal",
         "timeOffsetHours": 2.5025
@@ -6702,10 +6606,6 @@
     "restMinutes": 45,
     "milestones": [
       {
-        "label": "Expect the stall (~70°C internal)",
-        "timeOffsetHours": 2.1
-      },
-      {
         "label": "Wrap at 72°C internal",
         "timeOffsetHours": 2.275
       },
@@ -6797,10 +6697,6 @@
     "internalTempC": 92,
     "restMinutes": 45,
     "milestones": [
-      {
-        "label": "Expect the stall (~70°C internal)",
-        "timeOffsetHours": 2.1
-      },
       {
         "label": "Wrap at 72°C internal",
         "timeOffsetHours": 2.275
@@ -9666,10 +9562,6 @@
     "restMinutes": 60,
     "milestones": [
       {
-        "label": "Expect the stall (~70°C internal)",
-        "timeOffsetHours": 2.31
-      },
-      {
         "label": "Wrap at 72°C internal",
         "timeOffsetHours": 2.5025
       },
@@ -9773,10 +9665,6 @@
     "internalTempC": 93,
     "restMinutes": 60,
     "milestones": [
-      {
-        "label": "Expect the stall (~70°C internal)",
-        "timeOffsetHours": 2.31
-      },
       {
         "label": "Wrap at 72°C internal",
         "timeOffsetHours": 2.5025

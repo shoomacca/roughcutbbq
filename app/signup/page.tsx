@@ -49,13 +49,17 @@ export default function SignupPage() {
         if (rawHistory) {
           const history = JSON.parse(rawHistory);
           if (Array.isArray(history) && history.length > 0) {
-            await fetch('/api/saves/sync', {
+            const syncRes = await fetch('/api/saves/sync', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({ cooks: history }),
             });
-            // Clear local history after sync
-            localStorage.setItem('bbq_history', JSON.stringify([]));
+            // Only clear local history once the server confirmed the sync (2xx)
+            if (syncRes.ok) {
+              localStorage.setItem('bbq_history', JSON.stringify([]));
+            } else {
+              console.error('Offline cook sync failed, keeping local history:', syncRes.status);
+            }
           }
         }
       } catch (syncErr) {
