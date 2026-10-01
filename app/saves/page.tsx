@@ -3,9 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { getHistory, deleteFromHistory, saveResult, updateHistory, type SavedCook } from '@/lib/resultStorage';
-import { m, AnimatePresence } from 'framer-motion';
 import Reveal from '@/components/Reveal';
-import { collapse } from '@/lib/motion';
 
 export default function SavesPage() {
   const router = useRouter();
@@ -203,15 +201,8 @@ export default function SavesPage() {
                       {isExpanded ? 'Hide Details' : 'View Cook Details'}
                     </button>
                     
-                    <AnimatePresence>
-                      {isExpanded && (
-                        <m.div
-                          variants={collapse}
-                          initial="hidden"
-                          animate="show"
-                          exit="exit"
-                          className="overflow-hidden"
-                        >
+                    <div className="collapse-box" data-open={isExpanded ? '' : undefined}>
+                     <div>
                           <div className="flex flex-wrap items-center gap-3 text-sm text-white/60 mt-4 bg-black/20 p-4 rounded-xl border border-white/5">
                             <div className="flex items-center gap-1.5">
                               <span className="text-xl">⚖️</span> 
@@ -236,9 +227,8 @@ export default function SavesPage() {
                                 </button>
                              </div>
                           </div>
-                        </m.div>
-                      )}
-                    </AnimatePresence>
+                     </div>
+                    </div>
                   </div>
                 </div>
                 </Reveal>

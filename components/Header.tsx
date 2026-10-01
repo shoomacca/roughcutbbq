@@ -3,8 +3,6 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
-import { AnimatePresence, m } from "framer-motion";
-import { collapse } from "@/lib/motion";
 import { useSlidingIndicator } from "@/lib/useSlidingIndicator";
 
 const NAV = [
@@ -74,7 +72,7 @@ export default function Header() {
             style={{ borderBottom: '2px solid var(--color-brand-secondary)', boxSizing: 'border-box', marginTop: '2px' }}
           />
           {NAV.map(([href, label]) => (
-            <Link key={href} href={href} data-tab={href} className={`relative py-1 ${linkClass(href)}`}>
+            <Link key={href} href={href} data-tab={href} aria-current={pathname === href ? "page" : undefined} className={`relative py-1 ${linkClass(href)}`}>
               {label}
             </Link>
           ))}
@@ -136,11 +134,10 @@ export default function Header() {
         </button>
       </div>
 
-      {/* Mobile menu */}
-      <AnimatePresence initial={false}>
-      {menuOpen && (
-        <m.div key="mobile-menu" variants={collapse} initial="hidden" animate="show" exit="exit" className="md:hidden overflow-hidden">
-        <nav className="bg-brand-surface border-t border-brand-muted/20 px-4 py-3 flex flex-col gap-3 text-sm font-medium">
+      {/* Mobile menu — stays mounted; the CSS collapse-box animates open and closed */}
+      <div className="md:hidden collapse-box" data-open={menuOpen ? '' : undefined} aria-hidden={!menuOpen}>
+       <div>
+        <nav className={`bg-brand-surface border-t border-brand-muted/20 px-4 py-3 flex flex-col gap-3 text-sm font-medium`}>
           <Link
             href="/"
             className={linkClass("/")}
@@ -236,9 +233,8 @@ export default function Header() {
             )
           )}
         </nav>
-        </m.div>
-      )}
-      </AnimatePresence>
+       </div>
+      </div>
     </header>
   );
 }

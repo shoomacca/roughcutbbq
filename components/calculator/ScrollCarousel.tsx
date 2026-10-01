@@ -2,8 +2,6 @@
 
 import { useRef, useState, useCallback, useEffect, useLayoutEffect } from 'react';
 import { useDragScroll, prefersReducedMotion } from '@/lib/useDragScroll';
-import { m } from 'framer-motion';
-import { DIST, uiTransition } from '@/lib/motion';
 
 export interface CarouselItem {
   id: string;
@@ -54,6 +52,8 @@ export default function ScrollCarousel({
   const itemRefs       = useRef<(HTMLDivElement | null)[]>([]);
   const innerRefs      = useRef<(HTMLDivElement | null)[]>([]);
   const [centeredIdx, setCenteredIdx] = useState(0);
+  // The label only animates on later changes: first paint ships fully visible.
+  const [textChanged, setTextChanged] = useState(false);
   const centeredIdxRef = useRef(0);
 
   const clickTimer   = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -94,6 +94,7 @@ export default function ScrollCarousel({
     if (closestIdx !== centeredIdxRef.current) {
       centeredIdxRef.current = closestIdx;
       setCenteredIdx(closestIdx);
+      setTextChanged(true);
     }
   }, [STRIDE]);
 
@@ -259,25 +260,19 @@ export default function ScrollCarousel({
       <div className="flex flex-col items-center text-center px-6 pt-1 pb-4 min-h-[60px]">
         {centeredItem && (
           <>
-            <m.p
+            <p
               key={centeredItem.id}
-              initial={{ opacity: 0, y: DIST.sm }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={uiTransition}
-              className="text-brand-text font-black text-xl italic leading-tight"
+              className={`text-brand-text font-black text-xl italic leading-tight ${textChanged ? 'animate-fade-up duration-(--motion-base)' : ''}`}
             >
               {centeredItem.label}
-            </m.p>
+            </p>
             {centeredItem.sublabel && (
-              <m.p
+              <p
                 key={`${centeredItem.id}-sub`}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ ...uiTransition, delay: 0.05 }}
-                className="text-brand-muted text-sm mt-1"
+                className={`text-brand-muted text-sm mt-1 ${textChanged ? 'animate-fade-in delay-50' : ''}`}
               >
                 {centeredItem.sublabel}
-              </m.p>
+              </p>
             )}
           </>
         )}

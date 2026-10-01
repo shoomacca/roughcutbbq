@@ -1,8 +1,6 @@
 'use client';
 
 import { useState, useMemo } from 'react';
-import { m, AnimatePresence } from 'framer-motion';
-import { collapse } from '@/lib/motion';
 import { useSlidingIndicator } from '@/lib/useSlidingIndicator';
 import Reveal from '@/components/Reveal';
 import Link from 'next/link';
@@ -50,31 +48,47 @@ function RecipeRow({ item }: { item: Recipe }) {
       </button>
 
       {/* Expanded details */}
-      <AnimatePresence initial={false}>
-      {open && (
-        <m.div variants={collapse} initial="hidden" animate="show" exit="exit" className="overflow-hidden">
-        <div className="border-t border-white/8 px-4 py-4 grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
-          <Detail label="Cut" value={item.cut} />
-          <Detail label="Method" value={item.method} />
-          <Detail label="Style / Rub" value={item.style} />
-          <Detail label="Target Internal" value={item.targetInternal} />
-          <Detail label="Time" value={item.time} />
-          {item.wood !== 'N/A' && <Detail label="Wood" value={item.wood} />}
-          <div className="sm:col-span-2">
-            <Detail label="Notes" value={item.notes} />
-          </div>
-          <div className="sm:col-span-2">
-            <Link
-              href={`/recipes/${item.slug}`}
-              className="text-brand-secondary text-xs font-semibold hover:underline"
-            >
-              Full recipe page &rarr;
-            </Link>
-          </div>
+      <div className="collapse-box" data-open={open ? '' : undefined}>
+       <div>
+        <div className="border-t border-white/8 px-4 py-4 grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+
+          <Detail label="Cut" value={item.cut} />
+
+          <Detail label="Method" value={item.method} />
+
+          <Detail label="Style / Rub" value={item.style} />
+
+          <Detail label="Target Internal" value={item.targetInternal} />
+
+          <Detail label="Time" value={item.time} />
+
+          {item.wood !== 'N/A' && <Detail label="Wood" value={item.wood} />}
+
+          <div className="sm:col-span-2">
+
+            <Detail label="Notes" value={item.notes} />
+
+          </div>
+
+          <div className="sm:col-span-2">
+
+            <Link
+
+              href={`/recipes/${item.slug}`}
+
+              className="text-brand-secondary text-xs font-semibold hover:underline"
+
+            >
+
+              Full recipe page &rarr;
+
+            </Link>
+
+          </div>
+
         </div>
-        </m.div>
-      )}
-      </AnimatePresence>
+       </div>
+      </div>
     </div>
   );
 }
@@ -124,6 +138,7 @@ export default function RecipesPage() {
           <button
             key={id}
             data-tab={id}
+            data-active={activeCategory === id ? '' : undefined}
             onClick={() => setActiveCategory(id)}
             className={`relative z-10 px-3 py-1.5 rounded-full text-xs font-semibold transition-ui border ${
               activeCategory === id ? 'text-white border-transparent' : 'text-brand-text border-white/12 bg-white/7 hover:bg-white/12'

@@ -3,6 +3,7 @@
 import { useState, Suspense } from 'react';
 import { AnimatePresence, m } from 'framer-motion';
 import { slideStep } from '@/lib/motion';
+import MotionProvider from '@/components/MotionProvider';
 import { useRouter } from 'next/navigation';
 import { useCalculator } from '@/lib/useCalculator';
 import { calculateCook, getMeatCategories } from '@/lib/calculator';
@@ -126,7 +127,9 @@ function CalculatorInner() {
 export default function CalculatorPage() {
   return (
     <Suspense>
-      <CalculatorInner />
+      <MotionProvider>
+        <CalculatorInner />
+      </MotionProvider>
     </Suspense>
   );
 }

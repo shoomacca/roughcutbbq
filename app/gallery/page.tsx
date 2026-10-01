@@ -7,8 +7,8 @@ import { useRouter } from 'next/navigation';
 import GearRecommendation from '@/components/GearRecommendation';
 import UploadFlow from '@/components/gallery/UploadFlow';
 import Reveal from '@/components/Reveal';
-import { AnimatePresence, m } from 'framer-motion';
-import { collapse } from '@/lib/motion';
+import { AnimatePresence } from 'framer-motion';
+import MotionProvider from '@/components/MotionProvider';
 
 interface GalleryPost {
   id: string;
@@ -255,9 +255,8 @@ function PostCard({
       </div>
 
       {/* Collapsible Comment drawer */}
-      <AnimatePresence initial={false}>
-      {expanded && (
-        <m.div variants={collapse} initial="hidden" animate="show" exit="exit" className="overflow-hidden">
+      <div className="collapse-box" data-open={expanded ? '' : undefined}>
+       <div>
         <div className="mt-4 pt-4 border-t border-white/5 flex flex-col gap-3">
           <h4 className="text-[10px] font-black text-brand-muted uppercase tracking-wider">
             Pitmaster Comments
@@ -313,9 +312,8 @@ function PostCard({
             </div>
           )}
         </div>
-        </m.div>
-      )}
-      </AnimatePresence>
+       </div>
+      </div>
     </div>
   );
 }
@@ -480,14 +478,16 @@ export default function GalleryPage() {
       </div>
 
       {/* Upload Flow Modal */}
-      <AnimatePresence>
-        {showUploadModal && (
-          <UploadFlow
-            onClose={() => setShowUploadModal(false)}
-            onSuccess={handleUploadSuccess}
-          />
-        )}
-      </AnimatePresence>
+      <MotionProvider>
+        <AnimatePresence>
+          {showUploadModal && (
+            <UploadFlow
+              onClose={() => setShowUploadModal(false)}
+              onSuccess={handleUploadSuccess}
+            />
+          )}
+        </AnimatePresence>
+      </MotionProvider>
     </div>
   );
 }

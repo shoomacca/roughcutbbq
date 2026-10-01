@@ -3,8 +3,6 @@
 import { useRef, useState, useCallback, useEffect, useLayoutEffect } from 'react';
 import { useDragScroll, prefersReducedMotion } from '@/lib/useDragScroll';
 import { useRouter } from 'next/navigation';
-import { m } from 'framer-motion';
-import { DIST, uiTransition } from '@/lib/motion';
 
 const CATEGORIES = [
   { id: 'pork',    icon: '🐷', label: 'Pork',         headline: 'Low & slow pork glory',      body: 'Shoulder, ribs, belly — all day in the smoke.' },
@@ -46,6 +44,8 @@ export default function HeroCarousel() {
   const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
   const innerRefs = useRef<(HTMLDivElement | null)[]>([]);
   const [centeredIdx, setCenteredIdx] = useState(0);
+  // The headline only animates on later changes: server HTML must ship fully visible.
+  const [textChanged, setTextChanged] = useState(false);
   const centeredIdxRef = useRef(0);
 
   // Double-click state
@@ -91,6 +91,7 @@ export default function HeroCarousel() {
     if (closestIdx !== centeredIdxRef.current) {
       centeredIdxRef.current = closestIdx;
       setCenteredIdx(closestIdx);
+      setTextChanged(true);
     }
   }, [STRIDE]);
 
@@ -253,24 +254,18 @@ export default function HeroCarousel() {
 
       {/* Dynamic headline */}
       <div className="flex flex-col items-center text-center px-6 pt-2 pb-6 gap-2 min-h-[80px]">
-        <m.h2
+        <h2
           key={centered.id}
-          initial={{ opacity: 0, y: DIST.sm }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={uiTransition}
-          className="text-2xl sm:text-3xl font-black text-brand-text italic leading-tight"
+          className={`text-2xl sm:text-3xl font-black text-brand-text italic leading-tight ${textChanged ? 'animate-fade-up duration-(--motion-base)' : ''}`}
         >
           {centered.headline}
-        </m.h2>
-        <m.p
+        </h2>
+        <p
           key={`${centered.id}-body`}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ ...uiTransition, delay: 0.05 }}
-          className="text-brand-muted text-sm"
+          className={`text-brand-muted text-sm ${textChanged ? 'animate-fade-in delay-50' : ''}`}
         >
           {centered.body}
-        </m.p>
+        </p>
         {!isTouch() && (
           <p className="text-brand-muted/50 text-xs mt-1">Double-click to start cooking</p>
         )}

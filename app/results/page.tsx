@@ -21,6 +21,7 @@ import { trackEvent } from '@/lib/posthog';
 import type { CalculatorInput, CalculatorResult } from '@/types/calculator';
 import { AnimatePresence, m } from 'framer-motion';
 import { fadeUp, stagger } from '@/lib/motion';
+import MotionProvider from '@/components/MotionProvider';
 
 function ResultsInner() {
   const router = useRouter();
@@ -308,7 +309,9 @@ function ResultsInner() {
 export default function ResultsPage() {
   return (
     <Suspense>
-      <ResultsInner />
+      <MotionProvider>
+        <ResultsInner />
+      </MotionProvider>
     </Suspense>
   );
 }
