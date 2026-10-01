@@ -90,7 +90,7 @@ export default function SignupPage() {
         </div>
 
         {error && (
-          <div className="bg-brand-primary/10 border border-brand-primary/20 text-brand-primary text-sm rounded-xl p-4 mb-6">
+          <div className="bg-brand-primary/10 border border-brand-primary/20 text-brand-primary text-sm rounded-xl p-4 mb-6 animate-fade-up">
             ⚠️ {error}
           </div>
         )}
@@ -107,7 +107,7 @@ export default function SignupPage() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="you@example.com"
-              className="w-full bg-brand-dark border border-brand-muted/20 rounded-xl px-4 py-3 text-brand-text placeholder-brand-muted/50 focus:outline-none focus:border-brand-secondary transition-all"
+              className="w-full bg-brand-dark border border-brand-muted/20 rounded-xl px-4 py-3 text-brand-text placeholder-brand-muted/50 focus:outline-none focus:border-brand-secondary transition-ui"
             />
           </div>
 
@@ -122,7 +122,7 @@ export default function SignupPage() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Min. 6 characters"
-              className="w-full bg-brand-dark border border-brand-muted/20 rounded-xl px-4 py-3 text-brand-text placeholder-brand-muted/50 focus:outline-none focus:border-brand-secondary transition-all"
+              className="w-full bg-brand-dark border border-brand-muted/20 rounded-xl px-4 py-3 text-brand-text placeholder-brand-muted/50 focus:outline-none focus:border-brand-secondary transition-ui"
             />
           </div>
 
@@ -137,14 +137,14 @@ export default function SignupPage() {
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
               placeholder="Re-enter password"
-              className="w-full bg-brand-dark border border-brand-muted/20 rounded-xl px-4 py-3 text-brand-text placeholder-brand-muted/50 focus:outline-none focus:border-brand-secondary transition-all"
+              className="w-full bg-brand-dark border border-brand-muted/20 rounded-xl px-4 py-3 text-brand-text placeholder-brand-muted/50 focus:outline-none focus:border-brand-secondary transition-ui"
             />
           </div>
 
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-brand-primary hover:bg-brand-secondary disabled:opacity-50 transition-colors text-white font-bold py-3.5 rounded-xl text-sm mt-2 cursor-pointer"
+            className="w-full bg-brand-primary hover:bg-brand-secondary disabled:opacity-50 transition-ui text-white font-bold py-3.5 rounded-xl text-sm mt-2 cursor-pointer"
           >
             {loading ? 'Creating account...' : 'Create Account'}
           </button>

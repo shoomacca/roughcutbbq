@@ -3,12 +3,25 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
+import { AnimatePresence, m } from "framer-motion";
+import { collapse } from "@/lib/motion";
+import { useSlidingIndicator } from "@/lib/useSlidingIndicator";
+
+const NAV = [
+  ["/", "Home"], ["/ideas", "Cook Ideas"], ["/cook", "Cook Times"], ["/recipes", "Recipes"],
+  ["/gallery", "Gallery"], ["/gear", "Gear"], ["/guides", "Guides"], ["/rubs", "Rubs"],
+  ["/wood-chart", "Wood Chart"], ["/saves", "My Saves"],
+] as const;
 
 export default function Header() {
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
   const [user, setUser] = useState<{ email: string } | null>(null);
   const [checked, setChecked] = useState(false);
+  // Desktop nav: one underline glides between links as the route changes.
+  const { containerRef: navRef, indicatorRef: underlineRef } = useSlidingIndicator<HTMLElement>(
+    NAV.some(([href]) => href === pathname) ? pathname : null,
+  );
 
   useEffect(() => {
     fetch('/api/auth/me')
@@ -35,9 +48,10 @@ export default function Header() {
   const linkClass = (path: string) => {
     const isExact = pathname === path;
     return isExact 
-      ? "text-brand-secondary font-bold transition-colors" 
-      : "text-brand-muted hover:text-brand-text transition-colors";
+      ? "text-brand-secondary font-bold transition-ui" 
+      : "text-brand-muted hover:text-brand-text transition-ui";
   };
+
 
   return (
     <header className="sticky top-0 z-50 bg-brand-surface border-b border-brand-muted/20">
@@ -45,43 +59,25 @@ export default function Header() {
         {/* Logo */}
         <Link
           href="/"
-          className="text-brand-text font-bold text-lg tracking-tight hover:text-brand-secondary transition-colors"
+          className="text-brand-text font-bold text-lg tracking-tight hover:text-brand-secondary transition-ui"
         >
           🔥 RoughCut BBQ
         </Link>
 
         {/* Desktop nav */}
-        <nav className="hidden md:flex items-center gap-6 text-sm font-medium">
-          <Link href="/" className={linkClass("/")}>
-            Home
-          </Link>
-          <Link href="/ideas" className={linkClass("/ideas")}>
-            Cook Ideas
-          </Link>
-          <Link href="/cook" className={linkClass("/cook")}>
-            Cook Times
-          </Link>
-          <Link href="/recipes" className={linkClass("/recipes")}>
-            Recipes
-          </Link>
-          <Link href="/gallery" className={linkClass("/gallery")}>
-            Gallery
-          </Link>
-          <Link href="/gear" className={linkClass("/gear")}>
-            Gear
-          </Link>
-          <Link href="/guides" className={linkClass("/guides")}>
-            Guides
-          </Link>
-          <Link href="/rubs" className={linkClass("/rubs")}>
-            Rubs
-          </Link>
-          <Link href="/wood-chart" className={linkClass("/wood-chart")}>
-            Wood Chart
-          </Link>
-          <Link href="/saves" className={linkClass("/saves")}>
-            My Saves
-          </Link>
+        <nav ref={navRef} className="relative hidden md:flex items-center gap-6 text-sm font-medium">
+          <span
+            ref={underlineRef}
+            aria-hidden
+            className="slide-indicator"
+            // The hook sizes it to the active link; this draws only a 2px bar at the link's foot.
+            style={{ borderBottom: '2px solid var(--color-brand-secondary)', boxSizing: 'border-box', marginTop: '2px' }}
+          />
+          {NAV.map(([href, label]) => (
+            <Link key={href} href={href} data-tab={href} className={`relative py-1 ${linkClass(href)}`}>
+              {label}
+            </Link>
+          ))}
 
           {checked && (
             user ? (
@@ -91,7 +87,7 @@ export default function Header() {
                 </span>
                 <button
                   onClick={handleLogout}
-                  className="bg-brand-primary/10 hover:bg-brand-primary/20 text-brand-primary text-xs font-bold px-3 py-1.5 rounded-lg border border-brand-primary/20 transition-all cursor-pointer"
+                  className="bg-brand-primary/10 hover:bg-brand-primary/20 text-brand-primary text-xs font-bold px-3 py-1.5 rounded-lg border border-brand-primary/20 transition-ui cursor-pointer"
                 >
                   Log Out
                 </button>
@@ -99,7 +95,7 @@ export default function Header() {
             ) : (
               <Link
                 href="/login"
-                className="bg-brand-primary hover:bg-brand-secondary text-white text-xs font-bold px-4 py-2 rounded-xl transition-all"
+                className="bg-brand-primary hover:bg-brand-secondary text-white text-xs font-bold px-4 py-2 rounded-xl transition-ui"
               >
                 Log In
               </Link>
@@ -109,7 +105,7 @@ export default function Header() {
 
         {/* Mobile hamburger */}
         <button
-          className="md:hidden text-brand-muted hover:text-brand-text transition-colors p-1"
+          className="md:hidden text-brand-muted hover:text-brand-text transition-ui p-1"
           aria-label="Toggle menu"
           onClick={() => setMenuOpen((o) => !o)}
         >
@@ -141,8 +137,10 @@ export default function Header() {
       </div>
 
       {/* Mobile menu */}
+      <AnimatePresence initial={false}>
       {menuOpen && (
-        <nav className="md:hidden bg-brand-surface border-t border-brand-muted/20 px-4 py-3 flex flex-col gap-3 text-sm font-medium">
+        <m.div key="mobile-menu" variants={collapse} initial="hidden" animate="show" exit="exit" className="md:hidden overflow-hidden">
+        <nav className="bg-brand-surface border-t border-brand-muted/20 px-4 py-3 flex flex-col gap-3 text-sm font-medium">
           <Link
             href="/"
             className={linkClass("/")}
@@ -222,7 +220,7 @@ export default function Header() {
                 </span>
                 <button
                   onClick={() => { setMenuOpen(false); handleLogout(); }}
-                  className="w-full bg-brand-primary/10 hover:bg-brand-primary/20 text-brand-primary text-xs font-bold py-2.5 rounded-xl border border-brand-primary/20 transition-all text-center cursor-pointer"
+                  className="w-full bg-brand-primary/10 hover:bg-brand-primary/20 text-brand-primary text-xs font-bold py-2.5 rounded-xl border border-brand-primary/20 transition-ui text-center cursor-pointer"
                 >
                   Log Out
                 </button>
@@ -230,7 +228,7 @@ export default function Header() {
             ) : (
               <Link
                 href="/login"
-                className="bg-brand-primary hover:bg-brand-secondary text-white text-xs font-bold py-2.5 rounded-xl transition-all text-center mt-2"
+                className="bg-brand-primary hover:bg-brand-secondary text-white text-xs font-bold py-2.5 rounded-xl transition-ui text-center mt-2"
                 onClick={() => setMenuOpen(false)}
               >
                 Log In
@@ -238,7 +236,9 @@ export default function Header() {
             )
           )}
         </nav>
+        </m.div>
       )}
+      </AnimatePresence>
     </header>
   );
 }

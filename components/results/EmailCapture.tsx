@@ -59,7 +59,7 @@ export default function EmailCapture({
 
   if (state === 'success') {
     return (
-      <div className="rounded-xl border border-amber-500/30 bg-amber-500/10 px-5 py-4 text-center">
+      <div className="rounded-xl border border-amber-500/30 bg-amber-500/10 px-5 py-4 text-center animate-fade-up">
         <p className="text-amber-400 font-semibold text-sm">📬 Check your inbox!</p>
         <p className="text-brand-muted text-xs mt-1">Your cook plan is on its way.</p>
       </div>
@@ -68,7 +68,7 @@ export default function EmailCapture({
 
   if (state === 'duplicate') {
     return (
-      <div className="rounded-xl border border-white/8 bg-brand-surface px-5 py-4 text-center">
+      <div className="rounded-xl border border-white/8 bg-brand-surface px-5 py-4 text-center animate-fade-up">
         <p className="text-brand-text text-sm font-semibold">Already sent!</p>
         <p className="text-brand-muted text-xs mt-1">
           That email already has this plan — check your inbox.
@@ -90,18 +90,18 @@ export default function EmailCapture({
           onChange={(e) => setEmail(e.target.value)}
           placeholder="your@email.com"
           disabled={state === 'loading'}
-          className="flex-1 min-w-0 bg-brand-dark border border-white/10 rounded-lg px-3 py-2.5 text-sm text-brand-text placeholder:text-brand-muted/50 focus:outline-none focus:border-amber-500/60 transition-colors disabled:opacity-50"
+          className="flex-1 min-w-0 bg-brand-dark border border-white/10 rounded-lg px-3 py-2.5 text-sm text-brand-text placeholder:text-brand-muted/50 focus:outline-none focus:border-amber-500/60 transition-ui disabled:opacity-50"
         />
         <button
           type="submit"
           disabled={state === 'loading'}
-          className="flex-none whitespace-nowrap px-4 py-2.5 rounded-lg text-sm font-semibold bg-amber-500 hover:bg-amber-400 text-brand-dark transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          className="flex-none whitespace-nowrap px-4 py-2.5 rounded-lg text-sm font-semibold bg-amber-500 hover:bg-amber-400 text-brand-dark transition-ui disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {state === 'loading' ? 'Sending…' : 'Email me this plan'}
         </button>
       </form>
       {state === 'error' && (
-        <p className="text-red-400 text-xs mt-2">
+        <p className="text-red-400 text-xs mt-2 animate-fade-up">
           Something went wrong.{' '}
           <button
             onClick={() => setState('idle')}

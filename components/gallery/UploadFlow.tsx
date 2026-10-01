@@ -3,6 +3,8 @@
 import { useRef, useState } from 'react';
 import Image from 'next/image';
 import { trackEvent } from '@/lib/posthog';
+import { AnimatePresence, m } from 'framer-motion';
+import { backdrop, sheet, fadeUp } from '@/lib/motion';
 
 interface Props {
   cutName?: string;
@@ -87,15 +89,20 @@ export default function UploadFlow({ cutName, method, onClose, onSuccess }: Prop
   };
 
   return (
-    /* Backdrop */
-    <div
+    /* Backdrop — parents mount this inside <AnimatePresence> so the exit plays too */
+    <m.div
+      variants={backdrop}
+      initial="hidden"
+      animate="show"
+      exit="exit"
       className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4"
       style={{ background: 'rgba(0,0,0,0.75)' }}
       onClick={(e) => {
         if (e.target === e.currentTarget) onClose();
       }}
     >
-      <div
+      <m.div
+        variants={sheet}
         className="w-full sm:max-w-md rounded-t-2xl sm:rounded-2xl flex flex-col"
         style={{ background: '#1a2818', maxHeight: '90vh', overflowY: 'auto' }}
       >
@@ -117,13 +124,15 @@ export default function UploadFlow({ cutName, method, onClose, onSuccess }: Prop
           {([1, 2, 3] as const).map((s) => (
             <div
               key={s}
-              className="h-1 flex-1 rounded-full transition-colors"
+              className="h-1 flex-1 rounded-full transition-ui"
               style={{ background: step >= s ? '#f97316' : 'rgba(255,255,255,0.15)' }}
             />
           ))}
         </div>
 
         <div className="px-5 py-5 flex flex-col gap-4">
+         <AnimatePresence mode="wait" initial={false}>
+          <m.div key={step} variants={fadeUp} initial="hidden" animate="show" exit="exit" className="flex flex-col gap-4">
           {/* ── Step 1: Before photo ── */}
           {step === 1 && (
             <>
@@ -149,7 +158,7 @@ export default function UploadFlow({ cutName, method, onClose, onSuccess }: Prop
               ) : (
                 <button
                   onClick={() => beforeRef.current?.click()}
-                  className="w-full aspect-video rounded-xl border-2 border-dashed border-white/20 flex flex-col items-center justify-center gap-2 hover:border-orange-500/50 transition-colors"
+                  className="w-full aspect-video rounded-xl border-2 border-dashed border-white/20 flex flex-col items-center justify-center gap-2 hover:border-orange-500/50 transition-ui"
                 >
                   <span className="text-3xl">📷</span>
                   <span className="text-brand-muted text-sm">Tap to add before photo</span>
@@ -163,7 +172,7 @@ export default function UploadFlow({ cutName, method, onClose, onSuccess }: Prop
                   setError('');
                   setStep(2);
                 }}
-                className="w-full py-3 rounded-xl font-bold text-sm transition-all disabled:opacity-40 cursor-pointer"
+                className="w-full py-3 rounded-xl font-bold text-sm transition-ui disabled:opacity-40 cursor-pointer"
                 style={{ background: beforeFile ? '#f97316' : undefined, color: beforeFile ? 'white' : undefined }}
               >
                 Next &rarr;
@@ -196,7 +205,7 @@ export default function UploadFlow({ cutName, method, onClose, onSuccess }: Prop
               ) : (
                 <button
                   onClick={() => afterRef.current?.click()}
-                  className="w-full aspect-video rounded-xl border-2 border-dashed border-white/20 flex flex-col items-center justify-center gap-2 hover:border-orange-500/50 transition-colors"
+                  className="w-full aspect-video rounded-xl border-2 border-dashed border-white/20 flex flex-col items-center justify-center gap-2 hover:border-orange-500/50 transition-ui"
                 >
                   <span className="text-3xl">🍖</span>
                   <span className="text-brand-muted text-sm">Tap to add after photo</span>
@@ -210,7 +219,7 @@ export default function UploadFlow({ cutName, method, onClose, onSuccess }: Prop
                     setError('');
                     setStep(1);
                   }}
-                  className="flex-none px-4 py-3 rounded-xl border border-white/15 text-brand-muted text-sm hover:text-white transition-colors cursor-pointer"
+                  className="flex-none px-4 py-3 rounded-xl border border-white/15 text-brand-muted text-sm hover:text-white transition-ui cursor-pointer"
                 >
                   &larr; Back
                 </button>
@@ -220,7 +229,7 @@ export default function UploadFlow({ cutName, method, onClose, onSuccess }: Prop
                     setError('');
                     setStep(3);
                   }}
-                  className="flex-1 py-3 rounded-xl font-bold text-sm transition-all disabled:opacity-40 cursor-pointer"
+                  className="flex-1 py-3 rounded-xl font-bold text-sm transition-ui disabled:opacity-40 cursor-pointer"
                   style={{ background: afterFile ? '#f97316' : undefined, color: afterFile ? 'white' : undefined }}
                 >
                   Next &rarr;
@@ -306,7 +315,7 @@ export default function UploadFlow({ cutName, method, onClose, onSuccess }: Prop
                     setError('');
                     setStep(2);
                   }}
-                  className="flex-none px-4 py-3 rounded-xl border border-white/15 text-brand-muted text-sm hover:text-white transition-colors cursor-pointer"
+                  className="flex-none px-4 py-3 rounded-xl border border-white/15 text-brand-muted text-sm hover:text-white transition-ui cursor-pointer"
                 >
                   &larr; Back
                 </button>
@@ -345,8 +354,10 @@ export default function UploadFlow({ cutName, method, onClose, onSuccess }: Prop
               )}
             </div>
           )}
+          </m.div>
+         </AnimatePresence>
         </div>
-      </div>
-    </div>
+      </m.div>
+    </m.div>
   );
 }
