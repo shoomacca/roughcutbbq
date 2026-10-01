@@ -16,8 +16,6 @@ const eslintConfig = defineConfig([
     "scripts/**",
     "tmp/**",
     "split_images.js",
-    // CommonJS Vercel install hook; RC-0.3 deletes it
-    "setup-source.js",
     "android/**",
     // Planning docs + one-off audit scripts, not app source
     ".planning/**",
