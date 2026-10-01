@@ -1,6 +1,7 @@
 'use client';
 
 import { useRef, useState, useCallback, useEffect, useLayoutEffect } from 'react';
+import { useDragScroll, prefersReducedMotion } from '@/lib/useDragScroll';
 
 export interface CarouselItem {
   id: string;
@@ -52,11 +53,6 @@ export default function ScrollCarousel({
   const innerRefs      = useRef<(HTMLDivElement | null)[]>([]);
   const [centeredIdx, setCenteredIdx] = useState(0);
   const centeredIdxRef = useRef(0);
-
-  const isDragging   = useRef(false);
-  const dragStartX   = useRef(0);
-  const scrollStartX = useRef(0);
-  const hasDragged   = useRef(false);
 
   const clickTimer   = useRef<ReturnType<typeof setTimeout> | null>(null);
   const lastClickIdx = useRef<number | null>(null);
@@ -122,32 +118,16 @@ export default function ScrollCarousel({
   }, [cardW, tick]);
 
   /* ── Helpers ────────────────────────────────────────────────────────────── */
-  const animRef = useRef(0);
-
-  const animateScrollTo = useCallback((target: number, duration?: number) => {
-    const container = containerRef.current;
-    if (!container) return;
-    const start = container.scrollLeft;
-    const dist  = target - start;
-    if (Math.abs(dist) < 1) return;
-    cancelAnimationFrame(animRef.current);
-    // Chrome snaps instantly when scroll-snap is active during programmatic
-    // scrolling — disable it for the duration of the tween.
-    container.style.scrollSnapType = 'none';
-    const dur = duration ?? Math.min(700, 300 + Math.abs(dist) * 0.3);
-    const t0  = performance.now();
-    const ease = (t: number) => (t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2);
-    const step = (now: number) => {
-      const p = Math.min(1, (now - t0) / dur);
-      container.scrollLeft = start + dist * ease(p);
-      if (p < 1) {
-        animRef.current = requestAnimationFrame(step);
-      } else {
-        container.style.scrollSnapType = 'x mandatory';
-      }
-    };
-    animRef.current = requestAnimationFrame(step);
-  }, []);
+  // Mouse drag + momentum, wheel-to-horizontal, and the rAF tween all live in the hook.
+  const { animateTo: animateScrollTo } = useDragScroll(containerRef, {
+    getSnapPoints: () => {
+      const container = containerRef.current;
+      if (!container) return [];
+      return itemRefs.current
+        .filter((el): el is HTMLDivElement => !!el)
+        .map((el) => el.offsetLeft + el.offsetWidth / 2 - container.clientWidth / 2);
+    },
+  });
 
   const scrollToIdx = (idx: number) => {
     const container = containerRef.current;
@@ -161,30 +141,15 @@ export default function ScrollCarousel({
     const container = containerRef.current;
     if (!container) return;
     const from = Math.min(STRIDE * 1.4, container.scrollWidth - container.clientWidth);
-    if (from <= 0) return;
+    // Unprompted decorative motion: skip it when the OS asks for reduced motion.
+    if (from <= 0 || prefersReducedMotion()) return;
     container.style.scrollSnapType = 'none';
     container.scrollLeft = from;
     animateScrollTo(0, 650);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const onMouseDown = (e: React.MouseEvent) => {
-    isDragging.current   = true;
-    hasDragged.current   = false;
-    dragStartX.current   = e.clientX;
-    scrollStartX.current = containerRef.current?.scrollLeft ?? 0;
-    e.preventDefault();
-  };
-  const onMouseMove = (e: React.MouseEvent) => {
-    if (!isDragging.current) return;
-    const dx = e.clientX - dragStartX.current;
-    if (Math.abs(dx) > 6) hasDragged.current = true;
-    if (containerRef.current) containerRef.current.scrollLeft = scrollStartX.current - dx;
-  };
-  const onMouseUp = () => { isDragging.current = false; };
-
   const handleCardClick = (i: number) => {
-    if (hasDragged.current) { hasDragged.current = false; return; }
     if (isTouch()) {
       if (i === centeredIdxRef.current) onSelect(items[i].id);
       else scrollToIdx(i);
@@ -254,10 +219,6 @@ export default function ScrollCarousel({
           paddingTop:    '1.5rem',
           paddingBottom: '1.5rem',
         }}
-        onMouseDown={onMouseDown}
-        onMouseMove={onMouseMove}
-        onMouseUp={onMouseUp}
-        onMouseLeave={onMouseUp}
       >
         {items.map((item, i) => (
           <div

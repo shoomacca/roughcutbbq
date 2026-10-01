@@ -2,6 +2,7 @@
 
 import { useRef, useState, useCallback, useEffect } from 'react';
 import { formatCookTime } from '@/lib/calculator';
+import { useDragScroll } from '@/lib/useDragScroll';
 import type { CalculatorResult, CookingMethod } from '@/types/calculator';
 
 const METHOD_LABELS: Record<CookingMethod, string> = {
@@ -35,25 +36,13 @@ function OptionSwiper({ title, icon, items }: { title: string; icon: string; ite
   const containerRef = useRef<HTMLDivElement>(null);
   const [idx, setIdx] = useState(0);
 
-  const isDragging = useRef(false);
-  const dragStartX = useRef(0);
-  const scrollStartX = useRef(0);
-  const hasDragged = useRef(false);
-
-  const onMouseDown = (e: React.MouseEvent) => {
-    isDragging.current = true;
-    hasDragged.current = false;
-    dragStartX.current = e.clientX;
-    scrollStartX.current = containerRef.current?.scrollLeft ?? 0;
-    e.preventDefault();
-  };
-  const onMouseMove = (e: React.MouseEvent) => {
-    if (!isDragging.current) return;
-    const dx = e.clientX - dragStartX.current;
-    if (Math.abs(dx) > 6) hasDragged.current = true;
-    if (containerRef.current) containerRef.current.scrollLeft = scrollStartX.current - dx;
-  };
-  const onMouseUp = () => { isDragging.current = false; };
+  // Mouse drag + momentum and wheel-to-horizontal; touch stays native.
+  const { animateTo } = useDragScroll(containerRef, {
+    getSnapPoints: () => {
+      const el = containerRef.current;
+      return el ? items.map((_, i) => i * el.clientWidth) : [];
+    },
+  });
 
   const updateIdx = useCallback(() => {
     const el = containerRef.current;
@@ -71,7 +60,8 @@ function OptionSwiper({ title, icon, items }: { title: string; icon: string; ite
   const goTo = (i: number) => {
     const el = containerRef.current;
     if (!el) return;
-    el.scrollTo({ left: i * el.clientWidth, behavior: 'smooth' });
+    // rAF tween: native behavior:'smooth' measured as a single-frame jump here.
+    animateTo(i * el.clientWidth);
   };
 
   if (!items || items.length === 0) return null;
@@ -95,12 +85,8 @@ function OptionSwiper({ title, icon, items }: { title: string; icon: string; ite
       {/* Slides — one per option */}
       <div
         ref={containerRef}
-        className="flex overflow-x-auto no-scrollbar cursor-grab active:cursor-grabbing"
+        className="flex overflow-x-auto no-scrollbar cursor-grab active:cursor-grabbing select-none"
         style={{ scrollSnapType: 'x mandatory' }}
-        onMouseDown={onMouseDown}
-        onMouseMove={onMouseMove}
-        onMouseUp={onMouseUp}
-        onMouseLeave={onMouseUp}
       >
         {items.map((item, i) => (
           <div
