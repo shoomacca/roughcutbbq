@@ -30,13 +30,13 @@ export function useSlidingIndicator<C extends HTMLElement = HTMLDivElement, I ex
         ? null
         : container.querySelector<HTMLElement>(`[data-tab="${CSS.escape(activeKey)}"]`);
       if (!target) {
-        indicator.style.opacity = '0';
+        delete indicator.dataset.placed; // CSS hides an unplaced indicator
         return;
       }
       const c = container.getBoundingClientRect();
       const t = target.getBoundingClientRect();
       if (!placed.current) indicator.style.transition = 'none';
-      indicator.style.opacity = '1';
+      indicator.dataset.placed = '';
       indicator.style.transform = `translate(${t.left - c.left + container.scrollLeft}px, ${t.top - c.top + container.scrollTop}px)`;
       indicator.style.width = `${t.width}px`;
       indicator.style.height = `${t.height}px`;

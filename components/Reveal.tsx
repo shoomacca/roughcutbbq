@@ -25,15 +25,20 @@ function getObserver() {
         observer?.unobserve(e.target); // run once
       }
     },
-    { rootMargin: '0px 0px -8% 0px', threshold: 0.05 }
+    // Any part of the item entering the viewport reveals it: nothing on screen stays hidden.
+    { rootMargin: '0px', threshold: 0 }
   );
   return observer;
 }
 
 /**
  * Fade-up once when scrolled into view. CSS does the animating (`.reveal` in
- * app/globals.css); this only flags visibility, so it costs nothing per frame and
- * degrades to "just visible" without JS. Reduced motion: opacity-only, via the CSS policy.
+ * app/globals.css); this only flags visibility, so it costs nothing per frame.
+ *
+ * Server HTML is fully visible. Anything already on screen when this mounts is
+ * marked instant (visible, no fade); only items below the fold hide — and only
+ * after hydration (html[data-hydrated]) — then animate in once as they scroll up.
+ * Reduced motion: opacity-only, via the CSS policy.
  */
 export default function Reveal({ children, index = 0, step = 60, as: Tag = 'div', className = '' }: Props) {
   const ref = useRef<HTMLElement>(null);
@@ -41,8 +46,12 @@ export default function Reveal({ children, index = 0, step = 60, as: Tag = 'div'
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
-    if (!('IntersectionObserver' in window)) {
+    const r = el.getBoundingClientRect();
+    const onScreen = r.bottom > 0 && r.top < window.innerHeight;
+    if (onScreen || !('IntersectionObserver' in window)) {
+      // Already visible to the user: keep it that way, no fade.
       el.dataset.inview = '';
+      el.dataset.instant = '';
       return;
     }
     const io = getObserver();

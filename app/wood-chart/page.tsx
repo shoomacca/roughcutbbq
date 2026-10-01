@@ -157,7 +157,7 @@ export default function WoodChartPage() {
           {WOODS.map((wood, i) => (
             <Reveal key={wood.name} index={i}>
               <div
-              className="rounded-3xl p-6 transition-ui hover:scale-[1.02] hover:shadow-2xl"
+              className="rounded-3xl p-6 transition-ui duration-(--motion-slow) hover:scale-[1.02] hover:shadow-2xl"
               style={{
                 background: 'rgba(255,255,255,0.03)',
                 border: '1px solid rgba(255,255,255,0.08)',

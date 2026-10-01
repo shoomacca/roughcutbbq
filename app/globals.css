@@ -133,16 +133,59 @@ body {
 }
 
 /* ── Scroll reveal (components/Reveal.tsx) ─────────────────────────────────────
-   Hidden only when scripting is on, so no-JS clients and crawlers see everything.
-   The IntersectionObserver sets data-inview once; the animation then runs once. */
-@media (scripting: enabled) {
-  .reveal {
-    opacity: 0;
+   SSR HTML is fully visible. Only once React has hydrated (components/HydrationFlag.tsx
+   sets html[data-hydrated]) do not-yet-seen items below the fold hide, and each
+   animates once when it scrolls in. Items already on screen at hydration are flagged
+   data-instant and never hide or fade. If JS never runs, nothing is ever hidden. */
+html[data-hydrated] .reveal:not([data-inview]) {
+  opacity: 0;
+}
+.reveal[data-inview]:not([data-instant]) {
+  animation: fade-up var(--motion-slow) var(--ease-out-soft) both;
+  animation-delay: var(--reveal-delay, 0ms);
+}
+
+/* ── Collapsible (menus, drawers, accordions) — CSS only, exit included ───────
+   grid-template-rows 0fr -> 1fr animates height without measuring; the element
+   stays mounted so closing animates too. */
+@utility collapse-box {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  transition:
+    grid-template-rows var(--motion-base) var(--ease-out-soft),
+    opacity var(--motion-fast) var(--ease-out-soft);
+  & > * {
+    min-height: 0;
+    overflow: hidden;
+    visibility: hidden; /* after the close animation; keeps hidden links out of the tab order */
+    transition: visibility 0s linear var(--motion-base);
   }
-  .reveal[data-inview] {
-    animation: fade-up var(--motion-slow) var(--ease-out-soft) both;
-    animation-delay: var(--reveal-delay, 0ms);
+  &[data-open] > * {
+    visibility: visible;
+    transition: none;
   }
+  &[data-open] {
+    grid-template-rows: 1fr;
+    opacity: 1;
+    transition:
+      grid-template-rows var(--motion-base) var(--ease-out-soft),
+      opacity var(--motion-slow) var(--ease-out-soft);
+  }
+}
+
+/* ── Server-rendered fallbacks for sliding indicators ─────────────────────────
+   Before hydration (and with JS off) the active tab / nav link draws its own
+   highlight; once hydrated the sliding indicator has already been placed on the
+   same rectangle (useLayoutEffect, before paint), so the hand-over has no flash. */
+html:not([data-hydrated]) [data-tab][data-active] {
+  background: #f97316;
+}
+html:not([data-hydrated]) nav [data-tab][aria-current="page"] {
+  box-shadow: inset 0 -2px 0 var(--color-brand-secondary);
+}
+.slide-indicator:not([data-placed]) {
+  opacity: 0;
 }
 
 /* ── Route transitions (app/template.tsx, React <ViewTransition>) ─────────────
@@ -178,8 +221,14 @@ body {
   .lift:hover {
     translate: none;
   }
-  .slide-indicator {
-    transition-duration: 0ms; /* a position change: instant is the honest no-motion version */
+  .slide-indicator,
+  .collapse-box,
+  .collapse-box[data-open] {
+    transition-duration: 0ms; /* position/size changes: instant is the honest no-motion version */
+  }
+  .collapse-box,
+  .collapse-box[data-open] {
+    transition: opacity var(--motion-base) var(--ease-out-soft);
   }
   .animate-fade-up {
     animation-name: fade-in;
@@ -195,6 +244,14 @@ body {
   body { background: white !important; color: black !important; font-size: 12pt; }
   .print-title { display: block !important; }
   .milestone-card { break-inside: avoid; }
+  /* Nothing may be mid-animation or pre-reveal on paper. */
+  .reveal, .animate-fade-up, .animate-fade-in, [style*="opacity"] {
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
+  }
+  .collapse-box { grid-template-rows: 1fr !important; opacity: 1 !important; }
+  .slide-indicator { display: none !important; }
   /* Ensure light text is readable on white */
   * { color: black !important; background: transparent !important; border-color: #ccc !important; }
 }

@@ -55,7 +55,8 @@ export default function GuidesPage() {
       <div className="flex flex-col gap-4">
         {GUIDES.map((guide, i) => (
           <Reveal key={guide.slug} index={i}>
-            <Link
+            <Link
+
             href={`/guides/${guide.slug}`}
             className="block rounded-xl border border-white/8 bg-brand-surface px-5 py-4 hover:border-amber-500/30 hover:shadow-lg transition-ui lift group"
           >

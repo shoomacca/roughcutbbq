@@ -154,6 +154,7 @@ export default function GearPage() {
           <button
             key={id}
             data-tab={id}
+            data-active={activeCategory === id ? '' : undefined}
             onClick={() => setActiveCategory(id)}
             className={`relative z-10 px-3 py-1.5 rounded-full text-xs font-semibold transition-ui border ${
               activeCategory === id ? 'text-white border-transparent' : 'text-brand-text border-white/12 bg-white/7 hover:bg-white/12'

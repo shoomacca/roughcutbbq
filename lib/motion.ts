@@ -62,11 +62,11 @@ export const slideStep: Variants = {
   exit: (dir: number) => ({ opacity: 0, x: dir * -DIST.base, transition: exitTransition }),
 };
 
-/** Overlay backdrop. */
+/** Overlay backdrop. On exit it stops catching pointer events at once, so the page beneath is clickable while it fades. */
 export const backdrop: Variants = {
   hidden: { opacity: 0 },
-  show: { opacity: 1, transition: uiTransition },
-  exit: { opacity: 0, transition: exitTransition },
+  show: { opacity: 1, pointerEvents: 'auto', transition: uiTransition },
+  exit: { opacity: 0, pointerEvents: 'none', transition: exitTransition },
 };
 
 /** Dialog panel: slides up as a sheet on small screens, scales in on larger ones. */
@@ -74,13 +74,6 @@ export const sheet: Variants = {
   hidden: { opacity: 0, y: DIST.base * 2, scale: 0.98 },
   show: { opacity: 1, y: 0, scale: 1, transition: enterTransition },
   exit: { opacity: 0, y: DIST.base, scale: 0.98, transition: exitTransition },
-};
-
-/** Collapsible region (menus, drawers). Height is layout, but it is the only honest way to open a drawer. */
-export const collapse: Variants = {
-  hidden: { height: 0, opacity: 0 },
-  show: { height: 'auto', opacity: 1, transition: { height: uiTransition, opacity: enterTransition } },
-  exit: { height: 0, opacity: 0, transition: { height: exitTransition, opacity: exitTransition } },
 };
 
 /* ── Count-up ──────────────────────────────────────────────────────────────── */
