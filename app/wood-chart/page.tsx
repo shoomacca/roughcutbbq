@@ -1,4 +1,7 @@
-import React from 'react';const WOODS = [
+import React from 'react';
+import Reveal from '@/components/Reveal';
+
+const WOODS = [
   {
     name: "Alder",
     profile: "Light, sweet, natural flavor",
@@ -151,10 +154,10 @@ export default function WoodChartPage() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {WOODS.map((wood) => (
-            <div 
-              key={wood.name}
-              className="rounded-3xl p-6 transition-all duration-300 hover:scale-[1.02]"
+          {WOODS.map((wood, i) => (
+            <Reveal key={wood.name} index={i}>
+              <div
+              className="rounded-3xl p-6 transition-ui hover:scale-[1.02] hover:shadow-2xl"
               style={{
                 background: 'rgba(255,255,255,0.03)',
                 border: '1px solid rgba(255,255,255,0.08)',
@@ -184,6 +187,7 @@ export default function WoodChartPage() {
                 <p className="text-sm text-white/80">{wood.greatFor}</p>
               </div>
             </div>
+            </Reveal>
           ))}
         </div>
 

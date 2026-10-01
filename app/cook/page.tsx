@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Reveal from '@/components/Reveal';
 import Link from 'next/link';
 import { METHOD_INFO, SITE_URL, allCategories, cutToSlug } from '@/lib/seo';
 import type { CookingMethod } from '@/types/calculator';
@@ -22,8 +23,8 @@ export default function CookHubPage() {
         <Link href="/calculator" className="text-brand-secondary hover:underline">calculator</Link> with your exact weight.
       </p>
 
-      {categories.map((category) => (
-        <section key={category.id} className="mt-10">
+      {categories.map((category, i) => (
+        <Reveal key={category.id} index={i} as="section" className="mt-10">
           <h2 className="text-brand-text text-xl font-bold border-b border-white/10 pb-2">{category.name}</h2>
           <div className="mt-4 flex flex-col gap-4">
             {category.cuts.map((cut) => (
@@ -35,7 +36,7 @@ export default function CookHubPage() {
                       <Link
                         key={m}
                         href={`/cook/${METHOD_INFO[m].slug}/${cutToSlug(cut.id)}`}
-                        className="px-3 py-1.5 rounded-lg text-xs font-semibold text-brand-muted border border-white/10 hover:border-white/30 hover:text-brand-text transition-colors"
+                        className="px-3 py-1.5 rounded-lg text-xs font-semibold text-brand-muted border border-white/10 hover:border-white/30 hover:text-brand-text transition-ui"
                       >
                         {METHOD_INFO[m].label}
                       </Link>
@@ -45,7 +46,7 @@ export default function CookHubPage() {
               </div>
             ))}
           </div>
-        </section>
+        </Reveal>
       ))}
     </div>
   );

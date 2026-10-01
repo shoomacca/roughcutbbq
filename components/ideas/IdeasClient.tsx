@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 import meatsData from '@/data/meats.json';
 import { RECIPES, type Recipe } from '@/data/recipes';
 import { GEAR } from '@/data/gear';
+import Reveal from '@/components/Reveal';
 import { RUBS } from '@/data/rubs';
 
 type MethodId =
@@ -191,7 +192,7 @@ export default function IdeasClient() {
           <button
             key={m}
             onClick={() => setMethod(m === method ? null : m)}
-            className={`px-4 py-2.5 rounded-2xl text-sm font-bold border transition-all cursor-pointer ${
+            className={`px-4 py-2.5 rounded-2xl text-sm font-bold border transition-ui cursor-pointer ${
               method === m
                 ? 'bg-brand-secondary text-white border-brand-secondary'
                 : 'bg-brand-surface text-brand-text border-brand-muted/30 hover:border-brand-secondary/60'
@@ -211,7 +212,7 @@ export default function IdeasClient() {
           <button
             key={c.id}
             onClick={() => toggleCat(c.id)}
-            className={`px-4 py-2.5 rounded-2xl text-sm font-bold border transition-all cursor-pointer ${
+            className={`px-4 py-2.5 rounded-2xl text-sm font-bold border transition-ui cursor-pointer ${
               selectedCats.has(c.id)
                 ? 'bg-brand-primary text-white border-brand-primary'
                 : 'bg-brand-surface text-brand-text border-brand-muted/30 hover:border-brand-primary/60'
@@ -236,8 +237,8 @@ export default function IdeasClient() {
       )}
 
       {method &&
-        results.map(({ category, cuts, recipes, rubs }) => (
-          <section key={category.id} className="mb-10">
+        results.map(({ category, cuts, recipes, rubs }, i) => (
+          <Reveal key={`${method}-${category.id}`} index={i} as="section" className="mb-10">
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-xl font-black">
                 {CATEGORY_EMOJI[category.id] ?? ''} {category.name}
@@ -247,7 +248,7 @@ export default function IdeasClient() {
               </h3>
               <button
                 onClick={() => planCook(category.id)}
-                className="bg-brand-secondary hover:opacity-90 text-white text-xs font-black px-4 py-2 rounded-xl transition-all cursor-pointer shrink-0"
+                className="bg-brand-secondary hover:opacity-90 text-white text-xs font-black px-4 py-2 rounded-xl transition-ui cursor-pointer shrink-0"
               >
                 Plan this cook →
               </button>
@@ -311,7 +312,7 @@ export default function IdeasClient() {
                 ))}
               </div>
             )}
-          </section>
+          </Reveal>
         ))}
 
       {/* Gear for this method */}
@@ -327,7 +328,7 @@ export default function IdeasClient() {
                 href={`/go/${g.slug}`}
                 target="_blank"
                 rel="noopener noreferrer sponsored"
-                className="bg-brand-surface border border-brand-muted/20 rounded-2xl p-4 hover:border-brand-secondary/60 transition-all"
+                className="bg-brand-surface border border-brand-muted/20 rounded-2xl p-4 hover:border-brand-secondary/60 hover:shadow-lg transition-ui lift"
               >
                 <div className="font-bold text-sm mb-1">{g.name} ↗</div>
                 <div className="text-xs text-brand-muted">{g.description}</div>

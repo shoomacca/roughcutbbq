@@ -6,6 +6,9 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import GearRecommendation from '@/components/GearRecommendation';
 import UploadFlow from '@/components/gallery/UploadFlow';
+import Reveal from '@/components/Reveal';
+import { AnimatePresence, m } from 'framer-motion';
+import { collapse } from '@/lib/motion';
 
 interface GalleryPost {
   id: string;
@@ -32,15 +35,15 @@ interface Comment {
 
 function SkeletonCard() {
   return (
-    <div className="rounded-xl overflow-hidden bg-brand-surface border border-white/5 animate-pulse p-4">
-      <div className="h-4 bg-white/10 rounded w-1/3 mb-3" />
+    <div className="rounded-xl overflow-hidden bg-brand-surface border border-white/5 p-4">
+      <div className="h-4 skeleton rounded w-1/3 mb-3" />
       <div className="flex gap-2">
-        <div className="flex-1 aspect-square bg-white/5 rounded-lg" />
-        <div className="flex-1 aspect-square bg-white/10 rounded-lg" />
+        <div className="flex-1 aspect-square skeleton rounded-lg" />
+        <div className="flex-1 aspect-square skeleton rounded-lg" />
       </div>
       <div className="mt-4 flex flex-col gap-2">
-        <div className="h-3 bg-white/10 rounded w-2/3" />
-        <div className="h-3 bg-white/5 rounded w-1/3" />
+        <div className="h-3 skeleton rounded w-2/3" />
+        <div className="h-3 skeleton rounded w-1/3" />
       </div>
     </div>
   );
@@ -156,7 +159,7 @@ function PostCard({
   }, [post.id]);
 
   return (
-    <div className="rounded-2xl bg-brand-surface border border-white/5 flex flex-col p-4 shadow-lg hover:border-brand-muted/20 transition-all">
+    <div className="rounded-2xl bg-brand-surface border border-white/5 flex flex-col p-4 shadow-lg hover:border-brand-muted/20 hover:shadow-xl transition-ui lift">
       {/* Post Author / Header */}
       <div className="flex justify-between items-start mb-3">
         <div className="min-w-0">
@@ -176,7 +179,7 @@ function PostCard({
           onClick={handleReport}
           disabled={reported}
           title={reported ? 'Reported' : 'Report post'}
-          className="text-brand-muted/30 hover:text-brand-primary disabled:opacity-20 transition-colors text-sm cursor-pointer"
+          className="text-brand-muted/30 hover:text-brand-primary disabled:opacity-20 transition-ui text-sm cursor-pointer"
         >
           {reported ? '✓' : '⚑'}
         </button>
@@ -232,7 +235,7 @@ function PostCard({
       <div className="flex items-center gap-4 pt-3 border-t border-white/5">
         <button
           onClick={handleStarToggle}
-          className={`flex items-center gap-1.5 text-xs font-semibold cursor-pointer transition-all ${
+          className={`flex items-center gap-1.5 text-xs font-semibold cursor-pointer transition-ui ${
             hasStarred ? 'text-brand-secondary scale-105' : 'text-brand-muted hover:text-brand-text'
           }`}
         >
@@ -242,7 +245,7 @@ function PostCard({
 
         <button
           onClick={toggleComments}
-          className={`flex items-center gap-1.5 text-xs font-semibold cursor-pointer transition-colors ${
+          className={`flex items-center gap-1.5 text-xs font-semibold cursor-pointer transition-ui ${
             expanded ? 'text-brand-secondary' : 'text-brand-muted hover:text-brand-text'
           }`}
         >
@@ -252,7 +255,9 @@ function PostCard({
       </div>
 
       {/* Collapsible Comment drawer */}
+      <AnimatePresence initial={false}>
       {expanded && (
+        <m.div variants={collapse} initial="hidden" animate="show" exit="exit" className="overflow-hidden">
         <div className="mt-4 pt-4 border-t border-white/5 flex flex-col gap-3">
           <h4 className="text-[10px] font-black text-brand-muted uppercase tracking-wider">
             Pitmaster Comments
@@ -295,7 +300,7 @@ function PostCard({
               <button
                 type="submit"
                 disabled={!commentText.trim() || isSubmitting}
-                className="bg-brand-secondary hover:bg-brand-primary disabled:opacity-50 text-white font-bold text-xs px-3.5 py-2 rounded-xl transition-all cursor-pointer"
+                className="bg-brand-secondary hover:bg-brand-primary disabled:opacity-50 text-white font-bold text-xs px-3.5 py-2 rounded-xl transition-ui cursor-pointer"
               >
                 Send
               </button>
@@ -308,7 +313,9 @@ function PostCard({
             </div>
           )}
         </div>
+        </m.div>
       )}
+      </AnimatePresence>
     </div>
   );
 }
@@ -385,7 +392,7 @@ export default function GalleryPage() {
 
         <button
           onClick={() => setShowUploadModal(true)}
-          className="flex-none bg-brand-primary hover:bg-brand-secondary text-white font-bold px-5 py-3 rounded-xl text-sm transition-all shadow-lg flex items-center justify-center gap-2 cursor-pointer"
+          className="flex-none bg-brand-primary hover:bg-brand-secondary text-white font-bold px-5 py-3 rounded-xl text-sm transition-ui shadow-lg flex items-center justify-center gap-2 cursor-pointer"
         >
           <span>📸</span> Share a New Cook
         </button>
@@ -416,7 +423,7 @@ export default function GalleryPage() {
                 setMethodFilter('');
                 setCutFilter('');
               }}
-              className="text-brand-muted text-xs hover:text-brand-text transition-colors cursor-pointer"
+              className="text-brand-muted text-xs hover:text-brand-text transition-ui cursor-pointer"
             >
               Clear filters
             </button>
@@ -448,7 +455,7 @@ export default function GalleryPage() {
               </p>
               <button
                 onClick={() => setShowUploadModal(true)}
-                className="mt-2 bg-brand-primary hover:bg-brand-secondary text-white font-bold px-6 py-3 rounded-xl text-sm transition-all cursor-pointer"
+                className="mt-2 bg-brand-primary hover:bg-brand-secondary text-white font-bold px-6 py-3 rounded-xl text-sm transition-ui cursor-pointer"
               >
                 Share a Cook Now &rarr;
               </button>
@@ -457,8 +464,10 @@ export default function GalleryPage() {
 
           {!loading && filtered.length > 0 && (
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {filtered.map((post) => (
-                <PostCard key={post.id} post={post} user={user} onReport={handleReport} />
+              {filtered.map((post, i) => (
+                <Reveal key={post.id} index={i}>
+                  <PostCard post={post} user={user} onReport={handleReport} />
+                </Reveal>
               ))}
             </div>
           )}
@@ -471,12 +480,14 @@ export default function GalleryPage() {
       </div>
 
       {/* Upload Flow Modal */}
-      {showUploadModal && (
-        <UploadFlow
-          onClose={() => setShowUploadModal(false)}
-          onSuccess={handleUploadSuccess}
-        />
-      )}
+      <AnimatePresence>
+        {showUploadModal && (
+          <UploadFlow
+            onClose={() => setShowUploadModal(false)}
+            onSuccess={handleUploadSuccess}
+          />
+        )}
+      </AnimatePresence>
     </div>
   );
 }

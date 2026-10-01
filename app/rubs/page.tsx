@@ -1,6 +1,8 @@
 'use client';
 
 import { useEffect, useState, useMemo } from 'react';
+import { useSlidingIndicator } from '@/lib/useSlidingIndicator';
+import Reveal from '@/components/Reveal';
 import { RUBS, RUB_CATEGORIES, type RubItem } from '@/data/rubs';
 
 const RUB_CAT_IDS = new Set(RUB_CATEGORIES.filter((c) => c.id !== 'All').map((c) => c.id));
@@ -24,7 +26,7 @@ function ProductImage({ url, fallback }: { url: string; fallback: string }) {
 
   if (src === null) {
     return (
-      <div className="w-20 h-20 rounded-xl bg-brand-dark flex-shrink-0 animate-pulse" />
+      <div className="w-20 h-20 rounded-xl skeleton flex-shrink-0" />
     );
   }
 
@@ -60,12 +62,12 @@ function RubRow({ item }: { item: RubItem }) {
       href={`/go/${item.slug}`}
       target="_blank"
       rel="noopener noreferrer nofollow"
-      className="group flex items-center gap-4 bg-brand-surface border border-white/8 rounded-xl px-4 py-4 hover:border-white/20 hover:bg-brand-surface/80 transition-all"
+      className="group flex items-center gap-4 bg-brand-surface border border-white/8 rounded-xl px-4 py-4 hover:border-white/20 hover:bg-brand-surface/80 hover:shadow-lg transition-ui lift"
     >
       <ProductImage url={item.affiliateUrl} fallback={CAT_EMOJI[item.category] ?? '🧂'} />
 
       <div className="flex-1 min-w-0">
-        <p className="text-brand-text font-semibold text-sm leading-snug group-hover:text-brand-secondary transition-colors">
+        <p className="text-brand-text font-semibold text-sm leading-snug group-hover:text-brand-secondary transition-ui">
           {item.name}
         </p>
         <p className="text-brand-muted text-xs mt-1 leading-relaxed line-clamp-2">
@@ -87,6 +89,7 @@ function RubRow({ item }: { item: RubItem }) {
 
 export default function RubsPage() {
   const [activeCategory, setActiveCategory] = useState('All');
+  const { containerRef: tabsRef, indicatorRef: pillRef } = useSlidingIndicator(activeCategory);
   const [items, setItems] = useState<RubItem[]>(RUBS);
 
   // Live catalogue from the database (managed at /admin/gear); static list is the fallback
@@ -141,17 +144,17 @@ export default function RubsPage() {
       </div>
 
       {/* Category tabs */}
-      <div className="flex gap-2 flex-wrap mb-6">
+      <div ref={tabsRef} className="relative flex gap-2 flex-wrap mb-6">
+        {/* One orange pill shared by all tabs: it glides to the active one (lib/useSlidingIndicator). */}
+        <span ref={pillRef} aria-hidden className="slide-indicator rounded-full" style={{ background: '#f97316' }} />
         {tabs.map(({ id, emoji }) => (
           <button
             key={id}
+            data-tab={id}
             onClick={() => setActiveCategory(id)}
-            className="px-3 py-1.5 rounded-full text-xs font-semibold transition-all"
-            style={{
-              background: activeCategory === id ? '#f97316' : 'rgba(255,255,255,0.07)',
-              color: activeCategory === id ? 'white' : undefined,
-              border: activeCategory === id ? 'none' : '1px solid rgba(255,255,255,0.12)',
-            }}
+            className={`relative z-10 px-3 py-1.5 rounded-full text-xs font-semibold transition-ui border ${
+              activeCategory === id ? 'text-white border-transparent' : 'text-brand-text border-white/12 bg-white/7 hover:bg-white/12'
+            }`}
           >
             {emoji ? `${emoji} ` : ''}{id}
           </button>
@@ -165,7 +168,7 @@ export default function RubsPage() {
             <section key={id}>
               <h2 className="text-brand-text font-bold text-base mb-3">{emoji} {id}</h2>
               <div className="flex flex-col gap-3">
-                {grouped[id].map((item) => <RubRow key={item.slug} item={item} />)}
+                {grouped[id].map((item, i) => <Reveal key={item.slug} index={i}><RubRow item={item} /></Reveal>)}
               </div>
             </section>
           ))}
@@ -175,7 +178,7 @@ export default function RubsPage() {
       {/* Single category */}
       {!grouped && (
         <div className="flex flex-col gap-3">
-          {filtered.map((item) => <RubRow key={item.slug} item={item} />)}
+          {filtered.map((item, i) => <Reveal key={item.slug} index={i}><RubRow item={item} /></Reveal>)}
         </div>
       )}
 

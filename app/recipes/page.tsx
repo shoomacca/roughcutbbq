@@ -1,6 +1,10 @@
 'use client';
 
 import { useState, useMemo } from 'react';
+import { m, AnimatePresence } from 'framer-motion';
+import { collapse } from '@/lib/motion';
+import { useSlidingIndicator } from '@/lib/useSlidingIndicator';
+import Reveal from '@/components/Reveal';
 import Link from 'next/link';
 import { RECIPES, RECIPE_CATEGORIES, type Recipe } from '@/data/recipes';
 
@@ -18,7 +22,7 @@ function RecipeRow({ item }: { item: Recipe }) {
 
   return (
     <div
-      className="bg-brand-surface border border-white/8 rounded-xl overflow-hidden hover:border-white/20 transition-colors"
+      className="bg-brand-surface border border-white/8 rounded-xl overflow-hidden hover:border-white/20 hover:shadow-lg transition-ui lift"
     >
       {/* Summary row — always visible */}
       <button
@@ -31,7 +35,7 @@ function RecipeRow({ item }: { item: Recipe }) {
         </div>
 
         <div className="flex-1 min-w-0">
-          <p className="text-brand-text font-semibold text-sm leading-snug group-hover:text-brand-secondary transition-colors">
+          <p className="text-brand-text font-semibold text-sm leading-snug group-hover:text-brand-secondary transition-ui">
             {item.name}
           </p>
           <p className="text-brand-muted text-xs mt-1">
@@ -46,27 +50,31 @@ function RecipeRow({ item }: { item: Recipe }) {
       </button>
 
       {/* Expanded details */}
+      <AnimatePresence initial={false}>
       {open && (
-        <div className="border-t border-white/8 px-4 py-4 grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
-          <Detail label="Cut" value={item.cut} />
-          <Detail label="Method" value={item.method} />
-          <Detail label="Style / Rub" value={item.style} />
-          <Detail label="Target Internal" value={item.targetInternal} />
-          <Detail label="Time" value={item.time} />
-          {item.wood !== 'N/A' && <Detail label="Wood" value={item.wood} />}
-          <div className="sm:col-span-2">
-            <Detail label="Notes" value={item.notes} />
-          </div>
-          <div className="sm:col-span-2">
-            <Link
-              href={`/recipes/${item.slug}`}
-              className="text-brand-secondary text-xs font-semibold hover:underline"
-            >
-              Full recipe page &rarr;
-            </Link>
-          </div>
+        <m.div variants={collapse} initial="hidden" animate="show" exit="exit" className="overflow-hidden">
+        <div className="border-t border-white/8 px-4 py-4 grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+          <Detail label="Cut" value={item.cut} />
+          <Detail label="Method" value={item.method} />
+          <Detail label="Style / Rub" value={item.style} />
+          <Detail label="Target Internal" value={item.targetInternal} />
+          <Detail label="Time" value={item.time} />
+          {item.wood !== 'N/A' && <Detail label="Wood" value={item.wood} />}
+          <div className="sm:col-span-2">
+            <Detail label="Notes" value={item.notes} />
+          </div>
+          <div className="sm:col-span-2">
+            <Link
+              href={`/recipes/${item.slug}`}
+              className="text-brand-secondary text-xs font-semibold hover:underline"
+            >
+              Full recipe page &rarr;
+            </Link>
+          </div>
         </div>
+        </m.div>
       )}
+      </AnimatePresence>
     </div>
   );
 }
@@ -82,6 +90,7 @@ function Detail({ label, value }: { label: string; value: string }) {
 
 export default function RecipesPage() {
   const [activeCategory, setActiveCategory] = useState('All');
+  const { containerRef: tabsRef, indicatorRef: pillRef } = useSlidingIndicator(activeCategory);
 
   const filtered = useMemo(
     () => activeCategory === 'All' ? RECIPES : RECIPES.filter((r) => r.category === activeCategory),
@@ -108,17 +117,17 @@ export default function RecipesPage() {
       </div>
 
       {/* Category filter tabs */}
-      <div className="flex gap-2 flex-wrap mb-6">
+      <div ref={tabsRef} className="relative flex gap-2 flex-wrap mb-6">
+        {/* One orange pill shared by all tabs: it glides to the active one (lib/useSlidingIndicator). */}
+        <span ref={pillRef} aria-hidden className="slide-indicator rounded-full" style={{ background: '#f97316' }} />
         {RECIPE_CATEGORIES.map(({ id, emoji }) => (
           <button
             key={id}
+            data-tab={id}
             onClick={() => setActiveCategory(id)}
-            className="px-3 py-1.5 rounded-full text-xs font-semibold transition-all"
-            style={{
-              background: activeCategory === id ? '#f97316' : 'rgba(255,255,255,0.07)',
-              color: activeCategory === id ? 'white' : undefined,
-              border: activeCategory === id ? 'none' : '1px solid rgba(255,255,255,0.12)',
-            }}
+            className={`relative z-10 px-3 py-1.5 rounded-full text-xs font-semibold transition-ui border ${
+              activeCategory === id ? 'text-white border-transparent' : 'text-brand-text border-white/12 bg-white/7 hover:bg-white/12'
+            }`}
           >
             {emoji ? `${emoji} ` : ''}{id}
           </button>
@@ -132,7 +141,7 @@ export default function RecipesPage() {
             <section key={id}>
               <h2 className="text-brand-text font-bold text-base mb-3">{emoji} {id}</h2>
               <div className="flex flex-col gap-2">
-                {grouped[id].map((item) => <RecipeRow key={item.slug} item={item} />)}
+                {grouped[id].map((item, i) => <Reveal key={item.slug} index={i}><RecipeRow item={item} /></Reveal>)}
               </div>
             </section>
           ))}
@@ -142,7 +151,7 @@ export default function RecipesPage() {
       {/* Single category — flat list */}
       {!grouped && (
         <div className="flex flex-col gap-2">
-          {filtered.map((item) => <RecipeRow key={item.slug} item={item} />)}
+          {filtered.map((item, i) => <Reveal key={item.slug} index={i}><RecipeRow item={item} /></Reveal>)}
         </div>
       )}
     </div>

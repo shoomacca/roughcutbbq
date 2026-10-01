@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Reveal from '@/components/Reveal';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -52,16 +53,16 @@ export default function GuidesPage() {
         Step-by-step guides to help you cook better BBQ — every time.
       </p>
       <div className="flex flex-col gap-4">
-        {GUIDES.map((guide) => (
-          <Link
-            key={guide.slug}
+        {GUIDES.map((guide, i) => (
+          <Reveal key={guide.slug} index={i}>
+            <Link
             href={`/guides/${guide.slug}`}
-            className="block rounded-xl border border-white/8 bg-brand-surface px-5 py-4 hover:border-amber-500/30 transition-colors group"
+            className="block rounded-xl border border-white/8 bg-brand-surface px-5 py-4 hover:border-amber-500/30 hover:shadow-lg transition-ui lift group"
           >
             <div className="flex items-start gap-3">
               <span className="text-2xl mt-0.5">{guide.emoji}</span>
               <div className="min-w-0">
-                <h2 className="text-brand-text font-semibold group-hover:text-amber-400 transition-colors leading-snug">
+                <h2 className="text-brand-text font-semibold group-hover:text-amber-400 transition-ui leading-snug">
                   {guide.title}
                 </h2>
                 <p className="text-brand-muted text-sm mt-1 leading-relaxed">{guide.description}</p>
@@ -69,6 +70,7 @@ export default function GuidesPage() {
               </div>
             </div>
           </Link>
+          </Reveal>
         ))}
       </div>
     </>
