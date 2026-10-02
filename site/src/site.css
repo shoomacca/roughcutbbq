@@ -99,9 +99,15 @@ button:not(:disabled):active {
 html[data-js] .reveal:not([data-inview]) {
   opacity: 0;
 }
-.reveal[data-inview]:not([data-instant]) {
+/* Kept at specificity (0,2,0) on purpose: the app's generated reduced-motion block below
+   overrides `.reveal[data-inview]` to fade-in (opacity only) at the SAME specificity, later in
+   the cascade. `:not([data-instant])` here would be (0,3,0) and silently defeat it (RC-13.3). */
+.reveal[data-inview] {
   animation: fade-up var(--motion-slow) var(--ease-out-soft) both;
   animation-delay: var(--reveal-delay, 0ms);
+}
+.reveal[data-inview][data-instant] {
+  animation: none;
 }
 
 /* ── .collapse-box (mirrors @utility collapse-box) ── */
@@ -339,21 +345,57 @@ html:not([data-js]) .mobile-menu > * {
   }
 }
 
-/* ── Scaffold placeholder (RC-13.1; replaced by the real home in RC-13.3/13.4) ── */
+/* ── Home (RC-13.3): hero, how it works, sample plan, featured cooks ──────────────
+   Visual language = the app: display serif headings (Abril Fatface via --font-display),
+   dark page / surface panels / cream cards, 0.75-1rem radii, hairlines at 8-20% muted,
+   stat tiles like components/calculator/ResultsCard.tsx (muted uppercase label, bold value). */
+
+.wrap > h2,
+.steps h2,
+.sample h2,
+.featured h2 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  line-height: 1.1;
+  margin: 0 0 1rem;
+}
+.section-lede {
+  color: var(--color-brand-muted);
+  max-width: 40rem;
+  margin: 0 0 1.5rem;
+}
+
+/* Hero */
 .hero {
-  padding-block: 3rem 2rem;
+  padding-block: 2.5rem 3rem;
+}
+.hero-grid {
+  display: grid;
+  gap: 2rem;
+  align-items: center;
+}
+.eyebrow {
+  margin: 0 0 0.75rem;
+  color: var(--color-brand-secondary);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 .hero h1 {
   font-family: var(--font-display);
   font-weight: 400;
-  font-size: clamp(2rem, 6vw, 3.5rem);
-  line-height: 1.1;
+  font-size: clamp(2.5rem, 7vw, 4.25rem);
+  line-height: 1.05;
+  letter-spacing: -0.01em;
   margin: 0 0 1rem;
 }
-.hero p {
+.hero .lede {
   color: var(--color-brand-muted);
   font-size: 1.125rem;
-  max-width: 36rem;
+  line-height: 1.55;
+  max-width: 34rem;
   margin: 0 0 1.5rem;
 }
 .hero .actions {
@@ -362,12 +404,42 @@ html:not([data-js]) .mobile-menu > * {
   gap: 0.75rem 1rem;
   align-items: center;
 }
+.hero-note {
+  margin: 1rem 0 0;
+  color: color-mix(in srgb, var(--color-brand-muted) 80%, transparent);
+  font-size: 0.875rem;
+}
+.btn-lg {
+  min-height: 3.5rem;
+  padding: 1rem 1.75rem;
+  font-size: 1.0625rem;
+  font-weight: 700;
+  border-radius: 1rem;
+}
+.hero-img {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border-radius: 1.5rem;
+  border: 1px solid color-mix(in srgb, var(--color-brand-muted) 25%, transparent);
+  box-shadow: 0 24px 64px color-mix(in srgb, var(--color-brand-secondary) 18%, transparent);
+}
 @media (max-width: 767px) {
   .hero .btn {
     width: 100%;
   }
 }
+@media (min-width: 768px) {
+  .hero {
+    padding-block: 4rem 4.5rem;
+  }
+  .hero-grid {
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    gap: 3rem;
+  }
+}
 
+/* Cream card (the app's --color-brand-card panels) */
 .card {
   background-color: var(--color-brand-card);
   color: var(--color-brand-dark);
@@ -375,39 +447,222 @@ html:not([data-js]) .mobile-menu > * {
   padding: 1.25rem;
 }
 
-/* Placeholder step grid (RC-13.2 reveal fixture; RC-13.3 replaces the copy, keeps the classes) */
+/* How it works */
 .steps {
   padding-block: 3rem;
+  background-color: var(--color-brand-surface);
+  border-block: 1px solid color-mix(in srgb, var(--color-brand-muted) 15%, transparent);
 }
-.steps h2 {
-  font-family: var(--font-display);
-  font-weight: 400;
-  font-size: clamp(1.5rem, 4vw, 2.25rem);
-  margin: 0 0 1.5rem;
-}
-.steps .grid {
+.step-grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
   gap: 1rem;
 }
-.steps .card h3 {
-  margin: 0 0 0.5rem;
-  font-size: 1.125rem;
+.step {
+  position: relative;
+  padding: 1.5rem 1.25rem 1.25rem;
 }
-.steps .card p {
+.step-num {
+  display: inline-grid;
+  place-items: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 999px;
+  background-color: var(--color-brand-primary);
+  color: var(--color-brand-text);
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  margin-bottom: 0.75rem;
+}
+.step h3 {
+  margin: 0 0 0.375rem;
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+.step p {
   margin: 0;
-  color: var(--color-brand-dark);
+  color: color-mix(in srgb, var(--color-brand-dark) 78%, transparent);
+  line-height: 1.5;
+}
+@media (min-width: 768px) {
+  .step-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.25rem;
+  }
 }
 
-.swatches {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(8rem, 1fr));
-  gap: 0.75rem;
-  padding-block: 1rem 3rem;
+/* Sample plan */
+.sample {
+  padding-block: 3.5rem;
 }
-.swatch {
-  border-radius: 0.75rem;
-  padding: 0.75rem;
+.sample-grid {
+  display: grid;
+  gap: 2rem;
+  align-items: center;
+}
+.sample-copy p {
+  color: var(--color-brand-muted);
+  line-height: 1.55;
+  margin: 0 0 1rem;
+  max-width: 34rem;
+}
+.sample-copy .btn {
+  margin-top: 0.5rem;
+}
+.plan-card {
+  background-color: var(--color-brand-surface);
+  border: 1px solid color-mix(in srgb, var(--color-brand-muted) 20%, transparent);
+  border-radius: 1.25rem;
+  padding: 1.25rem;
+  box-shadow: 0 24px 64px color-mix(in srgb, var(--color-brand-dark) 60%, transparent);
+}
+.plan-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+.plan-kicker {
+  margin: 0 0 0.125rem;
+  color: var(--color-brand-muted);
   font-size: 0.75rem;
-  border: 1px solid var(--color-brand-muted);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.plan-title {
+  margin: 0;
+  font-size: 1.375rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+.pill {
+  flex: none;
+  display: inline-block;
+  padding: 0.25rem 0.625rem;
+  border-radius: 999px;
+  background-color: color-mix(in srgb, var(--color-brand-primary) 20%, transparent);
+  color: var(--color-brand-secondary);
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+.stats {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+  margin: 0;
+}
+.stat {
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+  background-color: var(--color-brand-dark);
+  border-radius: 0.75rem;
+  padding: 1rem;
+}
+.stat dt {
+  color: var(--color-brand-muted);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.stat dd {
+  margin: 0;
+  color: var(--color-brand-text);
+  font-size: 1.5rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.2;
+}
+.stat small {
+  color: var(--color-brand-muted);
+  font-size: 0.75rem;
+}
+.plan-when {
+  margin: 1rem 0 0;
+  padding: 0.875rem 1rem;
+  border-radius: 0.75rem;
+  background-color: color-mix(in srgb, var(--color-brand-secondary) 12%, transparent);
+  color: var(--color-brand-text);
+  font-size: 0.9375rem;
+}
+.plan-when strong {
+  color: var(--color-brand-secondary);
+}
+.plan-foot {
+  margin: 0.75rem 0 0;
+  color: color-mix(in srgb, var(--color-brand-muted) 80%, transparent);
+  font-size: 0.75rem;
+}
+@media (min-width: 768px) {
+  .sample-grid {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+    gap: 3rem;
+  }
+}
+
+/* Featured cooks */
+.featured {
+  padding-block: 1rem 4rem;
+}
+.tile-grid {
+  display: grid;
+  gap: 1rem;
+}
+.tile {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border-radius: 1rem;
+  background-color: var(--color-brand-surface);
+  border: 1px solid color-mix(in srgb, var(--color-brand-muted) 15%, transparent);
+  color: var(--color-brand-text);
+  text-decoration: none;
+}
+.tile:hover {
+  border-color: color-mix(in srgb, var(--color-brand-muted) 45%, transparent);
+}
+.tile img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
+.tile-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 1rem;
+}
+.tile-title {
+  font-size: 1.125rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+.tile-meta {
+  font-size: 0.875rem;
+  color: var(--color-brand-muted);
+}
+.tile-meta strong {
+  color: var(--color-brand-secondary);
+  font-variant-numeric: tabular-nums;
+}
+.tile-note {
+  font-size: 0.75rem;
+  color: color-mix(in srgb, var(--color-brand-muted) 75%, transparent);
+}
+@media (min-width: 640px) {
+  .tile-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (min-width: 1024px) {
+  .tile-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.25rem;
+  }
 }

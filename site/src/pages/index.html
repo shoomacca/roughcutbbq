@@ -9,36 +9,88 @@
 <body>
   <!-- @include header -->
   <main>
-    <section class="hero wrap">
-      <h1>Know when your BBQ will be done.</h1>
-      <p>Pick the cut, the cooker and the weight. RoughCut BBQ gives you cook time, pit temp, pull temp, rest, and the time to light the fire. Free, metric, made in Australia.</p>
-      <div class="actions">
-        <a class="btn lift transition-ui" href="{{APP_URL}}/calculator?utm_source=site&utm_medium=hero">Start a cook &rarr;</a>
-        <a class="btn btn-ghost transition-ui" href="{{APP_URL}}/cook/smoker/pork-shoulder?utm_source=site">See a sample plan</a>
+    <!-- 1. Hero (plan §3.3.1). No .reveal: the first screen is never hidden. -->
+    <section class="hero">
+      <div class="wrap hero-grid">
+        <div class="hero-copy">
+          <p class="eyebrow">Free BBQ cook planner &middot; kg and &deg;C</p>
+          <h1>Know when your BBQ will be done.</h1>
+          <p class="lede">Pick the cut, the cooker and the weight. You get the cook time, pit temp, pull temp, rest, and the time to light the fire. Free, metric, made in Australia.</p>
+          <div class="actions">
+            <a class="btn btn-lg lift transition-ui" href="{{APP_URL}}/calculator?utm_source=site&utm_medium=hero">Start a cook &rarr;</a>
+            <a class="btn btn-ghost transition-ui" href="#sample-plan">See a sample plan</a>
+          </div>
+          <p class="hero-note">No account. No ads. Works on your phone at the pit.</p>
+        </div>
+        <img class="hero-img" src="{{HERO_IMG}}" width="{{HERO_W}}" height="{{HERO_H}}" alt="Sliced smoked brisket with a dark pepper bark" fetchpriority="high" decoding="async">
       </div>
     </section>
 
-    <!-- Placeholder (RC-13.2): gives the reveal, nav anchor and Playwright spec real below-the-fold
-         items. RC-13.3 replaces the copy with the real "How it works" section and screenshots. -->
-    <section id="how-it-works" class="steps wrap" aria-labelledby="how-heading">
-      <h2 id="how-heading">How it works</h2>
-      <div class="grid">
-        <article class="reveal card lift transition-ui" data-index="0"><h3>1. Pick the cut</h3><p>Brisket, pork shoulder, lamb leg, spatchcock chicken and more.</p></article>
-        <article class="reveal card lift transition-ui" data-index="1"><h3>2. Pick the cooker</h3><p>Smoker, kettle, gas or oven. Each has its own pit temperature.</p></article>
-        <article class="reveal card lift transition-ui" data-index="2"><h3>3. Enter the weight</h3><p>Kilograms only. The plan scales with what is on the board.</p></article>
-        <article class="reveal card lift transition-ui" data-index="3"><h3>4. Get the plan</h3><p>Cook time, pull temp, rest, and the time to light the fire.</p></article>
-        <article class="reveal card lift transition-ui" data-index="4"><h3>5. Work backwards</h3><p>Set the time you want to eat and it tells you when to start.</p></article>
-        <article class="reveal card lift transition-ui" data-index="5"><h3>6. Save it</h3><p>Keep the plan on your phone for the next cook.</p></article>
+    <!-- 2. How it works (plan §3.3.2) -->
+    <section id="how-it-works" class="steps" aria-labelledby="how-heading">
+      <div class="wrap">
+        <h2 id="how-heading">Three taps, one plan.</h2>
+        <ol class="step-grid">
+          <li class="reveal step card lift transition-ui" data-index="0">
+            <span class="step-num" aria-hidden="true">1</span>
+            <h3>Pick the cut</h3>
+            <p>Pork, beef, chicken, lamb, fish, veg, game and jerky. 80 cuts, from a full packer brisket to a tray of prawns.</p>
+          </li>
+          <li class="reveal step card lift transition-ui" data-index="1">
+            <span class="step-num" aria-hidden="true">2</span>
+            <h3>Pick the cooker</h3>
+            <p>Smoker, kettle, kamado, oven, slow cooker, pressure cooker, wood fire, rotisserie or dehydrator.</p>
+          </li>
+          <li class="reveal step card lift transition-ui" data-index="2">
+            <span class="step-num" aria-hidden="true">3</span>
+            <h3>Enter the weight</h3>
+            <p>In kilograms. You get the whole plan: times, temps, when to wrap, when to rest and when to start.</p>
+          </li>
+        </ol>
       </div>
     </section>
 
-    <!-- Scaffold check (RC-13.1): every token below comes from app/globals.css via the extractor. -->
-    <section class="wrap swatches" aria-label="Design tokens">
-      <div class="reveal swatch" data-index="0" style="background: var(--color-brand-primary)">brand-primary</div>
-      <div class="reveal swatch" data-index="1" style="background: var(--color-brand-secondary)">brand-secondary</div>
-      <div class="reveal swatch" data-index="2" style="background: var(--color-brand-surface)">brand-surface</div>
-      <div class="reveal swatch" data-index="3" style="background: var(--color-brand-muted)">brand-muted</div>
-      <div class="reveal swatch card" data-index="4">brand-card</div>
+    <!-- 3. A real plan (plan §3.3.3). Every number in the card is written by scripts/build-site.mjs
+         from the app's calculateCook() for site.config.json's sampleCut; nothing here is hand-typed.
+         tests/site-home.test.ts and e2e/site.spec.ts assert the parity. -->
+    <section id="sample-plan" class="sample" aria-labelledby="sample-heading">
+      <div class="wrap sample-grid">
+        <div class="sample-copy">
+          <h2 id="sample-heading">Your plan, not a guess.</h2>
+          <p>Every number comes from the same engine as the app, built from published cook ranges. You still cook to temperature, not the clock; the plan gives you both.</p>
+          <p>Plus: when to wrap, when the stall hits, which rub and wood suit it, and the gear worth owning. Save it, email it, or print it for the shed wall.</p>
+          <a class="btn lift transition-ui" href="{{APP_URL}}{{SAMPLE_RESULTS_PATH}}&utm_source=site&utm_medium=sample">Plan this cook &rarr;</a>
+        </div>
+        <article class="reveal plan-card" data-index="0" data-testid="sample-plan" aria-label="Example plan: {{SAMPLE_CUT}} in the {{SAMPLE_METHOD}}">
+          <header class="plan-head">
+            <div>
+              <p class="plan-kicker">Example plan</p>
+              <h3 class="plan-title">{{SAMPLE_CUT}}</h3>
+            </div>
+            <span class="pill">{{SAMPLE_METHOD}}</span>
+          </header>
+          <dl class="stats">
+            <div class="stat"><dt>Cook time</dt><dd data-stat="cook-time">~{{SAMPLE_COOK_TIME}}</dd><small>{{SAMPLE_WEIGHT_NOTE}}</small></div>
+            <div class="stat"><dt>Pit temp</dt><dd data-stat="pit-temp">{{SAMPLE_PIT_C}}&deg;C</dd><small>set the {{SAMPLE_METHOD}} here</small></div>
+            <div class="stat"><dt>Pull at</dt><dd data-stat="pull-temp">{{SAMPLE_PULL_C}}&deg;C</dd><small>internal, thickest part</small></div>
+            <div class="stat"><dt>Rest</dt><dd data-stat="rest">{{SAMPLE_REST_MIN}} min</dd><small>loosely covered</small></div>
+          </dl>
+          <p class="plan-when" data-stat="timeline">Light the fire at <strong>{{SAMPLE_START_AT}}</strong> to eat at <strong>{{SAMPLE_EAT_AT}}</strong>.</p>
+          <p class="plan-foot">Example only. The app uses your weight and the time you want to eat.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- 4. Featured cooks (plan §3.3.4): tiles generated by build-site.mjs, times from the engine,
+         links to the app's static /cook/smoker/<cut> pages. -->
+    <section id="featured" class="featured" aria-labelledby="featured-heading">
+      <div class="wrap">
+        <h2 id="featured-heading">Start with a classic.</h2>
+        <p class="section-lede">Six cooks worth doing first. Each page has the full times table, the stall and wrap advice, rubs and wood.</p>
+        <div class="tile-grid">
+<!-- @block featured -->
+        </div>
+      </div>
     </section>
   </main>
   <!-- @include footer -->

@@ -1,7 +1,16 @@
 import { expect, test, type Page } from '@playwright/test';
+import { readFileSync } from 'node:fs';
+import { join } from 'node:path';
+import { calculateCook, formatCookTime } from '../lib/calculator';
+import { findCut } from '../lib/seo';
+import type { CookingMethod } from '../types/calculator';
 
 // Explainer site (site/dist, served by scripts/serve-site.mjs; Playwright project `site`).
 // Acceptance for RC-13.2 (.planning/ISSUES.md §M13): reveal contract, header/footer, mobile nav.
+// RC-13.3: hero without JS, CTA href, engine-driven sample card, featured links resolve live.
+
+const SITE_CONFIG = JSON.parse(readFileSync(join(__dirname, '..', 'site', 'site.config.json'), 'utf8'));
+const APP = SITE_CONFIG.APP_URL as string;
 
 const REVEAL = '.reveal';
 
@@ -24,15 +33,14 @@ async function revealState(page: Page) {
 }
 
 test.describe('reveal', () => {
-  // Phone viewport: the fixture cards stack, so several sit below the fold (at 1440x900 the
-  // placeholder page fits in one screen; RC-13.3's real sections will not).
+  // Phone viewport: the step cards, plan card and tiles stack, so most sit below the fold.
   test.use({ viewport: { width: 390, height: 844 } });
 
   test('page has below-the-fold reveal items to exercise', async ({ page }) => {
     await page.goto('/');
     const state = await revealState(page);
     expect(state.length).toBeGreaterThanOrEqual(6);
-    expect(state.some((s) => !s.onScreen)).toBe(true); // the fixtures sit below 844px
+    expect(state.some((s) => !s.onScreen)).toBe(true); // 3 steps + plan card + 6 tiles sit below 844px
   });
 
   test.describe('JavaScript disabled', () => {
@@ -63,9 +71,13 @@ test.describe('reveal', () => {
       expect(s.inview).toBe(false);
       expect(s.opacity).toBe(0);
     }
-    // Items on screen at init were shown at once, with no fade.
-    expect(before.some((x) => x.onScreen && x.inview && x.instant)).toBe(true);
-    for (const s of before.filter((x) => x.onScreen)) expect(s.inview).toBe(true);
+    // Items on screen at init were shown at once, with no fade. (At 390x844 the hero fills the
+    // first screen and carries no .reveal, so this may be vacuous here; the desktop test below
+    // asserts the rule with items present.)
+    for (const s of before.filter((x) => x.onScreen)) {
+      expect(s.inview).toBe(true);
+      expect(s.instant).toBe(true);
+    }
 
     // Bring exactly one item in (its top 20px above the fold): it is flagged once, animates
     // (no data-instant) and ends visible. scrollIntoViewIfNeeded would pull 3 stacked cards in
@@ -76,6 +88,20 @@ test.describe('reveal', () => {
     await expect(firstBelow).toHaveAttribute('data-inview', '');
     await expect(firstBelow).not.toHaveAttribute('data-instant', '');
     await expect.poll(() => firstBelow.evaluate((el) => getComputedStyle(el).opacity)).toBe('1');
+  });
+
+  test('desktop: items on screen at init are shown at once, with no fade', async ({ page }) => {
+    await page.setViewportSize({ width: 1440, height: 900 });
+    await page.goto('/');
+    await expect.poll(() => page.evaluate(() => 'js' in document.documentElement.dataset)).toBe(true);
+    const state = await revealState(page);
+    const onScreen = state.filter((s) => s.onScreen);
+    expect(onScreen.length).toBeGreaterThan(0); // the "how it works" cards sit under the hero at 1440x900
+    for (const s of onScreen) {
+      expect(s.inview).toBe(true);
+      expect(s.instant).toBe(true);
+      expect(s.opacity).toBe(1);
+    }
   });
 
   test('End then wheel up leaves no blank band', async ({ page }) => {
@@ -188,5 +214,106 @@ test.describe('header and footer', () => {
       await page.keyboard.press('Tab');
       await expect(firstLink).not.toBeFocused();
     });
+  });
+});
+
+test.describe('home (RC-13.3)', () => {
+  test.describe('JavaScript disabled', () => {
+    test.use({ javaScriptEnabled: false });
+    test('the hero H1, subhead and CTA are visible with no JS', async ({ page }) => {
+      await page.goto('/');
+      const h1 = page.getByRole('heading', { level: 1 });
+      await expect(h1).toBeVisible();
+      await expect(h1).toHaveText('Know when your BBQ will be done.');
+      await expect(page.locator('.hero .lede')).toBeVisible();
+      await expect(page.locator('.hero').getByRole('link', { name: 'Start a cook →' })).toBeVisible();
+    });
+  });
+
+  test('hero CTA goes to the app calculator with utm_source=site', async ({ page }) => {
+    await page.goto('/');
+    const cta = page.locator('.hero').getByRole('link', { name: 'Start a cook →' });
+    await expect(cta).toBeVisible();
+    expect(await cta.getAttribute('href')).toBe(`${APP}/calculator?utm_source=site&utm_medium=hero`);
+    // The secondary link scrolls to the sample plan on this page.
+    await expect(page.locator('.hero').getByRole('link', { name: 'See a sample plan' })).toHaveAttribute('href', '#sample-plan');
+  });
+
+  test('the sample card shows calculateCook() for site.config.json sampleCut, labelled as an example', async ({ page }) => {
+    const entry = findCut(SITE_CONFIG.sampleCut);
+    if (!entry) throw new Error(`sampleCut ${SITE_CONFIG.sampleCut} not in meats.json`);
+    const r = calculateCook({
+      method: SITE_CONFIG.sampleMethod as CookingMethod,
+      categoryId: entry.category.id,
+      cutId: entry.cut.id,
+      weightKg: Number(SITE_CONFIG.sampleKg),
+    });
+    await page.goto('/');
+    const card = page.getByTestId('sample-plan');
+    await card.scrollIntoViewIfNeeded();
+    await expect(card).toBeVisible();
+    await expect(card.getByText('Example plan')).toBeVisible();
+    await expect(card.locator('.plan-title')).toHaveText(r.cutName);
+    await expect(card.locator('[data-stat="cook-time"]')).toHaveText(`~${formatCookTime(r.cookTimeHours)}`);
+    await expect(card.locator('[data-stat="pit-temp"]')).toHaveText(`${r.applianceTempC}°C`);
+    await expect(card.locator('[data-stat="pull-temp"]')).toHaveText(`${r.internalTempC}°C`);
+    await expect(card.locator('[data-stat="rest"]')).toHaveText(`${r.restMinutes} min`);
+    await expect(card.locator('[data-stat="timeline"]')).toContainText(/Light the fire at \d{1,2}:\d{2} [ap]m to eat at \d{1,2}:\d{2} [ap]m\./);
+    await expect(card.getByText('Example only', { exact: false })).toBeVisible();
+    // "Plan this cook" carries the same input to the app's results page.
+    const plan = page.locator('.sample').getByRole('link', { name: 'Plan this cook →' });
+    expect(await plan.getAttribute('href')).toBe(
+      `${APP}/results?method=${SITE_CONFIG.sampleMethod}&cat=${entry.category.id}&cut=${entry.cut.id}&kg=${Number(SITE_CONFIG.sampleKg)}&utm_source=site&utm_medium=sample`,
+    );
+  });
+
+  test('featured tiles: 3 to 6, each with a sized photo, an engine time and an app cook link', async ({ page }) => {
+    await page.goto('/');
+    const tiles = page.locator('.tile-grid .tile');
+    const n = await tiles.count();
+    expect(n).toBeGreaterThanOrEqual(3);
+    expect(n).toBeLessThanOrEqual(6);
+    const appRe = new RegExp(`^${APP.replace(/\./g, '\\.')}/cook/smoker/[a-z0-9-]+\\?utm_source=site`);
+    for (let i = 0; i < n; i++) {
+      const t = tiles.nth(i);
+      expect(await t.getAttribute('href')).toMatch(appRe);
+      const img = t.locator('img');
+      expect(Number(await img.getAttribute('width'))).toBeGreaterThan(0);
+      expect(Number(await img.getAttribute('height'))).toBeGreaterThan(0);
+      expect((await img.getAttribute('alt')) ?? '').not.toBe('');
+      await expect(t.locator('.tile-meta strong')).toHaveText(/\d+ (hrs?|min)/);
+    }
+  });
+
+  test('hero and tile photos load from the site (no broken images)', async ({ page }) => {
+    await page.goto('/');
+    await page.keyboard.press('End');
+    await expect
+      .poll(() =>
+        page.evaluate(() =>
+          [...document.querySelectorAll<HTMLImageElement>('.tile img, .hero-img')].map((i) => i.complete && i.naturalWidth > 0),
+        ),
+      )
+      .not.toContain(false);
+  });
+
+  // Network check against production: the pages the site links to must exist in the app.
+  test('every featured link and the sample link resolve on the live app (200)', async ({ page, request }) => {
+    test.slow();
+    await page.goto('/');
+    const hrefs = await page
+      .locator('.tile-grid .tile, .sample a.btn')
+      .evaluateAll((els) => els.map((e) => (e as HTMLAnchorElement).href));
+    expect(hrefs.length).toBeGreaterThanOrEqual(4);
+    for (const href of hrefs) {
+      const res = await request.get(href, { maxRedirects: 3, timeout: 30_000 });
+      expect(res.status(), href).toBe(200);
+    }
+    // And each featured target is listed in the app's sitemap.
+    const sitemap = await (await request.get(`${APP}/sitemap.xml`)).text();
+    for (const href of hrefs.filter((h) => h.includes('/cook/'))) {
+      const bare = href.split('?')[0];
+      expect(sitemap, bare).toContain(`<loc>${bare}</loc>`);
+    }
   });
 });

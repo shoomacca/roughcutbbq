@@ -2,5 +2,16 @@
   "SITE_URL": "https://roughcut.com.au",
   "APP_URL": "https://app.roughcut.com.au",
   "PLAY_URL": "",
-  "sampleCut": "spatchcock_chicken"
+  "sampleCut": "spatchcock_chicken",
+  "sampleMethod": "smoker",
+  "sampleKg": 1.8,
+  "sampleEatAt": "18:00",
+  "featured": [
+    { "cutId": "brisket", "label": "Brisket", "kg": 5, "image": "brisket" },
+    { "cutId": "pork_shoulder", "label": "Pulled pork", "kg": 4, "image": "pulled-pork" },
+    { "cutId": "baby_back_ribs", "label": "Pork ribs", "kg": 1.5, "image": "ribs" },
+    { "cutId": "spatchcock_chicken", "label": "Spatchcock chicken", "kg": 1.8, "image": "chicken" },
+    { "cutId": "lamb_shoulder", "label": "Lamb shoulder", "kg": 2, "image": "coals" },
+    { "cutId": "salmon_fillet", "label": "Hot-smoked salmon", "kg": 1, "image": "fish" }
+  ]
 }

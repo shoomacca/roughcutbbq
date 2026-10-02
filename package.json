@@ -12,7 +12,7 @@
     "test:update-goldens": "tsx tests/generate-goldens.ts",
     "test:e2e": "playwright test",
     "typecheck": "tsc --noEmit",
-    "site:build": "node scripts/build-site.mjs"
+    "site:build": "tsx scripts/build-site.mjs"
   },
   "dependencies": {
     "@capacitor/android": "^8.4.1",
