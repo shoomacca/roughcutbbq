@@ -2,7 +2,11 @@
 
 **Written:** 2026-10-02 · **Revised:** 2026-10-02 (owner decision below) · **Status:** plan only, nothing built · **Owner's ask:** "maybe we should have a home page that explains what its for, make it easy etc? I think we need to re-evaluate the actual website that explains this as well, so I want a build plan."
 
-**Owner decision (2026-10-02, overrides D1 in BLUEPRINT §5):** keep the separate explainer website on Hostinger at `roughcut.com.au` (+ `www`), static HTML/CSS (PHP only where it genuinely helps), with the **same UI, style and motion as the app**. All CTAs go to `app.roughcut.com.au`. No apex redirect. The app stays at `app.roughcut.com.au`. BLUEPRINT §5 D1 and ISSUES RC-10.3 need a one-line amendment to match (RC-13.0 below).
+**Owner decisions (2026-10-02, override D1 in BLUEPRINT §5):**
+- Keep the separate explainer website on Hostinger at `roughcut.com.au` (+ `www`), static HTML/CSS (PHP only where it genuinely helps), with the **same UI, style and motion as the app**. All CTAs go to `app.roughcut.com.au`. No apex redirect. The app stays at `app.roughcut.com.au`.
+- **Deploy: no pipeline, no Hostinger credentials.** `npm run site:build` produces a self-contained `site/dist/` folder that the owner copies into `public_html` himself via hPanel File Manager (§5).
+- **Defaults confirmed:** build now on the current tokens (before D8); the sample card uses **spatchcock chicken** until RC-3.4 lands; **analytics deferred**: RC-13.10 stays blocked and no tracking code is added to either domain.
+- Recorded in BLUEPRINT §5 (D1), ISSUES (RC-10.3, RC-13.x) and HANDOVER by RC-13.0.
 
 Tags: **[M]** measured (command run / line read / page fetched on 2026-10-02) · **[G]** judgement.
 
@@ -105,7 +109,7 @@ Plus: when to wrap, when the stall hits, which rub and wood suit it, and the
 gear worth owning. Save it, email it, or print it for the shed wall.
 Plan this cook →  (app …/results?method=smoker&cat=pork&cut=pork_shoulder&kg=4&utm_source=site)
 ```
-Those are today's real engine numbers [M: `calculateCook({smoker, pork, pork_shoulder, 4 kg})` → 15.4 h, 110 °C, 95 °C, 60 min]. 15.4 h is the known linear-model over-estimate (BLUEPRINT §3; RC-3.4 fixes it). The build script (§4) writes this card from the engine at build time (`import { calculateCook } from '../lib/calculator'`), so it is never hand-typed and tracks RC-3.4. Open question Q3: use spatchcock chicken until RC-3.4 lands.
+Those are today's real engine numbers [M: `calculateCook({smoker, pork, pork_shoulder, 4 kg})` → 15.4 h, 110 °C, 95 °C, 60 min]. 15.4 h is the known linear-model over-estimate (BLUEPRINT §3; RC-3.4 fixes it). The build script (§4) writes this card from the engine at build time (`import { calculateCook } from '../lib/calculator'`), so it is never hand-typed and tracks RC-3.4. **Decided:** the card uses spatchcock chicken (`sampleCut` in `site.config.json`) until RC-3.4 lands, then switches to pork shoulder.
 
 **4. Featured cooks (6 tiles)**
 ```
@@ -218,22 +222,15 @@ site/
   dist/                     # build output, gitignored; what gets uploaded
 scripts/build-site.mjs      # npm run site:build
 ```
-Build output is **plain HTML/CSS/JS/images**. Nothing runs on Hostinger.
+Build output is **plain HTML/CSS/JS/images**. Nothing runs on Hostinger. No CI step, no FTP, no Git deploy, no credentials (owner decision).
 
-**Deploy mechanism, two options (owner picks, Q4):**
-- **(i) hPanel Git deploy:** hPanel → Websites → Advanced → Git, connect `shoomacca/roughcutbbq`, branch `site-release`, deploy path `public_html`. CI (`site-deploy.yml`) builds `site/dist` on push to `main` and force-pushes its contents to the `site-release` branch; Hostinger pulls on its webhook. No credentials in the repo. [G: hPanel's Git feature and auto-deploy webhook are known hPanel features; not verified on this account.]
-- **(ii) SFTP/FTP from CI:** GitHub Actions secrets `HOSTINGER_FTP_HOST`, `HOSTINGER_FTP_USER`, `HOSTINGER_FTP_PASS`, step `lftp mirror -R site/dist public_html`. Works on every Hostinger plan.
+**Deploy = upload package (RC-13.6), uploaded by the owner (RC-13.8).** `npm run site:build` writes `site/dist/` containing **every** file the site needs: `index.html`, `404.html`, `site.css`, `reveal.js`, `img/*`, `og/home.png`, `favicon.ico` + `favicon.svg`, `robots.txt`, `sitemap.xml`, and `.htaccess` with the §3.2 301 map and cache/HTTPS rules. It also writes:
+- `site/dist/README-UPLOAD.txt`: plain steps for hPanel File Manager: (1) open File Manager → `public_html`; (2) **back up first**: select all → Compress → download the zip (or just download the folder); (3) delete the old files; (4) upload everything from `site/dist/`, **including `.htaccess`, which is a hidden file** (turn on "show hidden files" in File Manager and in Windows Explorer, or use the zip below so it can't be missed); (5) check five URLs in a browser: `https://roughcut.com.au/`, `https://www.roughcut.com.au/`, `https://roughcut.com.au/guides.html` (should land on the app's `/guides`), `https://roughcut.com.au/rubs.html` (→ app `/rubs`), `https://roughcut.com.au/site.css` (loads, contains `--motion-base: 220ms`).
+- `site/roughcut-site.zip` (optional, same contents, hidden file included): upload the one zip and use File Manager's **Extract**, then delete the zip.
 
-Either way the first deploy and every DNS/htaccess change is **HUMAN-gated** (RC-13.8). CI only ships `site/dist` after the owner has approved the first manual upload.
+**Rollback:** before the first upload, RC-13.6 saves the current live site with `curl` into `site/backup-2026-10-02/` (`index.html`, `guides.html`, `rubs.html`, `wood-chart.html`, `guides/*.html` ×5, `style.css`; the site has no images [M]) and commits it. Rollback = upload that folder over `public_html`. The owner's own zip from step (2) is the second copy.
 
-**What the owner must provide (exactly):**
-1. hPanel login (or temporary collaborator access) for the `roughcut.com.au` website, to confirm the document root (`public_html`), enable Git deploy or create an FTP account, and edit `.htaccess`.
-2. **One of:** (i) permission to connect the GitHub repo in hPanel Git (owner clicks it; no secret leaves hPanel), **or** (ii) an FTP/SFTP host, username and password for that site, added by the owner as GitHub Actions secrets (never in the repo, never in Linear).
-3. Confirmation of where `roughcut.com.au` DNS is managed (Hostinger or registrar); nothing changes in DNS for this plan, but it must be known for the rollback.
-4. Google Search Console: verify `roughcut.com.au` (DNS TXT or HTML file in `site/src`) and `app.roughcut.com.au` as two properties; grant the agent read access or run the sitemap submission yourself.
-5. The Play Store URL when RC-12.5 publishes (sets `PLAY_URL`).
-
-**Rollback:** before the first upload, RC-13.8 downloads the entire current `public_html` via hPanel File Manager (zip) **and** commits a copy of the live site as fetched by `curl` to `site/backup-2026-10-02/` (6 HTML + CSS; it has no images [M]). Rollback = re-upload that folder; it is independent of the build.
+**Owner items (no credentials needed):** the upload itself (RC-13.8); optionally, later, Google Search Console verification for `roughcut.com.au` and `app.roughcut.com.au` (HTML-file method: the build can include the file once the owner supplies its name) and sitemap submission; the Play Store URL when RC-12.5 publishes (sets `PLAY_URL`).
 
 ---
 
@@ -267,13 +264,13 @@ No new sections, no server fetches, `/` stays static, Playwright specs that star
 
 ## 9. Measurement and open questions
 
-**Measurement.** The site is on Hostinger, so **Vercel Analytics would cover the app only**; a cross-domain picture needs PostHog (EU host; one project, two hosts, `utm_source=site` on every link) or GA4 on both. Until RC-0.8 lands, the only live signals are `cook_tally` (plans/day) and `gear_clicks` on the app [M]. Events to wire now (no-op until a provider exists): site `site_view`, `site_cta` (section), `site_faq_open`, `site_play_click`; app `home_view`, `home_cta_start`, `calc_complete` (exists). Success after 4 weeks vs the 4 weeks before: plans/day up; app sessions with `utm_source=site` present; Search Console impressions for brand queries on the apex and for `/cook/*` on the app both up; Lighthouse mobile ≥ 95 on both homes.
+**Measurement (deferred by owner decision).** No tracking code is added to either domain by this plan. The site is on Hostinger, so when the owner does decide, **Vercel Analytics would cover the app only**; a cross-domain picture needs PostHog (EU host, one project, `utm_source=site` on every link, which the site already carries) or GA4 on both. Until then the live signals are `cook_tally` (plans/day) and `gear_clicks` on the app [M], plus Search Console once verified. Success after 4 weeks vs the 4 weeks before: plans/day up; Search Console brand-query impressions on the apex and `/cook/*` impressions on the app both up; Lighthouse mobile ≥ 95 on both homes. RC-13.10 stays blocked on RC-0.8.
 
-**Open questions (only these change the plan):**
-1. **Analytics (RC-0.8):** PostHog EU (covers both domains) or Vercel Analytics (app only; the site would need GA4 or nothing). Recommend PostHog EU for one view across site → app.
-2. **Timing vs D8 (RC-4.1/4.2):** build the site now on the current tokens (recommended: `site:build` regenerates `site.css` for free when D8 lands; only the OG image and screenshots get redone) or wait for D8?
-3. **Sample-plan cut:** show pork shoulder (currently 15.4 h for 4 kg, the known model bug, fixed by RC-3.4) or spatchcock chicken until then? Recommend chicken now, switch after RC-3.4 (one config line).
-4. **Hostinger access:** hPanel login or collaborator invite; Git deploy vs FTP (§5 list items 1–3); where DNS is managed. Nothing can ship to the apex without these.
+**Decided (2026-10-02):** build now on the current tokens (D8 re-skins via `site:build`; only OG image and screenshots redone); sample card = spatchcock chicken until RC-3.4 (`site.config.json` `sampleCut`); analytics deferred; deploy = manual upload of `site/dist/`, no credentials.
+
+**Still open (none blocks RC-13.1–13.7):**
+1. Search Console verification for the two domains (optional, later; owner supplies the HTML-file name and the build includes it).
+2. Keep `guides.html` as a links-only index or 301 it to the app's `/guides` (plan recommends the 301; §3.2).
 
 ---
 
@@ -281,9 +278,9 @@ No new sections, no server fetches, `/` stays static, Playwright specs that star
 
 Conventions as `ISSUES.md`: size XS/S/M/L, risk tags, testable acceptance, branch `rc-13.y`, commit `type(RC-13.y): …`. Every code issue implicitly includes `tsc`, `lint`, `build`, vitest and Playwright green.
 
-**RC-13.0 Record the owner's decision** · docs · XS
-- BLUEPRINT §5 D1 → "Keep the Hostinger explainer site at the apex, same design system as the app (2026-10-02)"; ISSUES RC-10.3 → "superseded by RC-13.x (no merge, no apex redirect)"; HANDOVER "Next" line updated.
-- **Accept:** `grep -n "apex" .planning/BLUEPRINT.md .planning/ISSUES.md` shows no instruction to redirect the apex. **Verify:** reviewer reads the three diffs.
+**RC-13.0 Record the owner's decisions** · docs · XS · **done in this commit**
+- BLUEPRINT §5 D1 amended (separate Hostinger site, same UI as the app, manual upload, defaults); ISSUES RC-10.3 marked superseded and the RC-13.x list added (§M13); HANDOVER updated.
+- **Accept:** BLUEPRINT D1 and ISSUES contain no live instruction to redirect the apex. **Verify:** reviewer reads the three diffs.
 
 **RC-13.1 Site scaffold + token extractor + parity test** · risk-safe-fix · M
 - `site/` tree per §5; `scripts/build-site.mjs` (`npm run site:build`): extracts `@theme`, keyframes, reduced-motion and print blocks from `app/globals.css`, converts `@theme`→`:root`, prepends to `site/src/site.css`, inlines partials, writes `site/dist/`. Hand-written utility equivalents per §4.2. `tests/site-tokens.test.ts` per §4.4. `site/dist` gitignored. `.htaccess` with the §3.2 301 map and cache headers.
@@ -310,33 +307,33 @@ Conventions as `ISSUES.md`: size XS/S/M/L, risk tags, testable acceptance, branc
 - **Accept:** a parity checklist in the PR mapping every apex heading to an app URL and present/ported; `.htaccess` lists 9 `Redirect 301` lines whose targets return 200 on the live app (curl table).
 - **Verify:** reviewer curls the 9 targets; spot-checks 3 ported headings on the app preview.
 
-**RC-13.6 Site deploy pipeline (CI) + backup of the current site** · risk-safe-fix (code) · S · blocked by 13.4
-- `site/backup-2026-10-02/` = the live site fetched by curl (7 files) committed; `.github/workflows/site-deploy.yml` builds `site/dist` on push to `main` and either pushes to `site-release` (Git-deploy option) or `lftp` mirrors using secrets (FTP option), **gated by a `SITE_DEPLOY_ENABLED` repo variable that starts `false`**.
-- **Accept:** workflow runs green on a PR in dry-run mode (builds, lists the files it would upload, uploads nothing); the backup folder byte-matches `curl` of the live pages.
-- **Verify:** reviewer reads the workflow for any secret echo; diff backup vs live.
+**RC-13.6 Upload package + rollback backup** · risk-safe-fix (code) · S · blocked by 13.5
+- `npm run site:build` makes `site/dist/` self-contained per §5 (html, css, js, images, favicon, `robots.txt`, `sitemap.xml`, `.htaccess`), writes `site/dist/README-UPLOAD.txt` with the hPanel File Manager steps (back up `public_html` first, delete old files, upload incl. the hidden `.htaccess`, check the 5 URLs), and `site/roughcut-site.zip` for one-click Extract. `site/backup-2026-10-02/` = the current live site fetched by `curl` (10 files), committed. No CI, FTP or credentials anywhere.
+- **Accept:** `npm run site:build` from a clean checkout produces `site/dist` with `.htaccess`, `robots.txt`, `sitemap.xml`, `favicon.*`, `README-UPLOAD.txt` present; `npx serve site/dist` renders the home with every asset 200 (no request leaves the folder except Google Fonts and app links); the zip lists `.htaccess`; `grep -rn "FTP\|HOSTINGER_" .github site scripts` = 0; backup files byte-match `curl` of the live pages.
+- **Verify:** reviewer unzips `roughcut-site.zip` into an empty folder, serves it, and checks the 5 README URLs locally (paths); diff backup vs live.
 
 **RC-13.7 App `/`: H1, one line, metadata/OG, JSON-LD, footer visible, "What is RoughCut?" link** · risk-safe-fix · S
 - Per §7. No framer-motion import added to `/`; carousel untouched.
 - **Accept:** `curl /` shows exactly one `<h1>`; `og:image` 200 at 1200×630; title ≤ 60 with the brand once; description has no "no ads"; footer present on `/`; header and footer each contain one link to `https://roughcut.com.au`; `e2e/smoke.spec.ts` and `desktop-scroll.spec.ts` pass unchanged; `/` still static in the build route table.
 - **Verify:** reviewer runs both Playwright specs; 390 px screenshot showing H1 + CTA card inside the first viewport.
 
-**RC-13.8 First Hostinger deploy + `.htaccess` + Search Console** · risk-prod-state · HUMAN-gated · S · blocked by 13.5, 13.6, and the owner's §5 items 1–4
-- Owner: hPanel File Manager zip backup of `public_html`; enable Git deploy (connect repo, branch `site-release`, path `public_html`) **or** create the FTP account and add the three secrets; flip `SITE_DEPLOY_ENABLED=true`. Agent: trigger the workflow, then verify. Owner: verify both Search Console properties, submit both sitemaps.
-- **Accept:** `curl -I https://roughcut.com.au/` → 200 with the new title; `curl -I` on each of the 9 old URLs → 301 to a 200 app page; `https://www.roughcut.com.au/` serves the same build; `curl -s .../site.css | grep -- "--motion-base: 220ms"` matches the app; `rough-cut-bbq-debug.apk` string absent from the live HTML; Lighthouse mobile ≥ 95 ×4 on the live apex; GSC shows both sitemaps "Success". Rollback test: owner re-uploads the backup zip to a staging subfolder and it renders.
-- **Verify:** orchestrator re-runs the curl table live and attaches it; owner confirms hPanel steps.
+**RC-13.8 Owner uploads `site/dist/` to Hostinger; orchestrator verifies live** · HUMAN (upload) + verification · S · blocked by 13.6
+- Owner follows `README-UPLOAD.txt` in hPanel File Manager (backup zip, delete old, upload or Extract the zip, hidden `.htaccess` included). Then the orchestrator verifies by curl. Search Console verification and sitemap submission are optional, later.
+- **Accept:** `curl -I https://roughcut.com.au/` → 200 and the HTML has the new `<title>` and exactly one `<h1>`; `https://www.roughcut.com.au/` serves the same build (same ETag/length); `curl -I` on each of the 9 old URLs (`guides.html`, `guides/*.html` ×5, `rubs.html`, `wood-chart.html`, `index.html`→`/`) → 301 to a URL that returns 200; `curl -s https://roughcut.com.au/site.css | grep -c -- "--motion-base: 220ms"` = 1 (the `.htaccess` copied, and the tokens match the app); `grep -c apk` on the live HTML = 0; `robots.txt` and `sitemap.xml` return 200; Lighthouse mobile ≥ 95 ×4 on the live apex. If anything fails: owner uploads `site/backup-2026-10-02/` back (rollback) and the issue reopens.
+- **Verify:** orchestrator runs the curl table live and attaches it to the issue; owner confirms the backup zip exists.
 
 **RC-13.9 Android shell start URL + `offline.html`** · risk-safe-fix (code) + HUMAN (device) · XS · blocked by 13.7
 - Per §8.
 - **Accept:** `npx cap sync` succeeds; `capacitor.config.json` `server.url` ends in `/calculator?src=app`; `public/offline.html` renders with `var(--color-brand-dark)`; device (HUMAN): app opens on step 1, Back exits.
 - **Verify:** config diff + a screenshot of `offline.html`; device note from the owner.
 
-**RC-13.10 Analytics events on both domains** · risk-safe-fix · XS · blocked by RC-0.8 (owner's provider choice) and 13.4
-- Site: provider snippet only when `site.config.json` has a key; events per §9. App: `home_view`, `home_cta_start` with `src`/`returning`.
-- **Accept:** a vitest spies the capture function and sees `home_view`; on the site, with no key configured, `site/dist` contains no third-party script; after RC-0.8, a `site_cta` event followed by an app `calc_complete` appears in one provider with `utm_source=site`.
-- **Verify:** orchestrator sees the two events in the provider's live view.
+**RC-13.10 Analytics events on both domains** · risk-safe-fix · XS · **BLOCKED** by RC-0.8 (analytics deferred by owner, 2026-10-02); do not start
+- When unblocked: site provider snippet only when `site.config.json` has a key; app `home_view`, `home_cta_start` with `src`/`returning`. Until then **no tracking code on either domain**.
+- **Accept (later):** with no key configured, `site/dist` contains no third-party script; after RC-0.8, a `site_cta` followed by an app `calc_complete` appears in one provider with `utm_source=site`.
+- **Verify (later):** orchestrator sees the two events in the provider's live view.
 
 **Dependencies on the existing backlog:** RC-1.10 wording (disclosure, drop "no ads") before 13.4/13.7 or done inside them; RC-4.1/4.2 (D8) re-skins both via `site:build`, only OG + screenshots redone; RC-5.1 swaps the app carousel in place; RC-12.5 supplies `PLAY_URL`; RC-9.5 adds the iPhone "Add to Home Screen" line; RC-10.3 is superseded (RC-13.0).
 
 ---
 
-**Next:** RC-13.0, then RC-13.1 (code-only, no owner input needed). RC-13.8 waits on §5 items 1–4 and Q4.
+**Next:** RC-13.0 (this commit), then RC-13.1 → 13.7 (code-only, no owner input needed). RC-13.8 is the owner's upload. RC-13.10 stays blocked.

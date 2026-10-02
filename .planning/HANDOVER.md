@@ -26,6 +26,12 @@ RC-0.1, 0.2, 0.3, 0.4, 0.5, 0.7 · RC-1.1, 1.2, 1.3, 1.4, 1.7 · RC-3.1
 RC-1.8 (email + anti-enumeration; email sending is untestable until there's a Resend key) → RC-2.4 → RC-3.2 (needs FSANZ source check) → RC-3.3 → RC-4.4 → RC-4.1 (D8 charcoal + ember) → …
 RC-1.6 folds into RC-7.1 (D3 = Supabase Auth). Cancel it when RC-7.1 starts.
 
+## Owner decisions 2026-10-02 (explainer website + app home)
+- **D1 amended:** keep the separate explainer website on Hostinger at `roughcut.com.au` (+www), static, with the **same UI/style/motion as the app**; all CTAs → `app.roughcut.com.au`; **no apex redirect**. RC-10.3 superseded.
+- **Deploy:** no pipeline, no Hostinger credentials. `npm run site:build` → self-contained `site/dist/` (+ `roughcut-site.zip`, `README-UPLOAD.txt`); Chris copies it into `public_html` via hPanel File Manager; the orchestrator verifies live by curl (RC-13.8). Rollback = `site/backup-2026-10-02/`.
+- **Defaults:** build now on current tokens (before D8); sample card = spatchcock chicken until RC-3.4; analytics deferred, no tracking code (RC-13.10 blocked).
+- Plan: `.planning/HOME-AND-SITE-PLAN.md`. Issues RC-13.0–13.10 in ISSUES.md §M13. Order: RC-13.1 → 13.2 → 13.3 → 13.4 → 13.5 → 13.6 → 13.7 → 13.8 (Chris) → 13.9.
+
 ## New since the plan
 - **BOTS-735 RC-0.10:** demo accounts (after staging).
 - **BOTS-736 RC-6.6 (done 2026-10-01):** prod Supabase moved from Seoul `yvavflxtjzlbatrqdyai` to Sydney `xdiapmnocyibpfrfgdcw`. The data was verified identical (row count + md5 per table). The Vercel Production `SUPABASE_URL`/`SUPABASE_SECRET_KEY` now point at Sydney. Still for Chris: delete the Seoul project (the MCP pause was refused because it isn't free-tier), and rename `roughcutBBQ-staging` to e.g. `roughcutBBQ` in the dashboard.
