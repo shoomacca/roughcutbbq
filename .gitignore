@@ -46,6 +46,7 @@ Thumbs.db
 /tmp/
 /scripts/*
 !/scripts/build-site.mjs
+!/scripts/serve-site.mjs
 
 # Secrets / signing — never commit
 android/key.properties

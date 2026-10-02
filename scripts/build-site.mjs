@@ -156,7 +156,8 @@ function walk(dir) {
 export function build({ outDir = PATHS.dist } = {}) {
   const appCss = readFileSync(PATHS.appCss, 'utf8');
   const handWritten = readFileSync(join(PATHS.src, 'site.css'), 'utf8');
-  const config = JSON.parse(readFileSync(PATHS.config, 'utf8'));
+  // {{YEAR}} (footer copyright) is computed at build time, like the app's `new Date().getFullYear()`.
+  const config = { ...JSON.parse(readFileSync(PATHS.config, 'utf8')), YEAR: String(new Date().getFullYear()) };
 
   rmSync(outDir, { recursive: true, force: true });
   mkdirSync(outDir, { recursive: true });

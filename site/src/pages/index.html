@@ -18,15 +18,31 @@
       </div>
     </section>
 
+    <!-- Placeholder (RC-13.2): gives the reveal, nav anchor and Playwright spec real below-the-fold
+         items. RC-13.3 replaces the copy with the real "How it works" section and screenshots. -->
+    <section id="how-it-works" class="steps wrap" aria-labelledby="how-heading">
+      <h2 id="how-heading">How it works</h2>
+      <div class="grid">
+        <article class="reveal card lift transition-ui" data-index="0"><h3>1. Pick the cut</h3><p>Brisket, pork shoulder, lamb leg, spatchcock chicken and more.</p></article>
+        <article class="reveal card lift transition-ui" data-index="1"><h3>2. Pick the cooker</h3><p>Smoker, kettle, gas or oven. Each has its own pit temperature.</p></article>
+        <article class="reveal card lift transition-ui" data-index="2"><h3>3. Enter the weight</h3><p>Kilograms only. The plan scales with what is on the board.</p></article>
+        <article class="reveal card lift transition-ui" data-index="3"><h3>4. Get the plan</h3><p>Cook time, pull temp, rest, and the time to light the fire.</p></article>
+        <article class="reveal card lift transition-ui" data-index="4"><h3>5. Work backwards</h3><p>Set the time you want to eat and it tells you when to start.</p></article>
+        <article class="reveal card lift transition-ui" data-index="5"><h3>6. Save it</h3><p>Keep the plan on your phone for the next cook.</p></article>
+      </div>
+    </section>
+
     <!-- Scaffold check (RC-13.1): every token below comes from app/globals.css via the extractor. -->
     <section class="wrap swatches" aria-label="Design tokens">
-      <div class="swatch" style="background: var(--color-brand-primary)">brand-primary</div>
-      <div class="swatch" style="background: var(--color-brand-secondary)">brand-secondary</div>
-      <div class="swatch" style="background: var(--color-brand-surface)">brand-surface</div>
-      <div class="swatch" style="background: var(--color-brand-muted)">brand-muted</div>
-      <div class="swatch card">brand-card</div>
+      <div class="reveal swatch" data-index="0" style="background: var(--color-brand-primary)">brand-primary</div>
+      <div class="reveal swatch" data-index="1" style="background: var(--color-brand-secondary)">brand-secondary</div>
+      <div class="reveal swatch" data-index="2" style="background: var(--color-brand-surface)">brand-surface</div>
+      <div class="reveal swatch" data-index="3" style="background: var(--color-brand-muted)">brand-muted</div>
+      <div class="reveal swatch card" data-index="4">brand-card</div>
     </section>
   </main>
   <!-- @include footer -->
+  <script src="reveal.js"></script>
+  <script src="nav.js" defer></script>
 </body>
 </html>
