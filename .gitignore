@@ -44,7 +44,8 @@ Thumbs.db
 # Custom
 *.apk
 /tmp/
-/scripts/
+/scripts/*
+!/scripts/build-site.mjs
 
 # Secrets / signing — never commit
 android/key.properties
@@ -55,3 +56,7 @@ android/key.properties
 test-results/
 playwright-report/
 blob-report/
+
+# Static site build output (scripts/build-site.mjs); RC-13.6 packages it
+/site/dist/
+/site/roughcut-site.zip
