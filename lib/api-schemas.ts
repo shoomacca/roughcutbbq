@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { isValidAmazonTag, normalizeAmazonTag } from './amazon-tag';
 
 /** Must match `CookingMethod` in types/calculator.ts. */
 export const COOKING_METHODS = [
@@ -95,3 +96,13 @@ export const gearDeleteQuery = z.object({ id: positiveIntLike });
 
 export const unsubscribeQuery = z.object({ token: z.string().min(1).max(200) });
 export const slugParam = z.object({ slug: z.string().min(1).max(200) });
+
+// Admin settings (RC admin settings). Tag is trimmed + lowercased, then checked
+// against the Amazon tracking-ID shape in lib/amazon-tag.ts.
+export const settingsPutBody = z.object({
+  amazon_tag: z
+    .string()
+    .max(64)
+    .transform(normalizeAmazonTag)
+    .refine(isValidAmazonTag, 'invalid_amazon_tag'),
+});

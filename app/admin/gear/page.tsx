@@ -31,6 +31,7 @@ export default function AdminGearPage() {
   const [drafts, setDrafts] = useState<Record<number, GearRow>>({});
   const [newItem, setNewItem] = useState({ ...EMPTY_NEW });
   const [showNew, setShowNew] = useState(false);
+  const [amazonTag, setAmazonTag] = useState('');
 
   // Restore auth from the server-side admin cookie
   useEffect(() => {
@@ -39,6 +40,14 @@ export default function AdminGearPage() {
       .then(({ authed }) => { if (authed) setAuthed(true); })
       .catch(() => {});
   }, []);
+
+  useEffect(() => {
+    if (!authed) return;
+    fetch('/api/admin/settings')
+      .then((r) => r.json())
+      .then(({ amazon_tag }) => { if (amazon_tag) setAmazonTag(amazon_tag); })
+      .catch(() => {});
+  }, [authed]);
 
   useEffect(() => {
     if (!authed) return;
@@ -185,8 +194,9 @@ export default function AdminGearPage() {
         </div>
       </div>
       <p className="text-brand-muted text-sm mb-6">
-        Changes go live immediately on /gear, /rubs, /ideas gear picks and all /go/ links. Remember the
-        <code className="mx-1 text-brand-secondary">tag=bsbsbs0f-22</code> on every Amazon URL.
+        Changes go live immediately on /gear, /rubs, /ideas gear picks and all /go/ links. The Amazon tag
+        {amazonTag ? <code className="mx-1 text-brand-secondary">tag={amazonTag}</code> : ' '}
+        is applied automatically to every Amazon URL (change it in <a href="/admin/settings" className="underline hover:text-brand-text">Settings</a>).
       </p>
 
       {showNew && (
@@ -196,7 +206,7 @@ export default function AdminGearPage() {
           <input className={inputCls} placeholder="Category * (existing or new)" value={newItem.category} onChange={(e) => setNewItem({ ...newItem, category: e.target.value })} list="cats" required />
           <datalist id="cats">{categories.map((c) => <option key={c} value={c} />)}</datalist>
           <input className={inputCls} placeholder="Sort order" type="number" value={newItem.sort_order} onChange={(e) => setNewItem({ ...newItem, sort_order: parseInt(e.target.value || '100', 10) })} />
-          <input className={`${inputCls} md:col-span-2`} placeholder="Amazon affiliate URL * (include tag=bsbsbs0f-22)" value={newItem.affiliate_url} onChange={(e) => setNewItem({ ...newItem, affiliate_url: e.target.value })} required />
+          <input className={`${inputCls} md:col-span-2`} placeholder="Amazon product URL * (tag is applied automatically)" value={newItem.affiliate_url} onChange={(e) => setNewItem({ ...newItem, affiliate_url: e.target.value })} required />
           <input className={`${inputCls} md:col-span-2`} placeholder="Description / tagline" value={newItem.description} onChange={(e) => setNewItem({ ...newItem, description: e.target.value })} />
           <button disabled={busy === 'new'} className="bg-brand-secondary hover:opacity-90 text-white font-bold py-2.5 rounded-xl text-sm transition-ui md:col-span-2">
             {busy === 'new' ? 'Adding…' : 'Add product'}
