@@ -61,7 +61,7 @@ export const RUB_RECIPES: RubRecipe[] = [
   },
 ];
 
-/** "2 parts", "0.5 part", "1 part" */
+/** "2 parts", "0.5 parts", "1 part" (only exactly 1 is singular) */
 export function formatParts(n: number): string {
   return `${n} ${n === 1 ? 'part' : 'parts'}`;
 }

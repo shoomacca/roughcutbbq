@@ -76,7 +76,8 @@ function parseRewrite(src: string): Rule[] {
   return rules;
 }
 
-type Req = { scheme: 'http' | 'https'; host: string; path: string };
+/** `xfp` = X-Forwarded-Proto header (https terminator in front of the box); `sub` = ErrorDocument sub-request. */
+type Req = { scheme: 'http' | 'https'; host: string; path: string; xfp?: string; sub?: boolean };
 type Out = { status: number; location?: string };
 
 function condTrue(c: Cond, req: Req): boolean {
@@ -84,6 +85,9 @@ function condTrue(c: Cond, req: Req): boolean {
     '%{HTTPS}': req.scheme === 'https' ? 'on' : 'off',
     '%{HTTP_HOST}': req.host,
     '%{THE_REQUEST}': `GET ${req.path} HTTP/1.1`,
+    '%{HTTP:X-Forwarded-Proto}': req.xfp ?? '',
+    // Apache sets REDIRECT_STATUS only on internal sub-requests (ErrorDocument); empty on the original.
+    '%{ENV:REDIRECT_STATUS}': req.sub ? '404' : '',
   };
   const value = vars[c.test];
   if (value === undefined) throw new Error(`unsupported RewriteCond variable ${c.test}`);
@@ -132,7 +136,7 @@ function serve(rules: Rule[], req: Req): Out {
       if (r.flags.includes('L')) break;
       continue;
     }
-    const target = r.target.replace(/\$(\d)/g, (_, d) => m[Number(d)] ?? '');
+    const target = r.target.replace(/\$(\d)/g, (_, d) => m[Number(d)] ?? '').replace(/%\{REQUEST_URI\}/g, req.path.split('?')[0]);
     const R = r.flags.find((f) => f.startsWith('R'));
     if (R) return { status: Number(R.split('=')[1] ?? 302), location: target };
     rel = target.replace(/^\//, '');
@@ -185,9 +189,20 @@ describe('.htaccess structure', () => {
     expect(text).toContain('AddType image/webp .webp');
     expect(text).toContain('RewriteEngine On');
     expect(text).toMatch(/RewriteRule \^\\\.well-known\/ - \[L\]/);
-    expect(text).toContain('RewriteCond %{HTTPS} !=on [OR]');
-    expect(text).toContain(`RewriteCond %{HTTP_HOST} !^${HOST.replace(/\./g, '\\.')}$ [NC]`);
-    expect(text).toContain(`RewriteRule ^(.*)$ ${SITE}/$1 [R=301,L]`);
+    // Verifier D1+D2 (2026-10-03): two separate rules, each guarded against ErrorDocument
+    // sub-requests, the https rule also against an upstream TLS terminator (X-Forwarded-Proto).
+    expect(text).toContain(
+      [
+        'RewriteCond %{ENV:REDIRECT_STATUS} ^$',
+        'RewriteCond %{HTTPS} !=on',
+        'RewriteCond %{HTTP:X-Forwarded-Proto} !=https',
+        `RewriteRule ^ ${SITE}%{REQUEST_URI} [R=301,L]`,
+        'RewriteCond %{ENV:REDIRECT_STATUS} ^$',
+        `RewriteCond %{HTTP_HOST} !^${HOST.replace(/\./g, '\\.')}$ [NC]`,
+        `RewriteRule ^ ${SITE}%{REQUEST_URI} [R=301,L]`,
+      ].join('\n  '),
+    );
+    expect(text).not.toContain('[OR]');
     expect(text).toMatch(/ExpiresByType image\/webp "access plus 1 year"/);
     expect(text).toMatch(/Cache-Control "no-cache"/);
     // One rule per retired page and per ported image, all 301, all absolute https.
@@ -197,7 +212,7 @@ describe('.htaccess structure', () => {
       expect(code).toBe(301);
       expect(to).toMatch(/^https:\/\//);
     }
-    expect((text.match(/\[R=301,L\]/g) ?? []).length).toBe(table.length + 1); // + canonical rule
+    expect((text.match(/\[R=301,L\]/g) ?? []).length).toBe(table.length + 2); // + https rule + apex rule
   });
 
   it('canonical host matches sitemap.xml and the home canonical (apex, https)', () => {
@@ -281,5 +296,19 @@ describe('what must not redirect', () => {
     expect(serve(rules, { scheme: 'http', host: HOST, path: '/' })).toEqual({ status: 301, location: `${SITE}/` });
     expect(serve(rules, { scheme: 'https', host: `www.${HOST}`, path: '/site.css' })).toEqual({ status: 301, location: `${SITE}/site.css` });
     expect(serve(rules, { scheme: 'http', host: `www.${HOST}`, path: '/anything' })).toEqual({ status: 301, location: `${SITE}/anything` });
+  });
+
+  it('D1: http behind an https terminator (X-Forwarded-Proto: https) is served, not redirected (no loop)', () => {
+    expect(serve(rules, { scheme: 'http', host: HOST, path: '/', xfp: 'https' })).toEqual({ status: 200 });
+    expect(serve(rules, { scheme: 'http', host: HOST, path: '/site.css', xfp: 'https' })).toEqual({ status: 200 });
+    // www is still canonicalised behind the terminator; a non-https forwarded proto still redirects.
+    expect(serve(rules, { scheme: 'http', host: `www.${HOST}`, path: '/x', xfp: 'https' })).toEqual({ status: 301, location: `${SITE}/x` });
+    expect(serve(rules, { scheme: 'http', host: HOST, path: '/x', xfp: 'http' })).toEqual({ status: 301, location: `${SITE}/x` });
+  });
+
+  it('D2: the ErrorDocument sub-request (REDIRECT_STATUS set) is never redirected, so a 404 stays a 404', () => {
+    expect(serve(rules, { scheme: 'http', host: HOST, path: '/404.html', sub: true })).toEqual({ status: 200 });
+    expect(serve(rules, { scheme: 'https', host: `www.${HOST}`, path: '/404.html', sub: true })).toEqual({ status: 200 });
+    expect(serve(rules, { scheme: 'https', host: HOST, path: '/.well-known/nothing-here' }).status).toBe(404);
   });
 });

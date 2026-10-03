@@ -592,9 +592,16 @@ ErrorDocument 404 /404.html
 ${rules}
 
   # Canonical: https on the apex host (sitemap.xml and <link rel=canonical> use ${site}).
-  RewriteCond %{HTTPS} !=on [OR]
+  # REDIRECT_STATUS is empty only on the original request, so the ErrorDocument sub-request for
+  # a missing file (404.html) is never redirected again. X-Forwarded-Proto covers an https
+  # terminator in front of the box (Hostinger/LiteSpeed, Cloudflare): http behind it is not a loop.
+  RewriteCond %{ENV:REDIRECT_STATUS} ^$
+  RewriteCond %{HTTPS} !=on
+  RewriteCond %{HTTP:X-Forwarded-Proto} !=https
+  RewriteRule ^ ${site}%{REQUEST_URI} [R=301,L]
+  RewriteCond %{ENV:REDIRECT_STATUS} ^$
   RewriteCond %{HTTP_HOST} !^${reEsc(host)}$ [NC]
-  RewriteRule ^(.*)$ ${site}/$1 [R=301,L]
+  RewriteRule ^ ${site}%{REQUEST_URI} [R=301,L]
 </IfModule>
 
 <IfModule mod_expires.c>
