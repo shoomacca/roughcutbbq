@@ -15,6 +15,8 @@
 //   3. Inlines site/src/partials/<name>.html into pages where `<!-- @include name -->` appears,
 //      substitutes {{KEY}} from site/site.config.json, and writes site/src/pages/*.html -> site/dist/
 //   4. Copies every other file under site/src (reveal.js, .htaccess, og/ ...) to site/dist/
+//      (.js files have comment lines and indentation stripped; HTML comments are removed from
+//      pages; the hand-written CSS layer is minified. Plan §6 budgets: site.css <= 20 KB, reveal.js <= 2 KB.)
 //   5. RC-13.3: the sample plan card and the featured-cook tiles are computed here from
 //      calculateCook() (never hand-typed) and injected as {{SAMPLE_*}} keys and the
 //      `<!-- @block featured -->` marker; photos come from the app's public/images via sharp.
@@ -121,6 +123,24 @@ export function parseCustomProps(body) {
   return map;
 }
 
+/**
+ * Minify the HAND-WRITTEN layer only (comments, newlines, indentation, space around
+ * punctuation). The generated blocks (tokens, keyframes, reduced-motion, print) are left
+ * verbatim so tests/site-tokens.test.ts can still find them byte for byte. Plan §6 budget:
+ * site.css <= 20 KB. No string values with significant whitespace exist in site/src/site.css
+ * (no `content:`, no url()), so whitespace collapse is safe; font-family lists keep one space
+ * after each comma.
+ */
+export function minifyCss(css) {
+  return css
+    .replace(/\/\*[\s\S]*?\*\//g, '')
+    .replace(/\s+/g, ' ')
+    .replace(/\s*([{};:>,])\s*/g, '$1')
+    .replace(/;}/g, '}')
+    .replace(/,(?=[A-Za-z'"])/g, ', ') // font-family lists: `'Abril Fatface', Georgia, serif`
+    .trim();
+}
+
 /** The generated top of site.css: tokens as :root, keyframes, then the hand-written layer, then media blocks. */
 export function buildSiteCss(appCss, handWritten) {
   const theme = extractTheme(appCss);
@@ -138,8 +158,8 @@ export function buildSiteCss(appCss, handWritten) {
     '/* ── Keyframes (app, verbatim) ── */',
     ...keyframes.map((k) => k.text),
     '',
-    '/* END GENERATED: tokens + keyframes. Hand-written layer follows (site/src/site.css). */',
-    handWritten.trimEnd(),
+    '/* END GENERATED: tokens + keyframes. Hand-written layer follows (site/src/site.css, minified). */',
+    minifyCss(handWritten),
     '',
     '/* GENERATED: reduced-motion and print policy (app, verbatim). Do not edit. */',
     reduced.text,
@@ -147,6 +167,29 @@ export function buildSiteCss(appCss, handWritten) {
     print.text,
     '',
   ].join('\n');
+}
+
+/**
+ * Strip comment-only lines, block comments and indentation from the site's plain JS
+ * (reveal.js, nav.js, faq.js). Not a real minifier: statements are untouched, so no string or
+ * regex literal can be damaged (none of the three files has `//` inside a string; checked).
+ */
+export function stripJs(js) {
+  return js
+    .replace(/\/\*[\s\S]*?\*\//g, '')
+    .split('\n')
+    .map((l) => l.trim())
+    .filter((l) => l && !l.startsWith('//'))
+    .join('\n') + '\n';
+}
+
+/**
+ * Remove HTML comments from a built page. Build/dev notes (`<!-- 1. Hero (plan §3.3.1) ... -->`)
+ * are for the template, not the wire. Conditional comments (`<!--[if ...]>`) are kept; JSON-LD
+ * lives in a <script>, not a comment, so it is untouched. Lines left empty are dropped.
+ */
+export function stripHtmlComments(html) {
+  return html.replace(/<!--(?!\[)[\s\S]*?-->/g, '').replace(/^[ \t]+\n/gm, '').replace(/\n{2,}/g, '\n');
 }
 
 // ── HTML assembly ─────────────────────────────────────────────────────────────
@@ -164,7 +207,7 @@ export function assemblePage(html, partials, config, blocks = {}) {
     if (!(key in config)) throw new Error(`Unknown config key {{${key}}}`);
     return String(config[key]);
   });
-  return out;
+  return stripHtmlComments(out);
 }
 
 // ── Engine-driven content (RC-13.3) ───────────────────────────────────────────
@@ -464,7 +507,14 @@ export function robotsTxt(config) {
   return `User-agent: *\nAllow: /\n\nSitemap: ${site}/sitemap.xml\n`;
 }
 
-/** Resize public/images/<name>.jpg -> <outDir>/img/<name>.webp and return its dimensions. */
+/**
+ * Columns trimmed from each side of every source photo. pulled-pork, ribs and chicken carry a
+ * 2-3px near-white edge (measured 2026-10-03: mean column brightness 250+ at x=0, 127-251 at
+ * x=1-2) that showed as a white sliver in the tiles. The dark-edged photos lose nothing visible.
+ */
+export const IMG_EDGE_TRIM = 3;
+
+/** Resize public/images/<name>.jpg -> <outDir>/img/<name>.webp (edges trimmed) and return its dimensions. */
 export async function buildImages(names, outDir) {
   const imgDir = join(outDir, 'img');
   mkdirSync(imgDir, { recursive: true });
@@ -473,7 +523,9 @@ export async function buildImages(names, outDir) {
     const src = join(PATHS.appImages, `${name}.jpg`);
     if (!existsSync(src)) throw new Error(`Missing app image ${src}`);
     const file = `${name}.webp`;
+    const meta = await sharp(src).metadata();
     const info = await sharp(src)
+      .extract({ left: IMG_EDGE_TRIM, top: 0, width: meta.width - 2 * IMG_EDGE_TRIM, height: meta.height })
       .resize({ width: IMG_WIDTH, withoutEnlargement: true })
       .webp({ quality: 78 })
       .toFile(join(imgDir, file));
@@ -575,7 +627,8 @@ export async function build({ outDir = PATHS.dist } = {}) {
     const rel = relative(PATHS.src, abs);
     const dest = join(outDir, rel);
     mkdirSync(dirname(dest), { recursive: true });
-    copyFileSync(abs, dest);
+    if (abs.endsWith('.js')) writeFileSync(dest, stripJs(readFileSync(abs, 'utf8')));
+    else copyFileSync(abs, dest);
     written.push(rel.split(sep).join('/'));
   }
 

@@ -330,9 +330,11 @@ html:not([data-js]) .mobile-menu > * {
 .footer-nav a:hover {
   color: var(--color-brand-text);
 }
+/* Amazon disclosure: full brand-text at 14px. The earlier muted-at-70% mix measured 2.94:1 on
+   the surface (fails AA); brand-text on surface is 12.1:1 (fix(RC-13.4)). */
 .disclosure {
-  font-size: 0.75rem;
-  color: color-mix(in srgb, var(--color-brand-muted) 70%, transparent);
+  font-size: 0.875rem;
+  color: var(--color-brand-text);
   text-align: center;
 }
 @media (min-width: 640px) {
@@ -406,7 +408,7 @@ html:not([data-js]) .mobile-menu > * {
 }
 .hero-note {
   margin: 1rem 0 0;
-  color: color-mix(in srgb, var(--color-brand-muted) 80%, transparent);
+  color: var(--color-brand-muted); /* plain token: 4.86:1 on dark (the 80% mix was 3.64) */
   font-size: 0.875rem;
 }
 .btn-lg {
@@ -545,7 +547,7 @@ html:not([data-js]) .mobile-menu > * {
   display: inline-block;
   padding: 0.25rem 0.625rem;
   border-radius: 999px;
-  background-color: color-mix(in srgb, var(--color-brand-primary) 20%, transparent);
+  background-color: var(--color-brand-dark); /* secondary on dark 5.12:1; on the primary-20% mix it was 4.19 */
   color: var(--color-brand-secondary);
   font-size: 0.75rem;
   font-weight: 600;
@@ -571,7 +573,11 @@ html:not([data-js]) .mobile-menu > * {
   letter-spacing: 0.04em;
   text-transform: uppercase;
 }
+/* dd holds the value and its note (axe definition-list: a dl's div may contain only dt/dd). */
 .stat dd {
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
   margin: 0;
   color: var(--color-brand-text);
   font-size: 1.5rem;
@@ -582,12 +588,13 @@ html:not([data-js]) .mobile-menu > * {
 .stat small {
   color: var(--color-brand-muted);
   font-size: 0.75rem;
+  font-weight: 400;
 }
 .plan-when {
   margin: 1rem 0 0;
   padding: 0.875rem 1rem;
   border-radius: 0.75rem;
-  background-color: color-mix(in srgb, var(--color-brand-secondary) 12%, transparent);
+  background-color: var(--color-brand-dark); /* strong (secondary) on dark 5.12:1; on the 12% mix it was 3.94 */
   color: var(--color-brand-text);
   font-size: 0.9375rem;
 }
@@ -596,7 +603,7 @@ html:not([data-js]) .mobile-menu > * {
 }
 .plan-foot {
   margin: 0.75rem 0 0;
-  color: color-mix(in srgb, var(--color-brand-muted) 80%, transparent);
+  color: var(--color-brand-muted); /* plain token (the 80% mix was 3.38:1) */
   font-size: 0.75rem;
 }
 @media (min-width: 768px) {
@@ -653,7 +660,7 @@ html:not([data-js]) .mobile-menu > * {
 }
 .tile-note {
   font-size: 0.75rem;
-  color: color-mix(in srgb, var(--color-brand-muted) 75%, transparent);
+  color: var(--color-brand-muted); /* plain token (the 75% mix was 3.16:1) */
 }
 @media (min-width: 640px) {
   .tile-grid {
@@ -822,9 +829,9 @@ html:not([data-js]) .mobile-menu > * {
   text-underline-offset: 0.15em;
 }
 .gear-name .paid {
-  font-size: 0.75rem;
+  font-size: 0.8125rem;
   font-weight: 500;
-  color: color-mix(in srgb, var(--color-brand-dark) 60%, transparent);
+  color: color-mix(in srgb, var(--color-brand-dark) 78%, transparent); /* 6.52:1 on card, same as .gear-desc; 60% was 3.82 */
   white-space: nowrap;
 }
 .gear-desc {
@@ -844,7 +851,7 @@ html:not([data-js]) .mobile-menu > * {
   color: var(--color-brand-text);
 }
 .gear .disclosure {
-  margin-top: 0.75rem;
+  margin: 0.75rem 0 0;
   text-align: left;
 }
 @media (min-width: 768px) {

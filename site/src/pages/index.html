@@ -90,10 +90,10 @@
             <span class="pill">{{SAMPLE_METHOD}}</span>
           </header>
           <dl class="stats">
-            <div class="stat"><dt>Cook time</dt><dd data-stat="cook-time">~{{SAMPLE_COOK_TIME}}</dd><small>{{SAMPLE_WEIGHT_NOTE}}</small></div>
-            <div class="stat"><dt>Pit temp</dt><dd data-stat="pit-temp">{{SAMPLE_PIT_C}}&deg;C</dd><small>set the {{SAMPLE_METHOD}} here</small></div>
-            <div class="stat"><dt>Pull at</dt><dd data-stat="pull-temp">{{SAMPLE_PULL_C}}&deg;C</dd><small>internal, thickest part</small></div>
-            <div class="stat"><dt>Rest</dt><dd data-stat="rest">{{SAMPLE_REST_MIN}} min</dd><small>loosely covered</small></div>
+            <div class="stat"><dt>Cook time</dt><dd><span data-stat="cook-time">~{{SAMPLE_COOK_TIME}}</span><small>{{SAMPLE_WEIGHT_NOTE}}</small></dd></div>
+            <div class="stat"><dt>Pit temp</dt><dd><span data-stat="pit-temp">{{SAMPLE_PIT_C}}&deg;C</span><small>set the {{SAMPLE_METHOD}} here</small></dd></div>
+            <div class="stat"><dt>Pull at</dt><dd><span data-stat="pull-temp">{{SAMPLE_PULL_C}}&deg;C</span><small>internal, thickest part</small></dd></div>
+            <div class="stat"><dt>Rest</dt><dd><span data-stat="rest">{{SAMPLE_REST_MIN}} min</span><small>loosely covered</small></dd></div>
           </dl>
           <p class="plan-when" data-stat="timeline">Light the fire at <strong>{{SAMPLE_START_AT}}</strong> to eat at <strong>{{SAMPLE_EAT_AT}}</strong>.</p>
           <p class="plan-foot">Example only. The app uses your weight and the time you want to eat.</p>
@@ -123,7 +123,7 @@
           <a class="btn btn-ghost transition-ui" href="{{APP_URL}}/guides?utm_source=site&utm_medium=guides">All guides &rarr;</a>
           <div class="reveal recipes-card card" data-index="5">
             <h3>Recipes</h3>
-            <p>{{RECIPE_COUNT}} tested cooks, from Texas pulled pork to smoked cauliflower. Each one links straight into its plan.</p>
+            <p>{{RECIPE_COUNT}} cooks, from Texas pulled pork to hot-smoked salmon. Each one links straight into its plan.</p>
             <a class="btn lift transition-ui" href="{{APP_URL}}/recipes?utm_source=site&utm_medium=recipes">All recipes &rarr;</a>
           </div>
         </div>

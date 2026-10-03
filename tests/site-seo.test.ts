@@ -54,7 +54,10 @@ describe('guides and recipes come from the app', () => {
 
   it('the recipe count is data/recipes.ts', () => {
     expect(RECIPES.length).toBeGreaterThanOrEqual(50);
-    if (html) expect(html).toContain(`${RECIPES.length} tested cooks`);
+    if (html) expect(html).toContain(`${RECIPES.length} cooks, from Texas pulled pork to hot-smoked salmon`);
+    // The two named recipes exist in data/recipes.ts (the earlier "smoked cauliflower" did not).
+    expect(RECIPES.some((r) => /Texas Pulled Pork/i.test(r.name))).toBe(true);
+    expect(RECIPES.some((r) => /Hot-Smoked Salmon/i.test(r.name))).toBe(true);
   });
 });
 
