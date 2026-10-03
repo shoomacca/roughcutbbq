@@ -28,17 +28,29 @@ export function appLinks(pageHtml, appUrl) {
   return out;
 }
 
+/** `/go/<slug>` is the app's affiliate redirect (RC-13.4): a 3xx to Amazon is the pass, not 200. */
+export function isGoLink(url) {
+  return /\/go\/[a-z0-9-]+(\?|$)/.test(url);
+}
+
+export function ok(r) {
+  return isGoLink(r.url) ? r.status >= 300 && r.status < 400 : r.status === 200;
+}
+
 export async function check(urls) {
   const results = [];
   for (const url of urls) {
     let status = 0;
+    let location = '';
     try {
-      const res = await fetch(url, { method: 'GET', redirect: 'follow', headers: { 'user-agent': 'roughcut-site-link-check' } });
+      const go = isGoLink(url);
+      const res = await fetch(url, { method: 'GET', redirect: go ? 'manual' : 'follow', headers: { 'user-agent': 'roughcut-site-link-check' } });
       status = res.status;
+      if (go) location = res.headers.get('location') ?? '';
     } catch (e) {
       status = -1;
     }
-    results.push({ url, status });
+    results.push({ url, status, location });
   }
   return results;
 }
@@ -48,8 +60,8 @@ if (isMain) {
   const urls = appLinks(html, config.APP_URL);
   urls.push(`${config.APP_URL}/sitemap.xml`);
   const results = await check(urls);
-  for (const r of results) console.log(`${String(r.status).padStart(4)}  ${r.url}`);
-  const bad = results.filter((r) => r.status !== 200);
-  console.log(bad.length ? `\n${bad.length} of ${results.length} links did not return 200` : `\nall ${results.length} app links returned 200`);
+  for (const r of results) console.log(`${String(r.status).padStart(4)}  ${r.url}${r.location ? `  -> ${r.location.split('&tag=')[0]}` : ''}`);
+  const bad = results.filter((r) => !ok(r));
+  console.log(bad.length ? `\n${bad.length} of ${results.length} links failed` : `\nall ${results.length} app links passed (200, or 3xx for /go/)`);
   process.exit(bad.length ? 1 : 0);
 }

@@ -317,3 +317,131 @@ test.describe('home (RC-13.3)', () => {
     }
   });
 });
+
+test.describe('home (RC-13.4)', () => {
+  test('guides: 5 links to the app guides, recipes count and link', async ({ page }) => {
+    await page.goto('/');
+    const links = page.locator('.guide-list .guide-link');
+    await expect(links).toHaveCount(5);
+    const re = new RegExp(`^${APP.replace(/\./g, '\\.')}/guides/[a-z0-9-]+\\?utm_source=site`);
+    for (let i = 0; i < 5; i++) {
+      expect(await links.nth(i).getAttribute('href')).toMatch(re);
+      await expect(links.nth(i).locator('.guide-title')).not.toBeEmpty();
+    }
+    await expect(page.locator('.recipes-card p')).toHaveText(/^\d{2,} tested cooks/);
+    expect(await page.locator('.recipes-card a').getAttribute('href')).toBe(`${APP}/recipes?utm_source=site&utm_medium=recipes`);
+  });
+
+  test('gear: /go links, sponsored, paid-link tag, disclosure in the section; no Play section, no apk', async ({ page }) => {
+    await page.goto('/');
+    const items = page.locator('.gear-grid .gear-name');
+    await expect(items).toHaveCount(3);
+    for (let i = 0; i < 3; i++) {
+      const a = items.nth(i);
+      expect(await a.getAttribute('href')).toMatch(new RegExp(`^${APP.replace(/\./g, '\\.')}/go/[a-z0-9-]+\\?utm_source=site`));
+      expect(await a.getAttribute('rel')).toBe('sponsored noopener');
+      await expect(a.locator('.paid')).toHaveText('(paid link)');
+    }
+    await page.getByTestId('gear-disclosure').scrollIntoViewIfNeeded();
+    await expect(page.getByTestId('gear-disclosure')).toHaveText('As an Amazon Associate, RoughCut BBQ earns from qualifying purchases.');
+    await expect(page.locator('#app')).toHaveCount(0);
+    await expect(page.getByText('Google Play')).toHaveCount(0);
+    expect(await page.content()).not.toMatch(/\.apk/i);
+  });
+
+  test('FAQ accordion: closed with aria-expanded=false and inert, opens and closes by keyboard; JSON-LD matches', async ({ page }) => {
+    await page.goto('/');
+    const toggles = page.locator('[data-faq-toggle]');
+    const n = await toggles.count();
+    expect(n).toBeGreaterThanOrEqual(4);
+    const first = toggles.first();
+    const answer = page.locator('#faq-1');
+    await first.scrollIntoViewIfNeeded();
+    await expect(first).toHaveAttribute('aria-expanded', 'false');
+    await expect(answer.locator('> div')).toHaveAttribute('inert', '');
+    await expect(answer.locator('p')).toBeHidden();
+    await first.focus();
+    await page.keyboard.press('Enter');
+    await expect(first).toHaveAttribute('aria-expanded', 'true');
+    await expect(answer).toHaveAttribute('data-open', '');
+    await expect(answer.locator('p')).toBeVisible();
+    await page.keyboard.press('Space');
+    await expect(first).toHaveAttribute('aria-expanded', 'false');
+    await expect(answer.locator('p')).toBeHidden();
+
+    // The FAQPage JSON-LD carries exactly the rendered questions.
+    const ld = JSON.parse((await page.locator('script[type="application/ld+json"]').textContent()) ?? '{}');
+    const faq = ld['@graph'].find((x: { '@type': string }) => x['@type'] === 'FAQPage');
+    const rendered = await toggles.locator('span').allTextContents();
+    expect(faq.mainEntity.map((q: { name: string }) => q.name)).toEqual(rendered);
+    expect(ld['@graph'].map((x: { '@type': string }) => x['@type'])).toEqual(['Organization', 'WebSite', 'FAQPage']);
+  });
+
+  test.describe('JavaScript disabled', () => {
+    test.use({ javaScriptEnabled: false });
+    test('every FAQ answer is open and readable', async ({ page }) => {
+      await page.goto('/');
+      const answers = page.locator('.faq-a p');
+      expect(await answers.count()).toBeGreaterThanOrEqual(4);
+      for (let i = 0; i < (await answers.count()); i++) await expect(answers.nth(i)).toBeVisible();
+    });
+  });
+
+  test('sitemap.xml, robots.txt, og image and 404 page are served', async ({ page, request }) => {
+    const sitemap = await request.get('/sitemap.xml');
+    expect(sitemap.status()).toBe(200);
+    expect(await sitemap.text()).toContain(`<loc>${SITE_CONFIG.SITE_URL}/</loc>`);
+    const robots = await request.get('/robots.txt');
+    expect(robots.status()).toBe(200);
+    expect(await robots.text()).toContain(`Sitemap: ${SITE_CONFIG.SITE_URL}/sitemap.xml`);
+    const og = await request.get('/og/home.png');
+    expect(og.status()).toBe(200);
+    expect(og.headers()['content-type']).toBe('image/png');
+    await page.goto('/404.html');
+    await expect(page.getByRole('heading', { level: 1 })).toHaveText('That page has gone cold.');
+    expect(await page.evaluate(() => getComputedStyle(document.body).backgroundColor)).not.toBe('rgba(0, 0, 0, 0)'); // /site.css loaded
+  });
+
+  test('head: title <= 60 with brand once, canonical, og:image 1200x630, twitter card', async ({ page }) => {
+    await page.goto('/');
+    const title = await page.title();
+    expect(title.length).toBeLessThanOrEqual(60);
+    expect(title.match(/RoughCut/g)).toHaveLength(1);
+    await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', `${SITE_CONFIG.SITE_URL}/`);
+    await expect(page.locator('meta[property="og:image"]')).toHaveAttribute('content', `${SITE_CONFIG.SITE_URL}/og/home.png`);
+    await expect(page.locator('meta[property="og:image:width"]')).toHaveAttribute('content', '1200');
+    await expect(page.locator('meta[property="og:image:height"]')).toHaveAttribute('content', '630');
+    await expect(page.locator('meta[name="twitter:card"]')).toHaveAttribute('content', 'summary_large_image');
+  });
+
+  test.describe('390px', () => {
+    test.use({ viewport: { width: 390, height: 844 } });
+    test('still no horizontal scroll with the new sections', async ({ page }) => {
+      await page.goto('/');
+      await page.keyboard.press('End');
+      await page.waitForTimeout(300);
+      expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(390);
+    });
+  });
+
+  // Network: gear links are the app's affiliate redirect, so a 3xx is the pass (not 200).
+  test('every guide/gear/gallery link resolves on the live app (200, or 3xx for /go)', async ({ page, request }) => {
+    test.slow();
+    await page.goto('/');
+    const hrefs = await page
+      .locator('.guide-list a, .recipes-card a, .guides-copy a, .gallery a, .gear-grid a, .gear-foot a')
+      .evaluateAll((els) => els.map((e) => (e as HTMLAnchorElement).href));
+    expect(hrefs.length).toBeGreaterThanOrEqual(11);
+    for (const href of hrefs) {
+      if (/\/go\//.test(href)) {
+        const res = await request.get(href, { maxRedirects: 0, timeout: 30_000 });
+        expect(res.status(), href).toBeGreaterThanOrEqual(300);
+        expect(res.status(), href).toBeLessThan(400);
+        expect(res.headers()['location'], href).toMatch(/^https:\/\//);
+      } else {
+        const res = await request.get(href, { maxRedirects: 3, timeout: 30_000 });
+        expect(res.status(), href).toBe(200);
+      }
+    }
+  });
+});

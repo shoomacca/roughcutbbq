@@ -5,6 +5,26 @@
   <title>RoughCut BBQ: free BBQ and smoker cook time calculator (AU)</title>
   <meta name="description" content="Pick the cut, cooker and weight. Get cook time, pit and pull temps, rest, and the time to start. Free, metric, no account needed.">
   <link rel="canonical" href="{{SITE_URL}}/">
+  <!-- Open Graph / Twitter (plan §6). og/home.png is 1200x630, checked by the build. -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="RoughCut BBQ">
+  <meta property="og:locale" content="en_AU">
+  <meta property="og:url" content="{{SITE_URL}}/">
+  <meta property="og:title" content="RoughCut BBQ: free BBQ and smoker cook time calculator (AU)">
+  <meta property="og:description" content="Pick the cut, cooker and weight. Get cook time, pit and pull temps, rest, and the time to start. Free, metric, no account needed.">
+  <meta property="og:image" content="{{OG_IMAGE}}">
+  <meta property="og:image:width" content="{{OG_W}}">
+  <meta property="og:image:height" content="{{OG_H}}">
+  <meta property="og:image:alt" content="RoughCut BBQ: know when your BBQ will be done">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="RoughCut BBQ: free BBQ and smoker cook time calculator (AU)">
+  <meta name="twitter:description" content="Pick the cut, cooker and weight. Get cook time, pit and pull temps, rest, and the time to start. Free, metric, no account needed.">
+  <meta name="twitter:image" content="{{OG_IMAGE}}">
+  <!-- Organization + WebSite + FAQPage, written by scripts/build-site.mjs from the same FAQ array
+       that renders the accordion below (tests/site-seo.test.ts asserts they match). -->
+  <script type="application/ld+json">
+{{JSON_LD}}
+  </script>
 </head>
 <body>
   <!-- @include header -->
@@ -20,7 +40,7 @@
             <a class="btn btn-lg lift transition-ui" href="{{APP_URL}}/calculator?utm_source=site&utm_medium=hero">Start a cook &rarr;</a>
             <a class="btn btn-ghost transition-ui" href="#sample-plan">See a sample plan</a>
           </div>
-          <p class="hero-note">No account. No ads. Works on your phone at the pit.</p>
+          <p class="hero-note">No account needed. Works on your phone at the pit.</p>
         </div>
         <img class="hero-img" src="{{HERO_IMG}}" width="{{HERO_W}}" height="{{HERO_H}}" alt="Sliced smoked brisket with a dark pepper bark" fetchpriority="high" decoding="async">
       </div>
@@ -92,9 +112,80 @@
         </div>
       </div>
     </section>
+
+    <!-- 5. Guides and recipes (plan §3.3.5): links only, to the app. Titles and slugs are read from
+         app/guides/*/page.mdx at build time; the recipe count from data/recipes.ts. -->
+    <section id="guides" class="guides" aria-labelledby="guides-heading">
+      <div class="wrap guides-grid">
+        <div class="guides-copy">
+          <h2 id="guides-heading">Learn the bits that matter.</h2>
+          <p class="section-lede">{{GUIDE_COUNT}} short guides on the things that go wrong: the stall, the wrap, the rest, and reading a thermometer.</p>
+          <a class="btn btn-ghost transition-ui" href="{{APP_URL}}/guides?utm_source=site&utm_medium=guides">All guides &rarr;</a>
+          <div class="reveal recipes-card card" data-index="5">
+            <h3>Recipes</h3>
+            <p>{{RECIPE_COUNT}} tested cooks, from Texas pulled pork to smoked cauliflower. Each one links straight into its plan.</p>
+            <a class="btn lift transition-ui" href="{{APP_URL}}/recipes?utm_source=site&utm_medium=recipes">All recipes &rarr;</a>
+          </div>
+        </div>
+        <ul class="guide-list">
+<!-- @block guides -->
+        </ul>
+      </div>
+    </section>
+
+    <!-- 6. Community gallery (plan §3.3.6). The gallery had no public posts at build time
+         (api/gallery returned 0 on 2026-10-03), so this is the one-line + link version; no live fetch. -->
+    <section id="gallery" class="gallery" aria-labelledby="gallery-heading">
+      <div class="wrap gallery-row reveal" data-index="0">
+        <div>
+          <h2 id="gallery-heading">Before and after.</h2>
+          <p class="section-lede">Post your cook, see what other backyards are turning out.</p>
+        </div>
+        <a class="btn lift transition-ui" href="{{APP_URL}}/gallery?utm_source=site&utm_medium=gallery">See the gallery &rarr;</a>
+      </div>
+    </section>
+
+    <!-- 7. Gear with disclosure (plan §3.3.7, RC-1.10 wording). Links go through the app's
+         /go/<slug> redirect so the Amazon Associates tag is applied in one place and clicks are
+         logged there; rel="sponsored noopener" and "(paid link)" on every item. -->
+    <section id="gear" class="gear" aria-labelledby="gear-heading">
+      <div class="wrap">
+        <h2 id="gear-heading">Gear we'd actually buy.</h2>
+        <p class="section-lede">A thermometer first, then everything else. These are the three we reach for most.</p>
+        <ul class="gear-grid">
+<!-- @block gear -->
+        </ul>
+        <p class="gear-foot">
+          <a class="transition-ui" href="{{APP_URL}}/gear?utm_source=site&utm_medium=gear">See all gear &rarr;</a>
+        </p>
+        <p class="disclosure" data-testid="gear-disclosure">{{DISCLOSURE}}</p>
+      </div>
+    </section>
+
+    <!-- 8. Android (plan §3.3.8): rendered only when PLAY_URL is set in site.config.json. Never an APK. -->
+<!-- @block play -->
+
+    <!-- 9. FAQ (plan §3.3.9): collapse-box accordion; the same array feeds the FAQPage JSON-LD in <head>. -->
+    <section id="faq" class="faq" aria-labelledby="faq-heading">
+      <div class="wrap faq-wrap">
+        <h2 id="faq-heading">Questions people ask.</h2>
+        <ul class="faq-list">
+<!-- @block faq -->
+        </ul>
+      </div>
+    </section>
+
+    <!-- Closing CTA: the one thing the page is for. -->
+    <section class="closing">
+      <div class="wrap closing-row reveal" data-index="0">
+        <h2>Got a lump of meat and a time to eat?</h2>
+        <a class="btn btn-lg lift transition-ui" href="{{APP_URL}}/calculator?utm_source=site&utm_medium=closing">Start a cook &rarr;</a>
+      </div>
+    </section>
   </main>
   <!-- @include footer -->
   <script src="reveal.js"></script>
   <script src="nav.js" defer></script>
+  <script src="faq.js" defer></script>
 </body>
 </html>

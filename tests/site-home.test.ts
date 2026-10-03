@@ -116,7 +116,12 @@ describe('site/dist/index.html carries those numbers (not stale)', () => {
       expect(tag, tag).toMatch(/ height="\d+"/);
       expect(tag, tag).toMatch(/ alt="[^"]+"/);
     }
-    // No JS beyond reveal.js and nav.js.
-    expect(html.match(/<script[^>]*>/g)).toEqual(['<script src="reveal.js">', '<script src="nav.js" defer>']);
+    // No JS beyond reveal.js, nav.js and faq.js (plus the one JSON-LD data block, RC-13.4).
+    expect(html.match(/<script src[^>]*>/g)).toEqual([
+      '<script src="reveal.js">',
+      '<script src="nav.js" defer>',
+      '<script src="faq.js" defer>',
+    ]);
+    expect(html.match(/<script type="application\/ld\+json">/g)).toHaveLength(1);
   });
 });

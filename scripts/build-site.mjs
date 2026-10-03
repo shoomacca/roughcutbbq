@@ -18,8 +18,14 @@
 //   5. RC-13.3: the sample plan card and the featured-cook tiles are computed here from
 //      calculateCook() (never hand-typed) and injected as {{SAMPLE_*}} keys and the
 //      `<!-- @block featured -->` marker; photos come from the app's public/images via sharp.
+//   6. RC-13.4: guides (titles/slugs read from app/guides/*/page.mdx), recipe count
+//      (data/recipes.ts), gear picks (data/gear.ts, linked via the app's /go/<slug> so the
+//      Amazon tag is applied centrally), FAQ (one array renders both the accordion and the
+//      FAQPage JSON-LD), Organization + WebSite JSON-LD, sitemap.xml, robots.txt, 404.html,
+//      and the Play section only when PLAY_URL is set.
 //
-// tests/site-tokens.test.ts and tests/site-home.test.ts import the functions below.
+// tests/site-tokens.test.ts, tests/site-home.test.ts and tests/site-seo.test.ts import the
+// functions below.
 
 import { readFileSync, writeFileSync, mkdirSync, rmSync, readdirSync, statSync, copyFileSync, existsSync } from 'node:fs';
 import { join, dirname, relative, sep } from 'node:path';
@@ -27,7 +33,9 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 import sharp from 'sharp';
 import { calculateCook, formatCookTime } from '../lib/calculator.ts';
 import { addHours } from '../lib/timeUtils.ts';
-import { METHOD_INFO, cutToSlug, findCut } from '../lib/seo.ts';
+import { METHOD_INFO, cutToSlug, findCut, allCategories } from '../lib/seo.ts';
+import { GEAR } from '../data/gear.ts';
+import { RECIPES } from '../data/recipes.ts';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 export const PATHS = {
@@ -36,6 +44,7 @@ export const PATHS = {
   dist: join(ROOT, 'site', 'dist'),
   config: join(ROOT, 'site', 'site.config.json'),
   appImages: join(ROOT, 'public', 'images'),
+  appGuides: join(ROOT, 'app', 'guides'),
 };
 
 /** Home-page photos: resized to this width (webp) so the page stays fast. */
@@ -254,8 +263,10 @@ export function renderFeatured(cooks, config, images) {
       const img = images[c.image];
       if (!img) throw new Error(`No image "${c.image}" for ${c.cutId}`);
       const href = `${config.APP_URL}${c.path}?utm_source=site&utm_medium=featured`;
+      // alt describes the PHOTO (lamb has none; its tile shows coals), not the cut name.
+      const alt = c.imageAlt || c.cutName;
       return `        <a class="reveal tile lift transition-ui" data-index="${i}" href="${esc(href)}">
-          <img src="img/${esc(img.file)}" width="${img.width}" height="${img.height}" alt="${esc(c.cutName)}" loading="lazy" decoding="async">
+          <img src="img/${esc(img.file)}" width="${img.width}" height="${img.height}" alt="${esc(alt)}" loading="lazy" decoding="async">
           <span class="tile-body">
             <span class="tile-title">${esc(c.label)}</span>
             <span class="tile-meta"><strong>${esc(c.cookTime)}</strong> at ${c.pitTempC}&deg;C${c.pullTempC != null ? ` &middot; pull at ${c.pullTempC}&deg;C` : ''}</span>
@@ -264,6 +275,193 @@ export function renderFeatured(cooks, config, images) {
         </a>`;
     })
     .join('\n');
+}
+
+// ── RC-13.4: guides, recipes, gear, FAQ, JSON-LD, sitemap ─────────────────────
+
+/**
+ * The app's guides, read from app/guides/<slug>/page.mdx `export const metadata = {...}`
+ * (the same title/description the app renders). Order = site.config.json `guides` if given,
+ * else directory order. Nothing is typed here, so a renamed guide propagates.
+ */
+export function appGuides(config, guidesDir = PATHS.appGuides) {
+  const slugs = readdirSync(guidesDir).filter((d) => existsSync(join(guidesDir, d, 'page.mdx')));
+  const order = Array.isArray(config.guides) && config.guides.length ? config.guides : slugs;
+  return order.map((slug) => {
+    if (!slugs.includes(slug)) throw new Error(`guide not in app/guides: ${slug}`);
+    const mdx = readFileSync(join(guidesDir, slug, 'page.mdx'), 'utf8');
+    const title = mdx.match(/^\s*title:\s*(['"])(.*?)\1\s*,?\s*$/m)?.[2];
+    const description = mdx.match(/^\s*description:\s*(['"])(.*?)\1\s*,?\s*$/m)?.[2];
+    if (!title) throw new Error(`no metadata.title in app/guides/${slug}/page.mdx`);
+    return { slug, title, description: description ?? '', path: `/guides/${slug}` };
+  });
+}
+
+export function renderGuides(guides, config) {
+  return guides
+    .map((g, i) => {
+      const href = `${config.APP_URL}${g.path}?utm_source=site&utm_medium=guides`;
+      return `          <li class="reveal" data-index="${i}">
+            <a class="guide-link lift transition-ui" href="${esc(href)}">
+              <span class="guide-title">${esc(g.title)}</span>
+              <span class="guide-desc">${esc(g.description)}</span>
+            </a>
+          </li>`;
+    })
+    .join('\n');
+}
+
+/** The number of recipes in data/recipes.ts, rounded down to a round figure for copy ("60+"). */
+export function recipeCount() {
+  return RECIPES.length;
+}
+
+/**
+ * Gear picks: `gearPicks` slugs from site.config.json, resolved against data/gear.ts (name,
+ * description, category). Links go through the app's /go/<slug> redirect so the Amazon
+ * Associates tag is applied in ONE place (the app/DB), never typed here.
+ */
+export function gearPicks(config) {
+  const slugs = config.gearPicks ?? [];
+  if (slugs.length < 1 || slugs.length > 4) throw new Error('gearPicks must list 1-4 slugs');
+  return slugs.map((slug) => {
+    const g = GEAR.find((x) => x.slug === slug);
+    if (!g) throw new Error(`gearPicks slug not in data/gear.ts: ${slug}`);
+    return { slug: g.slug, name: g.name, category: g.category, description: g.description, path: `/go/${g.slug}` };
+  });
+}
+
+/** Amazon Associates AU operating-agreement wording (RC-1.10) plus the per-link "(paid link)". */
+export const DISCLOSURE = 'As an Amazon Associate, RoughCut BBQ earns from qualifying purchases.';
+
+export function renderGear(picks, config) {
+  return picks
+    .map((g, i) => {
+      const href = `${config.APP_URL}${g.path}?utm_source=site&utm_medium=gear`;
+      return `          <li class="reveal gear-item card lift transition-ui" data-index="${i}">
+            <span class="gear-cat">${esc(g.category)}</span>
+            <a class="gear-name" href="${esc(href)}" rel="sponsored noopener" target="_blank">${esc(g.name)} <small class="paid">(paid link)</small></a>
+            <p class="gear-desc">${esc(g.description)}</p>
+          </li>`;
+    })
+    .join('\n');
+}
+
+/**
+ * FAQ: one array renders the accordion AND the FAQPage JSON-LD, so the two cannot disagree.
+ * The cooker list is read from the engine's METHOD_INFO (lib/seo.ts), not typed.
+ * "Can I plan backwards?" is deliberately absent until RC-3.5 ships it.
+ */
+export function faqItems() {
+  const cookers = Object.values(METHOD_INFO).map((m) => m.label.toLowerCase());
+  const cookerList = cookers.slice(0, -1).join(', ') + ' and ' + cookers[cookers.length - 1];
+  const cutCount = allCategories().reduce((n, c) => n + c.cuts.length, 0);
+  return [
+    {
+      q: 'Is it free?',
+      a: 'Yes. No account is needed to plan a cook. An account only saves your cooks so you can find them again.',
+    },
+    {
+      q: 'Is it metric?',
+      a: 'Yes. Kilograms and degrees Celsius only. Made in Australia for Australian cooks.',
+    },
+    {
+      q: 'How accurate is it?',
+      a: 'It is a planning estimate built from published cook ranges for each cut and cooker. Always cook to internal temperature, not the clock; the plan gives you both, plus when to wrap and how long to rest.',
+    },
+    {
+      q: 'Which cookers does it cover?',
+      a: `${cookerList[0].toUpperCase()}${cookerList.slice(1)}. Pick the one you have and the plan adjusts the pit temperature and time.`,
+    },
+    {
+      q: 'Which cuts?',
+      a: `${cutCount} cuts across pork, beef, chicken, lamb, fish, vegetables, game and jerky, from a full packer brisket to a tray of prawns.`,
+    },
+  ];
+}
+
+export function renderFaq(items) {
+  return items
+    .map((f, i) => {
+      const id = `faq-${i + 1}`;
+      return `          <li class="reveal faq-item" data-index="${i}">
+            <h3 class="faq-q">
+              <button class="faq-toggle transition-ui" type="button" data-faq-toggle aria-expanded="false" aria-controls="${id}">
+                <span>${esc(f.q)}</span>
+                <svg class="faq-chev" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
+              </button>
+            </h3>
+            <div id="${id}" class="faq-a collapse-box"><div><p>${esc(f.a)}</p></div></div>
+          </li>`;
+    })
+    .join('\n');
+}
+
+/** Organization + WebSite + FAQPage, one @graph (plan §6). sameAs carries the Play URL only when set. */
+export function jsonLd(config, faq) {
+  const site = config.SITE_URL.replace(/\/$/, '');
+  const orgId = `${site}/#organization`;
+  const org = {
+    '@type': 'Organization',
+    '@id': orgId,
+    name: 'RoughCut BBQ',
+    url: `${site}/`,
+    logo: `${site}/og/home.png`,
+  };
+  if (config.PLAY_URL) org.sameAs = [config.PLAY_URL];
+  return {
+    '@context': 'https://schema.org',
+    '@graph': [
+      org,
+      {
+        '@type': 'WebSite',
+        '@id': `${site}/#website`,
+        url: `${site}/`,
+        name: 'RoughCut BBQ',
+        inLanguage: 'en-AU',
+        publisher: { '@id': orgId },
+      },
+      {
+        '@type': 'FAQPage',
+        '@id': `${site}/#faq`,
+        mainEntity: faq.map((f) => ({
+          '@type': 'Question',
+          name: f.q,
+          acceptedAnswer: { '@type': 'Answer', text: f.a },
+        })),
+      },
+    ],
+  };
+}
+
+/** The Play section (plan §3.3.8), or nothing at all while PLAY_URL is empty. Never an APK link. */
+export function renderPlay(config) {
+  if (!config.PLAY_URL) return '';
+  return `    <section id="app" class="play" aria-labelledby="play-heading">
+      <div class="wrap play-grid">
+        <div>
+          <h2 id="play-heading">Take it to the pit.</h2>
+          <p class="section-lede">RoughCut BBQ on Android. Same calculator, in your pocket.</p>
+        </div>
+        <a class="btn btn-lg lift transition-ui" href="${esc(config.PLAY_URL)}" rel="noopener">Get it on Google Play</a>
+      </div>
+    </section>`;
+}
+
+/** sitemap.xml: the home only (404 excluded; guides/rubs/wood are 301s to the app from RC-13.5). */
+export function sitemapXml(config, pages, lastmod) {
+  const site = config.SITE_URL.replace(/\/$/, '');
+  const urls = pages
+    .filter((p) => p !== '404.html')
+    .map((p) => (p === 'index.html' ? `${site}/` : `${site}/${p}`))
+    .map((loc) => `  <url>\n    <loc>${esc(loc)}</loc>\n    <lastmod>${lastmod}</lastmod>\n  </url>`)
+    .join('\n');
+  return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls}\n</urlset>\n`;
+}
+
+export function robotsTxt(config) {
+  const site = config.SITE_URL.replace(/\/$/, '');
+  return `User-agent: *\nAllow: /\n\nSitemap: ${site}/sitemap.xml\n`;
 }
 
 /** Resize public/images/<name>.jpg -> <outDir>/img/<name>.webp and return its dimensions. */
@@ -301,8 +499,27 @@ export async function build({ outDir = PATHS.dist } = {}) {
   const handWritten = readFileSync(join(PATHS.src, 'site.css'), 'utf8');
   // {{YEAR}} (footer copyright) is computed at build time, like the app's `new Date().getFullYear()`.
   const raw = JSON.parse(readFileSync(PATHS.config, 'utf8'));
-  const config = { ...raw, YEAR: String(new Date().getFullYear()), ...sampleKeys(raw) };
+  const now = new Date();
+  const config = { ...raw, YEAR: String(now.getFullYear()), ...sampleKeys(raw) };
   const cooks = featuredCooks(raw);
+
+  // RC-13.4 content, all derived from the app's own data (nothing typed in the template).
+  const guides = appGuides(raw);
+  const picks = gearPicks(raw);
+  const faq = faqItems();
+  config.RECIPE_COUNT = String(recipeCount());
+  config.GUIDE_COUNT = String(guides.length);
+  config.DISCLOSURE = DISCLOSURE;
+  config.JSON_LD = JSON.stringify(jsonLd(config, faq), null, 2).replace(/</g, '\\u003c');
+
+  // og/home.png is a hand-made asset (1200x630, plan §6); the build refuses to ship without it.
+  const ogSrc = join(PATHS.src, 'og', 'home.png');
+  if (!existsSync(ogSrc)) throw new Error(`Missing ${ogSrc} (run node scripts/site-og.mjs)`);
+  const og = await sharp(ogSrc).metadata();
+  if (og.width !== 1200 || og.height !== 630) throw new Error(`og/home.png must be 1200x630, got ${og.width}x${og.height}`);
+  config.OG_IMAGE = `${config.SITE_URL}/og/home.png`;
+  config.OG_W = String(og.width);
+  config.OG_H = String(og.height);
 
   rmSync(outDir, { recursive: true, force: true });
   mkdirSync(outDir, { recursive: true });
@@ -321,7 +538,13 @@ export async function build({ outDir = PATHS.dist } = {}) {
   config.HERO_IMG = `img/${hero.file}`;
   config.HERO_W = String(hero.width);
   config.HERO_H = String(hero.height);
-  const blocks = { featured: renderFeatured(cooks, config, images) };
+  const blocks = {
+    featured: renderFeatured(cooks, config, images),
+    guides: renderGuides(guides, config),
+    gear: renderGear(picks, config),
+    faq: renderFaq(faq),
+    play: renderPlay(config),
+  };
 
   // 4. Pages
   const partialsDir = join(PATHS.src, 'partials');
@@ -330,12 +553,20 @@ export async function build({ outDir = PATHS.dist } = {}) {
     if (f.endsWith('.html')) partials[f.replace(/\.html$/, '')] = readFileSync(join(partialsDir, f), 'utf8');
   }
   const pagesDir = join(PATHS.src, 'pages');
+  const pages = [];
   for (const f of readdirSync(pagesDir)) {
     if (!f.endsWith('.html')) continue;
     const html = assemblePage(readFileSync(join(pagesDir, f), 'utf8'), partials, config, blocks);
     writeFileSync(join(outDir, f), html);
     written.push(f);
+    pages.push(f);
   }
+
+  // 4b. sitemap.xml + robots.txt (RC-13.4)
+  writeFileSync(join(outDir, 'sitemap.xml'), sitemapXml(config, pages, now.toISOString().slice(0, 10)));
+  written.push('sitemap.xml');
+  writeFileSync(join(outDir, 'robots.txt'), robotsTxt(config));
+  written.push('robots.txt');
 
   // 5. Everything else under src is copied as-is
   const skip = new Set([join(PATHS.src, 'site.css'), partialsDir, pagesDir]);
