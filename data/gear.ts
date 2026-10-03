@@ -20,7 +20,7 @@ export const GEAR: GearItem[] = [
     name: 'ThermoWorks Thermapen ONE',
     category: 'Thermometers',
     description: '1-second ±0.3°C accuracy — perfect for spot-checking chicken, ribs, and brisket.',
-    affiliateUrl: 'https://www.amazon.com.au/s?k=ThermoWorks+Therapen+ONE&tag=roughcutbbq-22',
+    affiliateUrl: 'https://www.amazon.com.au/s?k=ThermoWorks+Thermapen+ONE&tag=roughcutbbq-22',
   },
   {
     slug: 'thermoworks-dot',

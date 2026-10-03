@@ -6,7 +6,7 @@
 insert into public.gear (slug, name, category, description, affiliate_url, recommended_for, sort_order)
 values
   ('meater-plus', 'MEATER Plus Smart Thermometer', 'Thermometers', 'Wireless probe + app guides you through the brisket stall, alerts when meat is ready.', 'https://www.amazon.com.au/s?k=MEATER+Plus+Smart+Thermometer&tag=roughcutbbq-22', null, 1),
-  ('thermapen-one', 'ThermoWorks Thermapen ONE', 'Thermometers', '1-second ±0.3°C accuracy — perfect for spot-checking chicken, ribs, and brisket.', 'https://www.amazon.com.au/s?k=ThermoWorks+Therapen+ONE&tag=roughcutbbq-22', null, 2),
+  ('thermapen-one', 'ThermoWorks Thermapen ONE', 'Thermometers', '1-second ±0.3°C accuracy — perfect for spot-checking chicken, ribs, and brisket.', 'https://www.amazon.com.au/s?k=ThermoWorks+Thermapen+ONE&tag=roughcutbbq-22', null, 2),
   ('thermoworks-dot', 'ThermoWorks Dot Alarm Thermometer', 'Thermometers', 'Set-and-forget high/low temp alarms — ideal for monitoring long low-and-slow smokes.', 'https://www.amazon.com.au/s?k=ThermoWorks+Dot+Thermometer&tag=roughcutbbq-22', null, 3),
   ('inkbird-ibt4xs', 'Inkbird IBT-4XS Bluetooth Thermometer', 'Thermometers', 'Dual-probe, app-controlled — monitors meat and smoker temp simultaneously.', 'https://www.amazon.com.au/s?k=Inkbird+IBT-4XS+Bluetooth+Thermometer&tag=roughcutbbq-22', null, 4),
   ('grill-heat-aid-gloves', 'Grill Heat Aid Silicone Gloves', 'Safety & Protection', '800°C heat protection — grab hot brisket or ribs straight off the grate safely.', 'https://www.amazon.com.au/s?k=Grill+Heat+Aid+Silicone+Gloves&tag=roughcutbbq-22', null, 5),
