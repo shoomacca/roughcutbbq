@@ -15,6 +15,10 @@ export default function AdminIndex() {
           <span className="font-bold">🖼️ Gallery moderation</span>
           <span className="text-brand-muted text-sm block mt-1">Review reported posts, delete anything inappropriate</span>
         </Link>
+        <Link href="/admin/settings" className="bg-brand-surface border border-white/10 rounded-xl px-5 py-4 hover:border-brand-secondary/60 transition-ui">
+          <span className="font-bold">⚙️ Settings</span>
+          <span className="text-brand-muted text-sm block mt-1">Amazon affiliate tag applied to every product link</span>
+        </Link>
       </div>
     </div>
   );

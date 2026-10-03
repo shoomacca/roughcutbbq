@@ -1,6 +1,7 @@
 import crypto from 'crypto';
 import { cookies } from 'next/headers';
 import { cfg } from './runtime-config';
+import { getSupabase } from './supabase';
 
 // Resolved lazily (at sign/verify time, not import time) so `next build`
 // can collect page data without secrets present.
@@ -98,10 +99,57 @@ export function verifyAdminToken(token: string | undefined): boolean {
   }
 }
 
-/** True when the incoming request carries a valid admin_token cookie. */
+// -- Email allow-listed admins (interim, before full roles in RC-7.1) --
+/** Name of the user session cookie (re-exported by lib/api.ts). */
+export const SESSION_COOKIE = 'session';
+
+/** Parse ADMIN_EMAILS: comma-separated, trimmed, lowercased, blanks dropped. */
+export function parseAdminEmails(raw: string | undefined | null): Set<string> {
+  return new Set(
+    (raw ?? '')
+      .split(',')
+      .map((e) => e.trim().toLowerCase())
+      .filter((e) => e.length > 0)
+  );
+}
+
+/** Case-insensitive membership in ADMIN_EMAILS. Unset/empty env -> nobody. */
+export function isAllowedAdminEmail(email: string | undefined | null, raw: string = cfg('ADMIN_EMAILS')): boolean {
+  if (typeof email !== 'string' || !email.trim()) return false;
+  return parseAdminEmails(raw).has(email.trim().toLowerCase());
+}
+
+/**
+ * Session-token path: the user JWT verifies, its email is allow-listed, and the
+ * user row still exists with that email (one indexed lookup, only for
+ * allow-listed emails). Any DB error fails closed.
+ */
+async function isAllowListedSession(token: string | undefined): Promise<boolean> {
+  if (!token) return false;
+  const user = verifyToken(token);
+  if (!user || !user.userId || !isAllowedAdminEmail(user.email)) return false;
+  try {
+    const { data, error } = await getSupabase()
+      .from('users')
+      .select('id, email')
+      .eq('id', user.userId)
+      .maybeSingle();
+    if (error || !data || typeof data.email !== 'string') return false;
+    return data.email.trim().toLowerCase() === user.email.trim().toLowerCase();
+  } catch {
+    return false;
+  }
+}
+
+/**
+ * The single admin check. True when EITHER the request carries a valid
+ * admin_token cookie (shared password, /api/admin/login) OR a valid user
+ * session whose email is in ADMIN_EMAILS (and still matches the DB row).
+ */
 export async function isAdminRequest(): Promise<boolean> {
   const cookieStore = await cookies();
-  return verifyAdminToken(cookieStore.get(ADMIN_COOKIE)?.value);
+  if (verifyAdminToken(cookieStore.get(ADMIN_COOKIE)?.value)) return true;
+  return isAllowListedSession(cookieStore.get(SESSION_COOKIE)?.value);
 }
 
 export function getAnonymousName(userId: number): string {

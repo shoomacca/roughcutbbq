@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
 import type { ZodType, ZodTypeDef } from 'zod';
-import { isAdminRequest, verifyToken } from './auth';
+import { isAdminRequest, SESSION_COOKIE, verifyToken } from './auth';
 
 /**
  * Shared API guard layer (RC-1.4). Routes call these helpers instead of
@@ -14,7 +14,7 @@ import { isAdminRequest, verifyToken } from './auth';
  *   if (!auth.ok) return auth.res;
  */
 
-export const SESSION_COOKIE = 'session';
+export { SESSION_COOKIE };
 /** Default cap on a JSON request body. Oversize -> 400 `body_too_large`. */
 export const DEFAULT_MAX_BODY_BYTES = 64 * 1024;
 
@@ -48,7 +48,7 @@ export async function requireUser(): Promise<Guard<{ user: SessionUser }>> {
   return { ok: true, user };
 }
 
-/** 401 `unauthorized` unless a valid admin_token cookie is present. */
+/** 401 `unauthorized` unless isAdminRequest() (admin_token cookie or allow-listed session). */
 export async function requireAdmin(): Promise<Guard<object>> {
   if (!(await isAdminRequest())) return { ok: false, res: errorResponse(401, 'unauthorized') };
   return { ok: true };

@@ -4,6 +4,7 @@ import { validate } from '@/lib/api';
 import { slugParam } from '@/lib/api-schemas';
 import { GEAR } from '@/data/gear';
 import { RUBS } from '@/data/rubs';
+import { applyAmazonTag, getAmazonTag } from '@/lib/affiliate';
 
 export async function GET(
   req: Request,
@@ -37,5 +38,6 @@ export async function GET(
     return NextResponse.redirect(new URL('/gear', req.url));
   }
 
-  return NextResponse.redirect(affiliateUrl);
+  // The current Associates tag (admin setting) always wins over the stored one.
+  return NextResponse.redirect(applyAmazonTag(affiliateUrl, await getAmazonTag()));
 }
