@@ -432,6 +432,18 @@ test.describe('home (RC-13.4)', () => {
       await page.setViewportSize({ width, height });
       await page.goto('/');
       await page.evaluate(() => document.fonts.ready);
+      // Scroll the whole page first so every .reveal has fired (data-inview, opacity 1): axe skips
+      // opacity:0 nodes, so an unscrolled page would silently exclude most of the content.
+      await page.evaluate(async () => {
+        const step = Math.max(200, Math.floor(window.innerHeight * 0.6));
+        for (let y = 0; y <= document.documentElement.scrollHeight; y += step) {
+          window.scrollTo(0, y);
+          await new Promise((r) => requestAnimationFrame(() => setTimeout(r, 40)));
+        }
+        window.scrollTo(0, 0);
+      });
+      await expect.poll(() => page.locator('.reveal:not([data-inview])').count()).toBe(0);
+      await page.waitForTimeout(400); // let the last fades settle
       await page.addScriptTag({ path: require.resolve('axe-core/axe.min.js') });
       type AxeNode = { html: string; target: string[]; any: { data?: { fgColor?: string; bgColor?: string } }[] };
       type AxeViolation = { id: string; impact: string; nodes: AxeNode[] };
@@ -444,14 +456,18 @@ test.describe('home (RC-13.4)', () => {
       )) as { violations: AxeViolation[] };
       // Narrow exclusion: the APP's --color-brand-muted (#7a9e7a) measures 4.40:1 on --color-brand-surface
       // (#1e3524). It is a shared token the site may not change (tests/site-tokens.test.ts), raised
-      // as an app issue. Only colour-contrast nodes whose foreground is exactly that token are dropped;
-      // every other contrast failure still counts.
+      // as an app issue. Only colour-contrast nodes with exactly that foreground ON exactly that
+      // background are dropped; the same muted text on any other background, and every other
+      // contrast failure, still counts.
       const MUTED = '#7a9e7a';
+      const SURFACE = '#1e3524';
+      const isKnownPair = (c: AxeNode['any'][number]) =>
+        c.data?.fgColor?.toLowerCase() === MUTED && c.data?.bgColor?.toLowerCase() === SURFACE;
       const violations = results.violations
         .map((v) =>
           v.id !== 'color-contrast'
             ? v
-            : { ...v, nodes: v.nodes.filter((n) => !n.any.some((c) => c.data?.fgColor?.toLowerCase() === MUTED)) },
+            : { ...v, nodes: v.nodes.filter((n) => !n.any.some(isKnownPair)) },
         )
         .filter((v) => v.nodes.length > 0 && (v.impact === 'serious' || v.impact === 'critical'));
       expect(
