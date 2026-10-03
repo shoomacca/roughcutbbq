@@ -1,0 +1,25 @@
+{
+  "SITE_URL": "https://roughcut.com.au",
+  "APP_URL": "https://app.roughcut.com.au",
+  "PLAY_URL": "",
+  "sampleCut": "spatchcock_chicken",
+  "sampleMethod": "smoker",
+  "sampleKg": 1.8,
+  "sampleEatAt": "18:00",
+  "featured": [
+    { "cutId": "brisket", "label": "Brisket", "kg": 3, "image": "brisket", "imageAlt": "Sliced smoked brisket with a dark pepper bark" },
+    { "cutId": "pork_shoulder", "label": "Pulled pork", "kg": 2, "image": "pulled-pork", "imageAlt": "Smoked pork shoulder, pulled, on a board over coals" },
+    { "cutId": "baby_back_ribs", "label": "Pork ribs", "kg": 1.5, "image": "ribs", "imageAlt": "A rack of glazed smoked pork ribs on a board" },
+    { "cutId": "spatchcock_chicken", "label": "Spatchcock chicken", "kg": 1.8, "image": "chicken", "imageAlt": "A whole smoked chicken with crisp golden skin" },
+    { "cutId": "lamb_shoulder", "label": "Lamb shoulder", "kg": 2, "image": "coals", "imageAlt": "Lit charcoal and wood chunks smoking in a firebox" },
+    { "cutId": "salmon_fillet", "label": "Hot-smoked salmon", "kg": 1, "image": "fish", "imageAlt": "A whole fish hot-smoked on a board over coals" }
+  ],
+  "guides": [
+    "how-to-smoke-a-brisket",
+    "pork-shoulder-the-stall-explained",
+    "how-long-to-smoke-ribs",
+    "spatchcock-chicken-on-the-smoker",
+    "how-to-use-a-meat-thermometer"
+  ],
+  "gearPicks": ["thermapen-one", "inkbird-ibt4xs", "peach-butcher-paper"]
+}

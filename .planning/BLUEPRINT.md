@@ -136,7 +136,7 @@ Definition of done for the programme:
 
 **Answered by Chris on 2026-10-01:**
 - **Go-live:** yes. Rotate secrets, push (August work kept on `archive/aug-2026`), create a staging Supabase project, deploy. **Confirm with Chris before each domain move.**
-- **D1:** `app.roughcut.com.au` is the one home. The journal site's content moves into the app and the apex redirects there.
+- **D1 (amended 2026-10-02):** the app stays at `app.roughcut.com.au`. The explainer website **stays separate on Hostinger at `roughcut.com.au` (+www)**, static HTML/CSS, with the same UI, style and motion as the app (tokens extracted from `app/globals.css` by `scripts/build-site.mjs`). All its CTAs go to the app; no apex redirect. Its reference pages (guides, rubs, wood chart) 301 to the app's existing routes. Deploy = manual upload of the self-contained `site/dist/` by Chris (no pipeline, no credentials). Defaults: build now on current tokens (before D8); sample card = spatchcock chicken until RC-3.4; analytics deferred (no tracking code). Plan: `.planning/HOME-AND-SITE-PLAN.md`; issues RC-13.0–13.10. (Original 2026-10-01 answer, superseded: one home on the app, apex redirects.)
 - **D2:** overwrite GitHub `roughcutbbq` `main`, keeping August on `archive/aug-2026`.
 - **D3:** Supabase Auth (magic link + Google) for users and the superadmin. RC-1.6 folds into RC-7.1.
 - **D5:** "RoughCut BBQ".
@@ -146,7 +146,7 @@ Definition of done for the programme:
 
 | # | Decision | Recommendation |
 |---|---|---|
-| D1 | Canonical domain; fate of the `roughcut.com.au` Hostinger site | App on `app.roughcut.com.au`; port the site's content into the app; 301 the apex |
+| D1 | Canonical domain; fate of the `roughcut.com.au` Hostinger site | ~~App on `app.roughcut.com.au`; port the site's content into the app; 301 the apex~~ **Decided 2026-10-02: keep the Hostinger site, same design system, manual upload (see above)** |
 | D2 | GitHub target | Overwrite `shoomacca/roughcutbbq` `main`; keep August as `archive/aug-2026` |
 | D3 | Accounts | Supabase Auth for users **and** the superadmin (magic link + Google) |
 | D4 | Android architecture | Decide **after** the device test RC-12.1; lean hybrid (offline calculator + Cook Mode) |

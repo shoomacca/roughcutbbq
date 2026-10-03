@@ -609,7 +609,9 @@ Ref AC AN1.
 
 Ref AC SE3, SE4.
 
-**RC-10.3 Merge the marketing site into the app + 301 the apex** · risk-prod-state (DNS) · M · blocked by 0.1 (D1), 4.3
+**RC-10.3 Merge the marketing site into the app + 301 the apex** · **SUPERSEDED 2026-10-02** by RC-13.x (owner: keep the Hostinger site, no apex redirect; see D1 amended and `HOME-AND-SITE-PLAN.md`). Cancel in Linear.
+
+~~risk-prod-state (DNS) · M · blocked by 0.1 (D1), 4.3~~
 - Port the journal content (5 guides, rubs matrix, wood matrix) into app routes on the new primitives.
 - Landing hero on `/` or `/about`.
 - 301 every `roughcut.com.au/*` URL; remove the dead APK link.
@@ -679,6 +681,40 @@ Ref AC SE3, SE4.
 **RC-12.5 Internal → closed (12 testers × 14 days) → production** · HUMAN · M · blocked by 12.4
 - **Accept:** the production track is live; the store link works.
 
+## M13 — Explainer website (Hostinger) + app home (added 2026-10-02)
+
+Spec, draft copy, token-sharing design and full acceptance: `.planning/HOME-AND-SITE-PLAN.md`. Owner decisions: separate static site at `roughcut.com.au` with the app's design system; CTAs → app; no apex redirect; **manual upload of `site/dist/` by Chris, no pipeline, no credentials**; build now on current tokens; sample card = spatchcock chicken until RC-3.4; analytics deferred.
+
+**RC-13.0 Record the owner's decisions** · docs · XS · done (this commit)
+
+**RC-13.1 Site scaffold + token extractor (`scripts/build-site.mjs`) + parity test** · risk-safe-fix · M
+- **Accept:** `npm run site:build` emits `site/dist/`; `tests/site-tokens.test.ts` proves every `--color-*`/`--motion-*`/`--ease-*` var and keyframe equals `app/globals.css` and fails when one is changed; 0 framer-motion, 0 raw hex outside the generated block.
+
+**RC-13.2 `reveal.js` + header/footer partials + mobile nav + site Playwright spec** · risk-safe-fix · S · blocked by 13.1
+- **Accept:** JS off → all `.reveal` visible; reduced motion → `getAnimations().length === 0`; print → nothing below opacity 1; 390 px `scrollWidth === 390`; axe 0 serious.
+
+**RC-13.3 Site home: hero, how it works, engine-driven sample plan, featured cooks** · risk-safe-fix · M · blocked by 13.2
+- **Accept:** sample-card numbers equal `calculateCook()` for `sampleCut` (test); every app link 200; images sized + alt; Lighthouse mobile ≥ 95.
+
+**RC-13.4 Site home: guides/recipes, gallery, gear + disclosure, FAQ, Play flag, JSON-LD, sitemap, OG** · risk-safe-fix · M · blocked by 13.3
+- **Accept:** FAQPage valid in Rich Results Test; no `apk` string; Play section absent while `PLAY_URL` empty; disclosure present; `og:image` 1200×630.
+
+**RC-13.5 301 map (`.htaccess`) for guides/rubs/wood + content parity port into the app** · risk-safe-fix · S · blocked by 13.4
+- **Accept:** parity checklist; 9 redirect targets return 200 on the live app.
+
+**RC-13.6 Upload package + rollback backup** · risk-safe-fix · S · blocked by 13.5
+- **Accept:** `site/dist/` self-contained incl. hidden `.htaccess`, `robots.txt`, `sitemap.xml`, favicon, `README-UPLOAD.txt`; `site/roughcut-site.zip`; `site/backup-2026-10-02/` byte-matches the live site; no FTP/CI/credentials anywhere.
+
+**RC-13.7 App `/`: H1 + one line, metadata/OG, WebApplication JSON-LD, footer visible, "What is RoughCut?" → roughcut.com.au; carousel untouched** · risk-safe-fix · S
+- **Accept:** exactly one `<h1>` on live `/`; `og:image` 200; brand once in title; no "no ads"; smoke + desktop-scroll specs pass unchanged.
+
+**RC-13.8 Chris uploads `site/dist/` via hPanel File Manager; orchestrator verifies live by curl** · HUMAN + verify · S · blocked by 13.6
+- **Accept:** apex + www 200 with the new title; 9 old URLs → 301 → 200; live `site.css` contains `--motion-base: 220ms`; no `apk`; robots + sitemap 200; Lighthouse ≥ 95 ×4. Rollback = upload the backup folder.
+
+**RC-13.9 Android shell `server.url` → `/calculator?src=app` + `public/offline.html`** · risk-safe-fix + HUMAN device · XS · blocked by 13.7
+
+**RC-13.10 Analytics events on both domains** · XS · **BLOCKED** by RC-0.8 (deferred by owner); add no tracking code until then
+
 ---
 **Done (verified):** RC-0.1 decisions, RC-0.2 secrets, RC-0.3 git+Vercel (1599d2a), RC-0.4 (05ec731), RC-0.5 (1d4a689), RC-1.1 (fdcbc54), RC-1.2 (f7d0c2a), RC-1.3 (8f9aedc), RC-1.4 (bdc79c2).
-**Next:** RC-0.1 (Chris: decisions). Can run meanwhile without decisions: RC-0.4 → RC-0.5 → RC-1.1 → RC-1.2 → RC-1.3 (all code-only, no prod state).
+**Next:** see HANDOVER.md. M13 (site + app home) runs RC-13.1 → 13.7 code-only, then Chris's upload (RC-13.8).

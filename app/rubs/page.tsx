@@ -4,6 +4,7 @@ import { useEffect, useState, useMemo } from 'react';
 import { useSlidingIndicator } from '@/lib/useSlidingIndicator';
 import Reveal from '@/components/Reveal';
 import { RUBS, RUB_CATEGORIES, type RubItem } from '@/data/rubs';
+import { RUB_RECIPES, formatParts } from '@/data/rub-recipes';
 
 const RUB_CAT_IDS = new Set(RUB_CATEGORIES.filter((c) => c.id !== 'All').map((c) => c.id));
 const RUB_EMOJI: Record<string, string> = Object.fromEntries(RUB_CATEGORIES.map((c) => [c.id, c.emoji ?? '']));
@@ -182,6 +183,32 @@ export default function RubsPage() {
           {filtered.map((item, i) => <Reveal key={item.slug} index={i}><RubRow item={item} /></Reveal>)}
         </div>
       )}
+
+      {/* Scratch-made rubs by parts (RC-13.5: ported from the retired roughcut.com.au/rubs.html). */}
+      <section className="mt-14" aria-labelledby="make-your-own" data-testid="rub-recipes">
+        <h2 id="make-your-own" className="text-brand-text font-bold text-base mb-1">Make your own</h2>
+        <p className="text-brand-muted text-sm mb-4">
+          Four scratch rubs, measured by parts: use the same spoon or cup for every line and scale to the cut.
+        </p>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          {RUB_RECIPES.map((r, i) => (
+            <Reveal key={r.slug} index={i}>
+              <article className="bg-brand-surface border border-white/8 rounded-xl px-4 py-4 h-full">
+                <p className="text-brand-muted text-xs uppercase tracking-wider">{CAT_EMOJI[r.category] ?? '🧂'} {r.category}</p>
+                <h3 className="text-brand-text font-semibold text-sm mt-1">{r.name}</h3>
+                <dl className="mt-3 flex flex-col gap-1.5">
+                  {r.ingredients.map((ing) => (
+                    <div key={ing.item} className="flex items-baseline justify-between gap-3 text-sm">
+                      <dt className="text-brand-text/90">{ing.item}</dt>
+                      <dd className="text-brand-secondary font-semibold whitespace-nowrap tabular-nums">{formatParts(ing.parts)}</dd>
+                    </div>
+                  ))}
+                </dl>
+              </article>
+            </Reveal>
+          ))}
+        </div>
+      </section>
 
       <p className="text-brand-muted/40 text-xs text-center mt-12">
         BBQ Calculator earns a commission from qualifying Amazon purchases via links on this page.

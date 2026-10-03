@@ -1,0 +1,945 @@
+/* ── Hand-written layer for roughcut.com.au ─────────────────────────────────────
+   Everything above this file in site/dist/site.css is GENERATED from app/globals.css
+   (tokens as :root, keyframes). Everything below the hand-written layer (reduced-motion
+   and print blocks) is generated too. This file holds layout and the plain-CSS
+   equivalents of the app's Tailwind utilities. It must contain NO raw colour or motion
+   literals: only var(--…) references (tests/site-tokens.test.ts enforces it). */
+
+/* The app's @theme declares --font-display as var(--font-display, �), a self-reference that
+   is guaranteed-invalid on its own; next/font then sets the real value via a class on <html>
+   (specificity 0,1,0, later in the cascade). The site does the same with :root (also 0,1,0)
+   declared after the generated block, so it wins the same way. */
+:root {
+  --font-display: 'Abril Fatface', Georgia, serif;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--color-brand-dark);
+  color: var(--color-brand-text);
+  font-family: var(--font-sans);
+  line-height: 1.5;
+}
+
+main {
+  flex: 1;
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+a {
+  color: inherit;
+}
+
+.font-display {
+  font-family: var(--font-display);
+  font-weight: 400;
+}
+
+.wrap {
+  width: 100%;
+  max-width: 72rem;
+  margin-inline: auto;
+  padding-inline: 1rem;
+}
+
+/* ── Interactive feedback (mirrors @layer base in app/globals.css) ── */
+button:not(:disabled) {
+  transition: scale var(--motion-fast) var(--ease-out-soft);
+}
+button:not(:disabled):active {
+  scale: 0.97;
+}
+
+/* ── .transition-ui (mirrors @utility transition-ui) ── */
+.transition-ui {
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke,
+    opacity, box-shadow, transform, translate, scale, rotate, filter;
+  transition-timing-function: var(--ease-out-soft);
+  transition-duration: var(--motion-base);
+}
+
+/* ── .lift (mirrors @utility lift) ── */
+.lift:hover {
+  translate: 0 -2px;
+}
+
+/* ── .skeleton (mirrors @utility skeleton) ── */
+.skeleton {
+  background: linear-gradient(
+    100deg,
+    rgba(255, 255, 255, 0.05) 30%,
+    rgba(255, 255, 255, 0.12) 50%,
+    rgba(255, 255, 255, 0.05) 70%
+  );
+  background-size: 200% 100%;
+  animation: var(--animate-shimmer);
+}
+
+/* ── Scroll reveal: same contract as components/Reveal.tsx, html[data-js] in place of
+   html[data-hydrated]. reveal.js (RC-13.2) sets data-js first; with no JS nothing hides. ── */
+html[data-js] .reveal:not([data-inview]) {
+  opacity: 0;
+}
+/* Kept at specificity (0,2,0) on purpose: the app's generated reduced-motion block below
+   overrides `.reveal[data-inview]` to fade-in (opacity only) at the SAME specificity, later in
+   the cascade. `:not([data-instant])` here would be (0,3,0) and silently defeat it (RC-13.3). */
+.reveal[data-inview] {
+  animation: fade-up var(--motion-slow) var(--ease-out-soft) both;
+  animation-delay: var(--reveal-delay, 0ms);
+}
+.reveal[data-inview][data-instant] {
+  animation: none;
+}
+
+/* ── .collapse-box (mirrors @utility collapse-box) ── */
+.collapse-box {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  transition:
+    grid-template-rows var(--motion-base) var(--ease-out-soft),
+    opacity var(--motion-fast) var(--ease-out-soft);
+}
+.collapse-box > * {
+  min-height: 0;
+  overflow: hidden;
+  visibility: hidden;
+  transition: visibility 0s linear var(--motion-base);
+}
+.collapse-box[data-open] > * {
+  visibility: visible;
+  transition: none;
+}
+.collapse-box[data-open] {
+  grid-template-rows: 1fr;
+  opacity: 1;
+  transition:
+    grid-template-rows var(--motion-base) var(--ease-out-soft),
+    opacity var(--motion-slow) var(--ease-out-soft);
+}
+
+/* ── Buttons (the app's primary CTA look: brand-primary fill, rounded, press feedback) ── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 3rem;
+  padding: 0.75rem 1.5rem;
+  border: 0;
+  border-radius: 0.75rem;
+  background-color: var(--color-brand-primary);
+  color: var(--color-brand-text);
+  font: inherit;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+}
+.btn:hover {
+  background-color: var(--color-brand-secondary);
+}
+.btn-ghost {
+  background-color: transparent;
+  color: var(--color-brand-muted);
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+.btn-ghost:hover {
+  background-color: transparent;
+  color: var(--color-brand-text);
+}
+
+/* ── Header (mirrors components/Header.tsx: sticky, surface, muted hairline, h-14, max-w-6xl) ── */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background-color: var(--color-brand-surface);
+  border-bottom: 1px solid color-mix(in srgb, var(--color-brand-muted) 20%, transparent);
+}
+.site-header .wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  height: 3.5rem;
+}
+.brand {
+  color: var(--color-brand-text);
+  font-weight: 700;
+  font-size: 1.125rem;
+  letter-spacing: -0.025em;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.brand:hover {
+  color: var(--color-brand-secondary);
+}
+
+/* Desktop nav: text-sm font-medium, gap-6; the active link carries the app's 2px underline
+   (app/globals.css: nav [data-tab][aria-current="page"]). */
+.site-nav {
+  display: none;
+  align-items: center;
+  gap: 1.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+.site-nav a:not(.btn) {
+  position: relative;
+  padding-block: 0.25rem;
+  color: var(--color-brand-muted);
+  text-decoration: none;
+}
+.site-nav a:not(.btn):hover {
+  color: var(--color-brand-text);
+}
+.site-nav a[aria-current='page'] {
+  color: var(--color-brand-secondary);
+  font-weight: 700;
+  box-shadow: inset 0 -2px 0 var(--color-brand-secondary);
+}
+.btn-sm {
+  min-height: 0;
+  padding: 0.5rem 1rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+/* Hamburger (text-brand-muted, hover text, p-1); the icon swaps on aria-expanded. */
+.menu-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.25rem;
+  margin-inline-end: -0.25rem;
+  border: 0;
+  background: transparent;
+  color: var(--color-brand-muted);
+  cursor: pointer;
+}
+.menu-toggle:hover {
+  color: var(--color-brand-text);
+}
+.menu-toggle .icon-close,
+.menu-toggle[aria-expanded='true'] .icon-open {
+  display: none;
+}
+.menu-toggle[aria-expanded='true'] .icon-close {
+  display: block;
+}
+
+/* Mobile menu: the collapse-box does the open/close animation. */
+.mobile-menu nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  border-top: 1px solid color-mix(in srgb, var(--color-brand-muted) 20%, transparent);
+  background-color: var(--color-brand-surface);
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+.mobile-menu nav a:not(.btn) {
+  color: var(--color-brand-muted);
+  text-decoration: none;
+}
+.mobile-menu nav a:not(.btn):hover {
+  color: var(--color-brand-text);
+}
+.mobile-menu nav .btn {
+  margin-top: 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+/* No JS: nothing is unreachable. The menu is simply open and the button is gone. */
+html:not([data-js]) .menu-toggle {
+  display: none;
+}
+html:not([data-js]) .mobile-menu {
+  grid-template-rows: 1fr;
+  opacity: 1;
+}
+html:not([data-js]) .mobile-menu > * {
+  visibility: visible;
+}
+
+@media (min-width: 768px) {
+  .site-nav {
+    display: flex;
+  }
+  .menu-toggle,
+  .mobile-menu {
+    display: none;
+  }
+}
+
+/* ── Footer (mirrors components/Footer.tsx: surface, hairline top, py-6, text-sm muted) ── */
+.site-footer {
+  background-color: var(--color-brand-surface);
+  border-top: 1px solid color-mix(in srgb, var(--color-brand-muted) 20%, transparent);
+  color: var(--color-brand-muted);
+  font-size: 0.875rem;
+}
+.site-footer .wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding-block: 1.5rem;
+}
+.site-footer p {
+  margin: 0;
+}
+.footer-row {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  text-align: center;
+}
+.footer-nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+}
+.footer-nav a {
+  text-decoration: none;
+}
+.footer-nav a:hover {
+  color: var(--color-brand-text);
+}
+/* Amazon disclosure: full brand-text at 14px. The earlier muted-at-70% mix measured 2.94:1 on
+   the surface (fails AA); brand-text on surface is 12.1:1 (fix(RC-13.4)). */
+.disclosure {
+  font-size: 0.875rem;
+  color: var(--color-brand-text);
+  text-align: center;
+}
+@media (min-width: 640px) {
+  .footer-row {
+    flex-direction: row;
+    text-align: left;
+  }
+  .disclosure {
+    text-align: left;
+  }
+}
+
+/* ── Home (RC-13.3): hero, how it works, sample plan, featured cooks ──────────────
+   Visual language = the app: display serif headings (Abril Fatface via --font-display),
+   dark page / surface panels / cream cards, 0.75-1rem radii, hairlines at 8-20% muted,
+   stat tiles like components/calculator/ResultsCard.tsx (muted uppercase label, bold value). */
+
+.wrap > h2,
+.steps h2,
+.sample h2,
+.featured h2 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  line-height: 1.1;
+  margin: 0 0 1rem;
+}
+.section-lede {
+  color: var(--color-brand-muted);
+  max-width: 40rem;
+  margin: 0 0 1.5rem;
+}
+
+/* Hero */
+.hero {
+  padding-block: 2.5rem 3rem;
+}
+.hero-grid {
+  display: grid;
+  gap: 2rem;
+  align-items: center;
+}
+.eyebrow {
+  margin: 0 0 0.75rem;
+  color: var(--color-brand-secondary);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.hero h1 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(2.5rem, 7vw, 4.25rem);
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+  margin: 0 0 1rem;
+}
+.hero .lede {
+  color: var(--color-brand-muted);
+  font-size: 1.125rem;
+  line-height: 1.55;
+  max-width: 34rem;
+  margin: 0 0 1.5rem;
+}
+.hero .actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1rem;
+  align-items: center;
+}
+.hero-note {
+  margin: 1rem 0 0;
+  color: var(--color-brand-muted); /* plain token: 4.86:1 on dark (the 80% mix was 3.64) */
+  font-size: 0.875rem;
+}
+.btn-lg {
+  min-height: 3.5rem;
+  padding: 1rem 1.75rem;
+  font-size: 1.0625rem;
+  font-weight: 700;
+  border-radius: 1rem;
+}
+.hero-img {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border-radius: 1.5rem;
+  border: 1px solid color-mix(in srgb, var(--color-brand-muted) 25%, transparent);
+  box-shadow: 0 24px 64px color-mix(in srgb, var(--color-brand-secondary) 18%, transparent);
+}
+@media (max-width: 767px) {
+  .hero .btn {
+    width: 100%;
+  }
+}
+@media (min-width: 768px) {
+  .hero {
+    padding-block: 4rem 4.5rem;
+  }
+  .hero-grid {
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    gap: 3rem;
+  }
+}
+
+/* Cream card (the app's --color-brand-card panels) */
+.card {
+  background-color: var(--color-brand-card);
+  color: var(--color-brand-dark);
+  border-radius: 1rem;
+  padding: 1.25rem;
+}
+
+/* How it works */
+.steps {
+  padding-block: 3rem;
+  background-color: var(--color-brand-surface);
+  border-block: 1px solid color-mix(in srgb, var(--color-brand-muted) 15%, transparent);
+}
+.step-grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 1rem;
+}
+.step {
+  position: relative;
+  padding: 1.5rem 1.25rem 1.25rem;
+}
+.step-num {
+  display: inline-grid;
+  place-items: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 999px;
+  background-color: var(--color-brand-primary);
+  color: var(--color-brand-text);
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  margin-bottom: 0.75rem;
+}
+.step h3 {
+  margin: 0 0 0.375rem;
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+.step p {
+  margin: 0;
+  color: color-mix(in srgb, var(--color-brand-dark) 78%, transparent);
+  line-height: 1.5;
+}
+@media (min-width: 768px) {
+  .step-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.25rem;
+  }
+}
+
+/* Sample plan */
+.sample {
+  padding-block: 3.5rem;
+}
+.sample-grid {
+  display: grid;
+  gap: 2rem;
+  align-items: center;
+}
+.sample-copy p {
+  color: var(--color-brand-muted);
+  line-height: 1.55;
+  margin: 0 0 1rem;
+  max-width: 34rem;
+}
+.sample-copy .btn {
+  margin-top: 0.5rem;
+}
+.plan-card {
+  background-color: var(--color-brand-surface);
+  border: 1px solid color-mix(in srgb, var(--color-brand-muted) 20%, transparent);
+  border-radius: 1.25rem;
+  padding: 1.25rem;
+  box-shadow: 0 24px 64px color-mix(in srgb, var(--color-brand-dark) 60%, transparent);
+}
+.plan-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+.plan-kicker {
+  margin: 0 0 0.125rem;
+  color: var(--color-brand-muted);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.plan-title {
+  margin: 0;
+  font-size: 1.375rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+.pill {
+  flex: none;
+  display: inline-block;
+  padding: 0.25rem 0.625rem;
+  border-radius: 999px;
+  background-color: var(--color-brand-dark); /* secondary on dark 5.12:1; on the primary-20% mix it was 4.19 */
+  color: var(--color-brand-secondary);
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+.stats {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+  margin: 0;
+}
+.stat {
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+  background-color: var(--color-brand-dark);
+  border-radius: 0.75rem;
+  padding: 1rem;
+}
+.stat dt {
+  color: var(--color-brand-muted);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+/* dd holds the value and its note (axe definition-list: a dl's div may contain only dt/dd). */
+.stat dd {
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+  margin: 0;
+  color: var(--color-brand-text);
+  font-size: 1.5rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.2;
+}
+.stat small {
+  color: var(--color-brand-muted);
+  font-size: 0.75rem;
+  font-weight: 400;
+}
+.plan-when {
+  margin: 1rem 0 0;
+  padding: 0.875rem 1rem;
+  border-radius: 0.75rem;
+  background-color: var(--color-brand-dark); /* strong (secondary) on dark 5.12:1; on the 12% mix it was 3.94 */
+  color: var(--color-brand-text);
+  font-size: 0.9375rem;
+}
+.plan-when strong {
+  color: var(--color-brand-secondary);
+}
+.plan-foot {
+  margin: 0.75rem 0 0;
+  color: var(--color-brand-muted); /* plain token (the 80% mix was 3.38:1) */
+  font-size: 0.75rem;
+}
+@media (min-width: 768px) {
+  .sample-grid {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+    gap: 3rem;
+  }
+}
+
+/* Featured cooks */
+.featured {
+  padding-block: 1rem 4rem;
+}
+.tile-grid {
+  display: grid;
+  gap: 1rem;
+}
+.tile {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border-radius: 1rem;
+  background-color: var(--color-brand-surface);
+  border: 1px solid color-mix(in srgb, var(--color-brand-muted) 15%, transparent);
+  color: var(--color-brand-text);
+  text-decoration: none;
+}
+.tile:hover {
+  border-color: color-mix(in srgb, var(--color-brand-muted) 45%, transparent);
+}
+.tile img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
+.tile-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 1rem;
+}
+.tile-title {
+  font-size: 1.125rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+.tile-meta {
+  font-size: 0.875rem;
+  color: var(--color-brand-muted);
+}
+.tile-meta strong {
+  color: var(--color-brand-secondary);
+  font-variant-numeric: tabular-nums;
+}
+.tile-note {
+  font-size: 0.75rem;
+  color: var(--color-brand-muted); /* plain token (the 75% mix was 3.16:1) */
+}
+@media (min-width: 640px) {
+  .tile-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (min-width: 1024px) {
+  .tile-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.25rem;
+  }
+}
+
+/* ── Home (RC-13.4): guides and recipes, gallery, gear, FAQ, Play, closing CTA, 404 ─────── */
+
+.guides h2,
+.gallery h2,
+.gear h2,
+.faq h2,
+.play h2,
+.closing h2 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  line-height: 1.1;
+  margin: 0 0 1rem;
+}
+
+/* Guides and recipes: copy + recipes card on the left, the guide list on the right */
+.guides {
+  padding-block: 3.5rem;
+  background-color: var(--color-brand-surface);
+  border-block: 1px solid color-mix(in srgb, var(--color-brand-muted) 15%, transparent);
+}
+.guides-grid {
+  display: grid;
+  gap: 2rem;
+  align-items: start;
+}
+.guides-copy .btn-ghost {
+  padding-inline: 0;
+  min-height: 0;
+}
+.recipes-card {
+  margin-top: 1.5rem;
+}
+.recipes-card h3 {
+  margin: 0 0 0.375rem;
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+.recipes-card p {
+  margin: 0 0 1rem;
+  color: color-mix(in srgb, var(--color-brand-dark) 78%, transparent);
+}
+.guide-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+.guide-link {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 1rem 1.25rem;
+  border-radius: 0.75rem;
+  background-color: var(--color-brand-dark);
+  border: 1px solid color-mix(in srgb, var(--color-brand-muted) 15%, transparent);
+  color: var(--color-brand-text);
+  text-decoration: none;
+}
+.guide-link:hover {
+  border-color: color-mix(in srgb, var(--color-brand-secondary) 45%, transparent);
+}
+.guide-link:hover .guide-title {
+  color: var(--color-brand-secondary);
+}
+.guide-title {
+  font-weight: 600;
+  line-height: 1.3;
+}
+.guide-desc {
+  font-size: 0.875rem;
+  line-height: 1.45;
+  color: var(--color-brand-muted);
+}
+@media (min-width: 768px) {
+  .guides-grid {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    gap: 3rem;
+  }
+}
+
+/* Gallery: one line + link */
+.gallery {
+  padding-block: 3rem;
+}
+.gallery-row,
+.closing-row,
+.play-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  align-items: flex-start;
+}
+.gallery-row .section-lede,
+.play-grid .section-lede {
+  margin-bottom: 0;
+}
+@media (min-width: 768px) {
+  .gallery-row,
+  .closing-row,
+  .play-grid {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+  }
+  .gallery-row h2,
+  .closing-row h2,
+  .play-grid h2 {
+    margin-bottom: 0.5rem;
+  }
+}
+
+/* Gear: three cream cards, then the disclosure */
+.gear {
+  padding-block: 3.5rem;
+  background-color: var(--color-brand-surface);
+  border-block: 1px solid color-mix(in srgb, var(--color-brand-muted) 15%, transparent);
+}
+.gear-grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 1rem;
+}
+.gear-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+}
+.gear-cat {
+  color: var(--color-brand-primary);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.gear-name {
+  color: var(--color-brand-dark);
+  font-size: 1.125rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 1.3;
+  text-decoration: none;
+}
+.gear-name:hover {
+  color: var(--color-brand-primary);
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+.gear-name .paid {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: color-mix(in srgb, var(--color-brand-dark) 78%, transparent); /* 6.52:1 on card, same as .gear-desc; 60% was 3.82 */
+  white-space: nowrap;
+}
+.gear-desc {
+  margin: 0;
+  color: color-mix(in srgb, var(--color-brand-dark) 78%, transparent);
+  line-height: 1.5;
+}
+.gear-foot {
+  margin: 1.5rem 0 0;
+}
+.gear-foot a {
+  color: var(--color-brand-muted);
+  font-weight: 600;
+  text-decoration: none;
+}
+.gear-foot a:hover {
+  color: var(--color-brand-text);
+}
+.gear .disclosure {
+  margin: 0.75rem 0 0;
+  text-align: left;
+}
+@media (min-width: 768px) {
+  .gear-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.25rem;
+  }
+}
+
+/* Play (only rendered when PLAY_URL is set) */
+.play {
+  padding-block: 3rem;
+}
+
+/* FAQ: collapse-box accordion, same contract as the header menu */
+.faq {
+  padding-block: 3.5rem;
+}
+.faq-wrap {
+  max-width: 48rem;
+}
+.faq-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid color-mix(in srgb, var(--color-brand-muted) 20%, transparent);
+}
+.faq-item {
+  border-bottom: 1px solid color-mix(in srgb, var(--color-brand-muted) 20%, transparent);
+}
+.faq-q {
+  margin: 0;
+  font-size: 1.0625rem;
+  font-weight: 600;
+}
+.faq-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  width: 100%;
+  padding: 1rem 0;
+  border: 0;
+  background: transparent;
+  color: var(--color-brand-text);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+.faq-toggle:hover {
+  color: var(--color-brand-secondary);
+}
+.faq-chev {
+  flex: none;
+  color: var(--color-brand-muted);
+  transition: rotate var(--motion-base) var(--ease-out-soft);
+}
+.faq-toggle[aria-expanded='true'] .faq-chev {
+  rotate: 180deg;
+}
+.faq-a p {
+  margin: 0;
+  padding: 0 0 1.125rem;
+  color: var(--color-brand-muted);
+  line-height: 1.55;
+  max-width: 42rem;
+}
+/* No JS: every answer is open and readable. */
+html:not([data-js]) .faq-a {
+  grid-template-rows: 1fr;
+  opacity: 1;
+}
+html:not([data-js]) .faq-a > * {
+  visibility: visible;
+}
+html:not([data-js]) .faq-chev {
+  display: none;
+}
+
+/* Closing CTA */
+.closing {
+  padding-block: 1rem 4.5rem;
+}
+.closing-row h2 {
+  max-width: 28rem;
+}
+
+/* 404 */
+.notfound .wrap {
+  max-width: 44rem;
+}

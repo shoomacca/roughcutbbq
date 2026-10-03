@@ -1,0 +1,39 @@
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand transition-ui" href="/">&#x1F525; RoughCut BBQ</a>
+
+    <!-- Desktop nav (hidden below 768px). Same links as the hamburger. -->
+    <nav class="site-nav" aria-label="Main">
+      <a data-tab href="/" class="transition-ui">Home</a>
+      <a data-tab href="/#how-it-works" class="transition-ui">How it works</a>
+      <a data-tab href="{{APP_URL}}/guides?utm_source=site&utm_medium=header" class="transition-ui">Guides</a>
+      <a data-tab href="{{APP_URL}}/recipes?utm_source=site&utm_medium=header" class="transition-ui">Recipes</a>
+      <a data-tab href="{{APP_URL}}/gear?utm_source=site&utm_medium=header" class="transition-ui">Gear</a>
+      <a class="btn btn-sm transition-ui" href="{{APP_URL}}/calculator?utm_source=site&utm_medium=header">Open the app</a>
+    </nav>
+
+    <!-- Mobile hamburger (nav.js toggles it; hidden with JS off because the menu is then always open) -->
+    <button class="menu-toggle transition-ui" type="button" data-menu-toggle aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+      <svg class="icon-open" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="18" x2="21" y2="18"></line>
+      </svg>
+      <svg class="icon-close" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line>
+      </svg>
+    </button>
+  </div>
+
+  <!-- Mobile menu: stays mounted; the CSS collapse-box animates open and closed -->
+  <div id="mobile-menu" class="mobile-menu collapse-box">
+    <div>
+      <nav aria-label="Main (mobile)">
+        <a href="/" class="transition-ui">Home</a>
+        <a href="/#how-it-works" class="transition-ui">How it works</a>
+        <a href="{{APP_URL}}/guides?utm_source=site&utm_medium=menu" class="transition-ui">Guides</a>
+        <a href="{{APP_URL}}/recipes?utm_source=site&utm_medium=menu" class="transition-ui">Recipes</a>
+        <a href="{{APP_URL}}/gear?utm_source=site&utm_medium=menu" class="transition-ui">Gear</a>
+        <a class="btn transition-ui" href="{{APP_URL}}/calculator?utm_source=site&utm_medium=menu">Start a cook &rarr;</a>
+      </nav>
+    </div>
+  </div>
+</header>

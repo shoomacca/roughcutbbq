@@ -1,0 +1,494 @@
+/* ── Rough Cut BBQ: The Pitmaster's Journal Style Guide ──────────────── */
+:root {
+  --color-bg: #09090b;          /* Charcoal Black */
+  --color-surface: #111114;     /* Cold Obsidian Carbon */
+  --color-border: rgba(255, 255, 255, 0.08); /* Fine technical separator */
+  --color-border-active: rgba(245, 158, 11, 0.3); /* Subtle gold amber glow */
+  
+  --color-text-primary: #f4f4f5; /* Ice-white high contrast */
+  --color-text-muted: #8e8e93;    /* Ash gray */
+  --color-gold: #f59e0b;          /* Ember Gold */
+  --color-red: #dc2626;           /* Smolder Red */
+  
+  --font-serif: 'Playfair Display', Georgia, serif;
+  --font-mono: 'Space Mono', 'Courier New', monospace;
+  --font-sans: 'Inter', system-ui, sans-serif;
+}
+
+/* ── Reset & Core Styles ───────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text-primary);
+  font-family: var(--font-sans);
+  line-height: 1.7;
+  overflow-x: hidden;
+  letter-spacing: -0.01em;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* ── Typography Utility ────────────────────────────────────────────── */
+h1, h2, h3, h4 {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--color-text-primary);
+}
+
+.mono {
+  font-family: var(--font-mono);
+  font-size: 0.85em;
+  color: var(--color-gold);
+}
+
+/* ── Grid Containers ───────────────────────────────────────────────── */
+.container {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* ── Fine-Line Editorial Layout Header ──────────────────────────────── */
+.header {
+  border-bottom: 1px solid var(--color-border);
+  background-color: rgba(9, 9, 11, 0.95);
+  backdrop-filter: blur(8px);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.header-container {
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 1.5rem;
+  letter-spacing: -0.5px;
+}
+
+.logo-accent {
+  color: var(--color-gold);
+  font-style: normal;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 36px;
+}
+
+.nav-link {
+  font-size: 0.85rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--color-text-muted);
+  transition: color 0.2s ease;
+}
+
+.nav-link:hover, .nav-link.active {
+  color: var(--color-text-primary);
+}
+
+.header-cta {
+  border: 1px solid var(--color-border);
+  padding: 10px 22px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  transition: all 0.2s ease;
+}
+
+.header-cta:hover {
+  background-color: var(--color-text-primary);
+  color: var(--color-bg);
+  border-color: var(--color-text-primary);
+}
+
+/* ── Hero Section (Minimalist Print Magazine layout) ───────────────── */
+.hero {
+  padding: 120px 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.hero-container {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.hero-journal-meta {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--color-gold);
+  margin-bottom: 24px;
+}
+
+.hero-title {
+  font-size: 4rem;
+  line-height: 1.1;
+  letter-spacing: -2px;
+  margin-bottom: 28px;
+}
+
+.hero-description {
+  font-size: 1.15rem;
+  color: var(--color-text-muted);
+  line-height: 1.8;
+  margin-bottom: 48px;
+  font-family: var(--font-serif);
+  font-style: italic;
+}
+
+.hero-ctas {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  padding: 16px 36px;
+  border-radius: 4px;
+  transition: all 0.25s ease;
+  cursor: pointer;
+}
+
+.btn-primary {
+  background-color: var(--color-gold);
+  color: var(--color-bg);
+  border: 1px solid var(--color-gold);
+}
+
+.btn-primary:hover {
+  background-color: #d97706;
+  border-color: #d97706;
+}
+
+.btn-secondary {
+  border: 1px solid var(--color-border);
+  color: var(--color-text-primary);
+  background-color: transparent;
+}
+
+.btn-secondary:hover {
+  background-color: rgba(255, 255, 255, 0.03);
+  border-color: var(--color-text-primary);
+}
+
+/* ── Content Grid (Technical Grid Cards) ───────────────────────────── */
+.section-wrapper {
+  padding: 100px 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.section-meta {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.25em;
+  color: var(--color-gold);
+  margin-bottom: 12px;
+  display: block;
+}
+
+.section-title {
+  font-size: 2.5rem;
+  letter-spacing: -1px;
+  margin-bottom: 16px;
+}
+
+.section-desc {
+  color: var(--color-text-muted);
+  font-size: 1rem;
+  max-width: 600px;
+  margin-bottom: 60px;
+}
+
+/* ── Guides List & Editorial Post Styles ───────────────────────────── */
+.guides-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  border-top: 1px solid var(--color-border);
+}
+
+.guide-row {
+  display: grid;
+  grid-template-columns: 180px 1fr 120px;
+  padding: 36px 0;
+  border-bottom: 1px solid var(--color-border);
+  align-items: center;
+  transition: border-color 0.2s ease;
+}
+
+.guide-row:hover {
+  border-bottom-color: rgba(245, 158, 11, 0.3);
+}
+
+.guide-meta-mono {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--color-gold);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.guide-title {
+  font-size: 1.6rem;
+  margin-bottom: 8px;
+  transition: color 0.2s ease;
+}
+
+.guide-row:hover .guide-title {
+  color: var(--color-gold);
+}
+
+.guide-desc {
+  color: var(--color-text-muted);
+  font-size: 0.95rem;
+  max-width: 580px;
+}
+
+.guide-link-btn {
+  text-align: right;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.guide-row:hover .guide-link-btn {
+  color: var(--color-text-primary);
+}
+
+/* ── Rubs Recipe Deck ────────────────────────────────────────────── */
+.rubs-deck {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.rub-card {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  padding: 40px 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-radius: 4px;
+}
+
+.rub-header {
+  border-bottom: 1px solid var(--color-border);
+  padding-bottom: 20px;
+  margin-bottom: 24px;
+}
+
+.rub-tag {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  color: var(--color-gold);
+  letter-spacing: 0.1em;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.rub-card h3 {
+  font-size: 1.35rem;
+}
+
+.rub-ingredients {
+  list-style: none;
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+}
+
+.rub-ingredients li {
+  margin-bottom: 8px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.rub-ingredients li span {
+  font-family: var(--font-mono);
+  color: var(--color-text-primary);
+}
+
+/* ── Technical Matrix (Wood Chart) ────────────────────────────────── */
+.wood-matrix {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 40px;
+  font-family: var(--font-sans);
+}
+
+.wood-matrix th, .wood-matrix td {
+  border-bottom: 1px solid var(--color-border);
+  padding: 20px 16px;
+  text-align: left;
+}
+
+.wood-matrix th {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--color-gold);
+}
+
+.wood-name {
+  font-family: var(--font-serif);
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.wood-strength-badge {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  padding: 4px 8px;
+  border-radius: 2px;
+  letter-spacing: 0.1em;
+}
+
+.strength-strong { background-color: rgba(220, 38, 38, 0.1); color: var(--color-red); border: 1px solid rgba(220, 38, 38, 0.2); }
+.strength-medium { background-color: rgba(245, 158, 11, 0.1); color: var(--color-gold); border: 1px solid rgba(245, 158, 11, 0.2); }
+.strength-mild { background-color: rgba(16, 185, 129, 0.1); color: #10b981; border: 1px solid rgba(16, 185, 129, 0.2); }
+
+.wood-desc {
+  font-size: 0.88rem;
+  color: var(--color-text-muted);
+  max-width: 380px;
+}
+
+.wood-great-for {
+  font-size: 0.88rem;
+  color: var(--color-text-primary);
+}
+
+/* ── Full Editorial Article Layout (for individual guides) ─────────── */
+.article-header {
+  padding: 80px 0 60px;
+  border-bottom: 1px solid var(--color-border);
+  text-align: center;
+}
+
+.article-title {
+  font-size: 3.5rem;
+  margin-bottom: 20px;
+  line-height: 1.15;
+}
+
+.article-content {
+  max-width: 680px;
+  margin: 80px auto;
+}
+
+.article-content p {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: var(--color-text-primary);
+  margin-bottom: 32px;
+}
+
+.article-content h2 {
+  font-size: 2rem;
+  margin: 60px 0 24px;
+}
+
+.article-content ul, .article-content ol {
+  margin-bottom: 32px;
+  padding-left: 24px;
+  color: var(--color-text-muted);
+}
+
+.article-content li {
+  margin-bottom: 12px;
+  font-size: 1.05rem;
+}
+
+.article-content blockquote {
+  border-left: 3px solid var(--color-gold);
+  padding-left: 24px;
+  margin: 40px 0;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 1.25rem;
+  color: var(--color-text-primary);
+}
+
+/* ── Footer ────────────────────────────────────────────────────────── */
+.footer {
+  border-top: 1px solid var(--color-border);
+  padding: 60px 0;
+  background-color: #050507;
+}
+
+.footer-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  letter-spacing: 0.05em;
+}
+
+.footer-link {
+  color: var(--color-gold);
+}
+
+.footer-link:hover {
+  text-decoration: underline;
+}
+
+/* ── Responsive ────────────────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .hero-title { font-size: 3rem; }
+  .guide-row {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .guide-link-btn { text-align: left; margin-top: 8px; }
+  .rubs-deck {
+    grid-template-columns: 1fr;
+  }
+  .wood-matrix {
+    display: block;
+    overflow-x: auto;
+  }
+  .footer-container {
+    flex-direction: column;
+    gap: 20px;
+    text-align: center;
+  }
+}
