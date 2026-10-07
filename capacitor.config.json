@@ -3,7 +3,7 @@
   "appName": "RoughCut BBQ",
   "webDir": "public",
   "server": {
-    "url": "https://roughcut-bbq.vercel.app",
+    "url": "https://app.roughcut.com.au",
     "androidScheme": "https",
     "allowNavigation": [
       "roughcut-bbq.vercel.app",
