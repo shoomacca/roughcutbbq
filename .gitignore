@@ -65,3 +65,4 @@ blob-report/
 # Static site build output (scripts/build-site.mjs); RC-13.6 packages it
 /site/dist/
 /site/roughcut-site.zip
+/release/
