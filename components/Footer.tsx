@@ -32,6 +32,9 @@ export default function Footer() {
             <Link href="/gallery" className="hover:text-brand-text transition-ui">
               Gallery
             </Link>
+            <Link href="/account/delete" className="hover:text-brand-text transition-ui">
+              Delete account
+            </Link>
           </nav>
         </div>
         <p className="text-xs text-brand-muted/70 text-center sm:text-left">

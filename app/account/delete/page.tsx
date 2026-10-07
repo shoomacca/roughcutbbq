@@ -116,7 +116,7 @@ export default function DeleteAccountPage() {
               <p className="font-semibold text-brand-muted mb-1">Authenticated as:</p>
               <p className="font-mono text-brand-secondary break-all">{user.email}</p>
               <p className="mt-3 text-xs text-brand-muted/80 leading-relaxed">
-                Deleting your account will result in the permanent removal of your email, authentication logs, saved cook results, and contributions to the gallery database.
+                Deleting your account will result in the permanent removal of your email, authentication logs, saved cook results, and your gallery photos, comments and stars.
               </p>
             </div>
 
@@ -129,7 +129,7 @@ export default function DeleteAccountPage() {
                 className="mt-1 w-4 h-4 rounded border-brand-muted/30 text-brand-primary focus:ring-brand-primary"
               />
               <label htmlFor="confirm" className="text-xs text-brand-text cursor-pointer leading-relaxed">
-                I understand this is permanent. Please delete all my personal information, saves, and uploaded photos immediately.
+                I understand this is permanent. Please delete all my personal information, saves, gallery photos, comments and stars immediately.
               </label>
             </div>
 
