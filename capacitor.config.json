@@ -1,16 +1,26 @@
 {
-  "appId": "com.roughcut.bbq",
+  "appId": "au.com.roughcut",
   "appName": "RoughCut BBQ",
   "webDir": "public",
   "server": {
-    "url": "https://roughcut-bbq.vercel.app",
+    "url": "https://app.roughcut.com.au",
     "androidScheme": "https",
     "allowNavigation": [
       "roughcut-bbq.vercel.app",
       "app.roughcut.com.au",
       "*.supabase.co"
     ],
-    "errorPath": "/offline.html"
+    "errorPath": "offline.html"
+  },
+  "plugins": {
+    "SplashScreen": {
+      "launchAutoHide": true,
+      "launchShowDuration": 1500,
+      "backgroundColor": "#1a1a1a"
+    },
+    "SystemBars": {
+      "insetsHandling": "css"
+    }
   },
   "android": {
     "backgroundColor": "#1a1a1a"

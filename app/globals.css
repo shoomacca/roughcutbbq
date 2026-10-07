@@ -1,5 +1,17 @@
 @import "tailwindcss";
 
+/* Safe areas: env() on browsers, --safe-area-inset-* injected by Capacitor SystemBars. */
+:root {
+  --sat: max(env(safe-area-inset-top), var(--safe-area-inset-top, 0px));
+  --sab: max(env(safe-area-inset-bottom), var(--safe-area-inset-bottom, 0px));
+  --sal: max(env(safe-area-inset-left), var(--safe-area-inset-left, 0px));
+  --sar: max(env(safe-area-inset-right), var(--safe-area-inset-right, 0px));
+}
+
+body {
+  padding-bottom: var(--sab);
+}
+
 @theme {
   --color-brand-primary: #C0392B;
   --color-brand-secondary: #E67E22;

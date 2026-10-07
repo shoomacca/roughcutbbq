@@ -1,10 +1,10 @@
 apply plugin: 'com.android.application'
 
 android {
-    namespace = "com.roughcut.bbq"
+    namespace = "au.com.roughcut"
     compileSdk = rootProject.ext.compileSdkVersion
     defaultConfig {
-        applicationId "com.roughcut.bbq"
+        applicationId "au.com.roughcut"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
@@ -35,6 +35,13 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+}
+
+// Release builds must be signed; debug builds work without key.properties.
+gradle.taskGraph.whenReady { graph ->
+    if (!rootProject.file("key.properties").exists() && graph.allTasks.any { it.name.toLowerCase().contains("release") }) {
+        throw new GradleException("android/key.properties missing — see docs/android/SIGNING.md")
     }
 }
 

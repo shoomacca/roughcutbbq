@@ -95,7 +95,7 @@ export default function UploadFlow({ cutName, method, onClose, onSuccess }: Prop
       initial="hidden"
       animate="show"
       exit="exit"
-      className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4"
+      className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 pt-[var(--sat)] pb-[var(--sab)]"
       style={{ background: 'rgba(0,0,0,0.75)' }}
       onClick={(e) => {
         if (e.target === e.currentTarget) onClose();
