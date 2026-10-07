@@ -27,7 +27,7 @@ Debug builds do not need it.
 
 ## Upload key fingerprints
 
-- Keystore: `RoughCutoughcut-upload.keystore` (existing, alias `roughcut`, not new)
+- Keystore: `C:UsersCorsa.antigravityprojectsRoughCutoughcut-upload.keystore` (existing, alias `roughcut`, not new)oughcut-upload.keystore` (existing, alias `roughcut`, not new)
 - SHA-1: AB:B0:79:45:77:96:A1:02:C6:5E:BB:17:36:1F:57:F3:BA:13:DC:CE
 - SHA-256: 15:44:3F:94:33:BE:1D:F7:66:2D:09:6B:A8:C7:F8:66:56:0F:BD:F3:26:2D:91:AE:9A:C8:59:1A:47:95:2A:71
 
