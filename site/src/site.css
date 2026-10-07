@@ -77,6 +77,14 @@ button:not(:disabled):active {
   transition-duration: var(--motion-base);
 }
 
+/* Reveal owns opacity. Without this, hiding/showing a .transition-ui item (step cards) runs a
+   220ms opacity transition even when data-instant removes the animation, so "shown at once"
+   items are caught mid-fade (CI: opacity 0.78). Hover transitions on the other properties stay. */
+.reveal.transition-ui {
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke,
+    box-shadow, transform, translate, scale, rotate, filter;
+}
+
 /* ── .lift (mirrors @utility lift) ── */
 .lift:hover {
   translate: 0 -2px;

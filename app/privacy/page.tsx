@@ -70,7 +70,7 @@ export default function PrivacyPage() {
             {" "}<Link href="/account/delete" className="text-brand-secondary hover:underline font-semibold">Account Deletion Page</Link> 
             or reach out to us at 
             {" "}<a href="mailto:support@roughcut.com.au" className="text-brand-secondary hover:underline font-semibold">support@roughcut.com.au</a> 
-            for assistance.
+            for assistance. Deleting your account permanently removes your gallery photos, comments and stars along with your email address and saved cooks.
           </p>
         </section>
 

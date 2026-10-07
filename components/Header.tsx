@@ -83,6 +83,9 @@ export default function Header() {
                 <span className="text-brand-muted text-xs truncate max-w-[120px]" title={user.email}>
                   👤 {user.email.split('@')[0]}
                 </span>
+                <Link href="/account/delete" className="text-brand-muted hover:text-brand-text text-xs transition-ui">
+                  Delete account
+                </Link>
                 <button
                   onClick={handleLogout}
                   className="bg-brand-primary/10 hover:bg-brand-primary/20 text-brand-primary text-xs font-bold px-3 py-1.5 rounded-lg border border-brand-primary/20 transition-ui cursor-pointer"
@@ -218,6 +221,13 @@ export default function Header() {
                 <span className="text-brand-muted text-xs px-1">
                   👤 Logged in as: {user.email}
                 </span>
+                <Link
+                  href="/account/delete"
+                  onClick={() => setMenuOpen(false)}
+                  className="text-brand-muted hover:text-brand-text text-xs px-1 transition-ui"
+                >
+                  Delete account
+                </Link>
                 <button
                   onClick={() => { setMenuOpen(false); handleLogout(); }}
                   className="w-full bg-brand-primary/10 hover:bg-brand-primary/20 text-brand-primary text-xs font-bold py-2.5 rounded-xl border border-brand-primary/20 transition-ui text-center cursor-pointer"
