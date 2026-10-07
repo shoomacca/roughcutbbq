@@ -1,10 +1,10 @@
 apply plugin: 'com.android.application'
 
 android {
-    namespace = "com.roughcut.bbq"
+    namespace = "au.com.roughcut"
     compileSdk = rootProject.ext.compileSdkVersion
     defaultConfig {
-        applicationId "com.roughcut.bbq"
+        applicationId "au.com.roughcut"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

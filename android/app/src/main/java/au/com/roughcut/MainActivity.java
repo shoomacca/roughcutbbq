@@ -1,4 +1,4 @@
-package com.roughcut.bbq;
+package au.com.roughcut;
 
 import com.getcapacitor.BridgeActivity;
 
