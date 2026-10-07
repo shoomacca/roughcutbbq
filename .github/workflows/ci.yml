@@ -21,6 +21,8 @@ jobs:
         run: npm run typecheck
       - name: Lint
         run: npm run lint
+      - name: Build static site (tests read site/dist)
+        run: npm run site:build
       - name: Unit tests
         run: npm test
       - name: Build
