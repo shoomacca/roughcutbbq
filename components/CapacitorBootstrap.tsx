@@ -24,7 +24,7 @@ export default function CapacitorBootstrap() {
       try {
         const { App } = await import("@capacitor/app");
         await App.addListener("backButton", (data) => {
-          if (data.canGoBack) {
+          if (data.canGoBack && window.location.pathname !== "/") {
             window.history.back();
           } else {
             App.exitApp();

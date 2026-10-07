@@ -4,6 +4,7 @@ import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import HydrationFlag from "@/components/HydrationFlag";
+import CapacitorBootstrap from "@/components/CapacitorBootstrap";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -45,6 +46,7 @@ export default function RootLayout({
     <html lang="en" className={`${inter.className} ${abrilFatface.variable}`}>
       <body className="bg-brand-dark text-brand-text min-h-screen flex flex-col">
         <HydrationFlag />
+        <CapacitorBootstrap />
         <Header />
         <main className="flex-1 flex flex-col">{children}</main>
         <Footer />
