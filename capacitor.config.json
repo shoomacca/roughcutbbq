@@ -13,6 +13,11 @@
     "errorPath": "/offline.html"
   },
   "plugins": {
+    "SplashScreen": {
+      "launchAutoHide": true,
+      "launchShowDuration": 1500,
+      "backgroundColor": "#1a1a1a"
+    },
     "SystemBars": {
       "insetsHandling": "css"
     }
