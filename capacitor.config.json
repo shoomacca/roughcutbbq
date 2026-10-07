@@ -12,6 +12,11 @@
     ],
     "errorPath": "/offline.html"
   },
+  "plugins": {
+    "SystemBars": {
+      "insetsHandling": "css"
+    }
+  },
   "android": {
     "backgroundColor": "#1a1a1a"
   }

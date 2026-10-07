@@ -52,7 +52,7 @@ export default function Header() {
 
 
   return (
-    <header className="sticky top-0 z-50 bg-brand-surface border-b border-brand-muted/20">
+    <header className="sticky top-0 z-50 pt-[var(--sat)] bg-brand-surface border-b border-brand-muted/20">
       <div className="max-w-6xl mx-auto px-4 h-14 flex items-center justify-between">
         {/* Logo */}
         <Link

@@ -47,7 +47,7 @@ export default function SaveModal({ open, onClose }: Props) {
           initial="hidden"
           animate="show"
           exit="exit"
-          className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-4"
+          className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-4 pt-[calc(var(--sat)+1rem)] pb-[calc(var(--sab)+1rem)]"
           style={{ backgroundColor: 'rgba(0,0,0,0.72)' }}
           onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
         >
