@@ -10,7 +10,7 @@
       "app.roughcut.com.au",
       "*.supabase.co"
     ],
-    "errorPath": "/offline.html"
+    "errorPath": "offline.html"
   },
   "plugins": {
     "SplashScreen": {
