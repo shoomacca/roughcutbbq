@@ -38,6 +38,13 @@ android {
     }
 }
 
+// Release builds must be signed; debug builds work without key.properties.
+gradle.taskGraph.whenReady { graph ->
+    if (!rootProject.file("key.properties").exists() && graph.allTasks.any { it.name.toLowerCase().contains("release") }) {
+        throw new GradleException("android/key.properties missing — see docs/android/SIGNING.md")
+    }
+}
+
 repositories {
     flatDir{
         dirs '../capacitor-cordova-android-plugins/src/main/libs', 'libs'
