@@ -80,7 +80,7 @@ function OptionSwiper({ title, icon, items }: { title: string; icon: string; ite
           {label}
         </span>
         {items.length > 1 && (
-          <span className="text-brand-muted text-[10px]">swipe for more →</span>
+          <span className="text-brand-muted text-[10px] whitespace-nowrap shrink-0 ml-2">swipe for more&nbsp;→</span>
         )}
       </div>
 
@@ -135,7 +135,7 @@ function Stat({ label, value, sub }: { label: string; value: string; sub?: strin
   return (
     <m.div variants={fadeUp} className="flex flex-col gap-0.5 bg-brand-dark rounded-xl p-4">
       <span className="text-brand-muted text-xs font-medium uppercase tracking-wide">{label}</span>
-      <span className="text-brand-text text-2xl font-bold tabular-nums"><CountUpValue value={value} /></span>
+      <span className="text-brand-text text-xl sm:text-2xl font-bold tabular-nums whitespace-nowrap"><CountUpValue value={value} /></span>
       {sub && <span className="text-brand-muted text-xs">{sub}</span>}
     </m.div>
   );
