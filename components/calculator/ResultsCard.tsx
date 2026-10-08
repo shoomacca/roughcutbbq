@@ -80,7 +80,7 @@ function OptionSwiper({ title, icon, items }: { title: string; icon: string; ite
           {label}
         </span>
         {items.length > 1 && (
-          <span className="text-brand-muted text-[10px] whitespace-nowrap shrink-0 ml-2">swipe for more&nbsp;→</span>
+          <span className="text-brand-muted text-[10px] whitespace-nowrap shrink-0 ml-2">swipe<span className="hidden sm:inline"> for more</span>&nbsp;→</span>
         )}
       </div>
 
