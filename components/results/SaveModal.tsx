@@ -4,6 +4,7 @@ import { useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { AnimatePresence, m } from 'framer-motion';
 import { backdrop, sheet } from '@/lib/motion';
+import { useBackClose } from '@/lib/backStack';
 
 interface Props {
   open: boolean;
@@ -13,15 +14,7 @@ interface Props {
 export default function SaveModal({ open, onClose }: Props) {
   const firstFocusRef = useRef<HTMLAnchorElement>(null);
 
-  // Close on Escape
-  useEffect(() => {
-    if (!open) return;
-    const handler = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onClose();
-    };
-    document.addEventListener('keydown', handler);
-    return () => document.removeEventListener('keydown', handler);
-  }, [open, onClose]);
+  useBackClose(open, onClose);
 
   // Lock body scroll
   useEffect(() => {
