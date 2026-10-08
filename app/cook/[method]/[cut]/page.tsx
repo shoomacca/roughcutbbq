@@ -280,7 +280,7 @@ export default async function CookPage({ params }: PageProps) {
               </a>
             ))}
           </div>
-          <p className="text-brand-muted/70 text-xs mt-2">
+          <p className="text-brand-muted text-xs mt-2">
             As an Amazon Associate, Rough Cut BBQ earns from qualifying purchases.
           </p>
         </section>

@@ -59,13 +59,13 @@ export default function Header() {
         {/* Logo */}
         <Link
           href="/"
-          className="text-brand-text font-bold text-lg tracking-tight hover:text-brand-secondary transition-ui"
+          className="shrink-0 whitespace-nowrap text-brand-text font-bold text-lg tracking-tight hover:text-brand-secondary transition-ui"
         >
           🔥 RoughCut BBQ
         </Link>
 
         {/* Desktop nav */}
-        <nav ref={navRef} className="relative hidden md:flex items-center gap-6 text-sm font-medium">
+        <nav ref={navRef} className="relative hidden lg:flex items-center gap-4 xl:gap-6 text-sm font-medium whitespace-nowrap">
           <span
             ref={underlineRef}
             aria-hidden
@@ -108,7 +108,7 @@ export default function Header() {
 
         {/* Mobile hamburger */}
         <button
-          className="md:hidden text-brand-muted hover:text-brand-text transition-ui p-1"
+          className="lg:hidden text-brand-muted hover:text-brand-text transition-ui p-1"
           aria-label="Toggle menu"
           aria-expanded={menuOpen}
           aria-controls="mobile-menu"
@@ -142,7 +142,7 @@ export default function Header() {
       </div>
 
       {/* Mobile menu — stays mounted; the CSS collapse-box animates open and closed */}
-      <div id="mobile-menu" className="md:hidden collapse-box" data-open={menuOpen ? '' : undefined} aria-hidden={!menuOpen}>
+      <div id="mobile-menu" className="lg:hidden collapse-box" data-open={menuOpen ? '' : undefined} aria-hidden={!menuOpen}>
        {/* inert from the moment it closes: unreachable by Tab while the close animates */}
        <div inert={!menuOpen}>
         <nav className={`bg-brand-surface border-t border-brand-muted/20 px-4 py-3 flex flex-col gap-3 text-sm font-medium`}>

@@ -20,7 +20,7 @@ export default function HomePage() {
       <div className="max-w-2xl mx-auto w-full px-4 pt-4 pb-3">
         <ProgressBar current={1} />
       </div>
-      <div className="flex-1 flex flex-col justify-center">
+      <div className="flex-1 flex flex-col">
         <HeroCarousel />
       </div>
     </div>

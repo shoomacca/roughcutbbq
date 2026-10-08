@@ -186,7 +186,7 @@ export default function GearPage() {
         </div>
       )}
 
-      <p className="text-brand-muted/40 text-xs text-center mt-12">
+      <p className="text-brand-muted text-xs text-center mt-12">
         BBQ Calculator earns a commission from qualifying Amazon purchases via links on this page.
       </p>
     </div>

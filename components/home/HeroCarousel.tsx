@@ -40,6 +40,9 @@ function isTouch() {
 export default function HeroCarousel() {
   const router = useRouter();
   const cardW = useCardSize();
+  // Pointer type is unknown on the server; read it after mount so hydration matches.
+  const [touch, setTouch] = useState(true);
+  useEffect(() => setTouch(isTouch()), []);
   const containerRef = useRef<HTMLDivElement>(null);
   const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
   const innerRefs = useRef<(HTMLDivElement | null)[]>([]);
@@ -194,7 +197,7 @@ export default function HeroCarousel() {
   const halfCard = cardW / 2;
 
   return (
-    <div className="flex flex-col w-full flex-1 justify-center" style={{ gap: 0 }}>
+    <div className="flex flex-col w-full flex-1" style={{ gap: 0 }}>
       {/* Dot navigation */}
       <div className="flex justify-center gap-2 py-3">
         {CATEGORIES.map((_, i) => (
@@ -278,7 +281,7 @@ export default function HeroCarousel() {
         >
           {centered.body}
         </p>
-        {!isTouch() && (
+        {!touch && (
           <p className="text-brand-muted/50 text-xs mt-1">Double-click to start cooking</p>
         )}
       </div>
