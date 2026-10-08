@@ -335,7 +335,7 @@ export default function IdeasClient() {
               </a>
             ))}
           </div>
-          <p className="text-[11px] text-brand-muted/60 mt-3">
+          <p className="text-[11px] text-brand-muted mt-3">
             As an Amazon Associate, RoughCut BBQ earns from qualifying purchases. It never costs
             you extra — it&rsquo;s how we keep this site free and ad-free.
           </p>

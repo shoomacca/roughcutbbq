@@ -37,7 +37,7 @@ export default function Footer() {
             </Link>
           </nav>
         </div>
-        <p className="text-xs text-brand-muted/70 text-center sm:text-left">
+        <p className="text-xs text-brand-muted text-center sm:text-left">
           As an Amazon Associate, RoughCut BBQ earns from qualifying purchases.
         </p>
       </div>

@@ -72,7 +72,7 @@ export default function GearRecommendation({ method, limit = 1, title = 'Recomme
           </div>
         ))}
       </div>
-      <p className="text-brand-muted/30 text-[10px] mt-3">
+      <p className="text-brand-muted text-[10px] mt-3">
         Rough Cut BBQ may earn a commission from qualifying purchases.
       </p>
     </div>
