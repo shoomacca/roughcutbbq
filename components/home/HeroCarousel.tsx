@@ -194,7 +194,7 @@ export default function HeroCarousel() {
   const halfCard = cardW / 2;
 
   return (
-    <div className="flex flex-col w-full flex-1 justify-center" style={{ gap: 0 }}>
+    <div className="flex flex-col w-full flex-1" style={{ gap: 0 }}>
       {/* Dot navigation */}
       <div className="flex justify-center gap-2 py-3">
         {CATEGORIES.map((_, i) => (
