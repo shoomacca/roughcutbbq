@@ -1,5 +1,6 @@
 "use client";
 
+import { useBackClose } from '@/lib/backStack';
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
@@ -14,6 +15,7 @@ const NAV = [
 export default function Header() {
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
+  useBackClose(menuOpen, () => setMenuOpen(false));
   const [user, setUser] = useState<{ email: string } | null>(null);
   const [checked, setChecked] = useState(false);
   // Desktop nav: one underline glides between links as the route changes.

@@ -2,6 +2,7 @@
 
 import { useEffect } from "react";
 import { Capacitor } from "@capacitor/core";
+import { handleBack } from "@/lib/backStack";
 
 export default function CapacitorBootstrap() {
   useEffect(() => {
@@ -24,6 +25,7 @@ export default function CapacitorBootstrap() {
       try {
         const { App } = await import("@capacitor/app");
         await App.addListener("backButton", (data) => {
+          if (handleBack()) return; // an open overlay absorbs Back
           if (data.canGoBack && window.location.pathname !== "/") {
             window.history.back();
           } else {

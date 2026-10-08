@@ -1,5 +1,6 @@
 'use client';
 
+import { useBackClose } from '@/lib/backStack';
 import { useRef, useState } from 'react';
 import Image from 'next/image';
 import { trackEvent } from '@/lib/posthog';
@@ -16,6 +17,7 @@ interface Props {
 type Step = 1 | 2 | 3 | 4;
 
 export default function UploadFlow({ cutName, method, onClose, onSuccess }: Props) {
+  useBackClose(true, onClose);
   const [step, setStep] = useState<Step>(1);
   const [beforeFile, setBeforeFile] = useState<File | null>(null);
   const [afterFile, setAfterFile] = useState<File | null>(null);
