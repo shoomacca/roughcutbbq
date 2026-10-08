@@ -376,7 +376,7 @@ export default function GalleryPage() {
   };
 
   return (
-    <div className="max-w-4xl mx-auto px-4 py-8 bg-brand-dark">
+    <div className="max-w-5xl mx-auto w-full px-4 md:px-8 py-8 bg-brand-dark">
       {/* Header with Upload Trigger */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
         <div>
