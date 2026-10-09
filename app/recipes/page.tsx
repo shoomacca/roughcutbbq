@@ -106,9 +106,9 @@ export default function RecipesPage() {
   }, [filtered, activeCategory]);
 
   return (
-    <div className="max-w-2xl mx-auto px-4 py-6">
+    <div className="page-shell">
       <div className="mb-6">
-        <h1 className="text-brand-text text-2xl font-bold">BBQ Recipes</h1>
+        <h1 className="page-title">BBQ Recipes</h1>
         <p className="text-brand-muted text-sm mt-1">
           60 cook profiles across pork, beef, chicken, lamb, fish, and jerky — tap to expand
         </p>

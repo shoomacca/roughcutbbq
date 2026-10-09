@@ -199,7 +199,8 @@ export default function HeroCarousel() {
   return (
     <div className="flex flex-col w-full flex-1" style={{ gap: 0 }}>
       {/* Dot navigation */}
-      <div className="flex justify-center gap-2 py-3">
+      <div className="px-6 pb-1 h-6" aria-hidden />
+      <div className="flex justify-center gap-2 mb-2">
         {CATEGORIES.map((_, i) => (
           <button
             key={i}
@@ -224,8 +225,8 @@ export default function HeroCarousel() {
           paddingLeft: `calc(50% - ${halfCard}px)`,
           paddingRight: `calc(50% - ${halfCard}px)`,
           gap: `${GAP}px`,
-          paddingTop: '2rem',
-          paddingBottom: '2.5rem',
+          paddingTop: '1.5rem',
+          paddingBottom: '1.5rem',
         }}
       >
         {CATEGORIES.map((cat, i) => (
@@ -266,7 +267,7 @@ export default function HeroCarousel() {
       </div>
 
       {/* Dynamic headline */}
-      <div className="flex flex-col items-center text-center px-6 pt-2 pb-6 gap-2 min-h-[80px]">
+      <div className="flex flex-col items-center text-center px-6 pt-2 pb-4 gap-2 min-h-[88px]">
         <h2
           key={centered.id}
           className={`text-2xl sm:text-3xl font-black text-brand-text italic leading-tight ${textChanged ? 'animate-fade-up' : ''}`}

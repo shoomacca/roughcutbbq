@@ -144,7 +144,7 @@ export default async function CookPage({ params }: PageProps) {
   ];
 
   return (
-    <div className="max-w-3xl mx-auto px-4 py-8">
+    <div className="page-shell">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
 
       {/* Breadcrumb */}
@@ -156,7 +156,7 @@ export default async function CookPage({ params }: PageProps) {
         <span className="text-brand-text">{cut.name}</span>
       </nav>
 
-      <h1 className="text-brand-text text-3xl font-bold leading-tight">
+      <h1 className="page-title">
         How Long to {info.verb} {cut.name}
       </h1>
       <p className="text-brand-muted mt-3 leading-relaxed">

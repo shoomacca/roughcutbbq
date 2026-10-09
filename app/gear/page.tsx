@@ -138,9 +138,9 @@ export default function GearPage() {
   }, [filtered, activeCategory]);
 
   return (
-    <div className="max-w-2xl mx-auto px-4 py-6">
+    <div className="page-shell">
       <div className="mb-6">
-        <h1 className="text-brand-text text-2xl font-bold">BBQ Gear</h1>
+        <h1 className="page-title">BBQ Gear</h1>
         <p className="text-brand-muted text-sm mt-1">
           Kit we actually recommend — every link supports BBQ Calculator
         </p>

@@ -267,3 +267,28 @@ html:not([data-hydrated]) nav [data-tab][aria-current="page"] {
   /* Ensure light text is readable on white */
   * { color: black !important; background: transparent !important; border-color: #ccc !important; }
 }
+
+/* Layout contract: every content page uses one container (3xl prose, 5xl wide), the same
+   padding and one title style, so the first heading sits at the same y on every page. */
+@utility page-shell {
+  width: 100%;
+  max-width: var(--container-3xl);
+  margin-inline: auto;
+  padding: 2rem 1rem;
+  @variant sm { padding-inline: 1.5rem; }
+}
+@utility page-shell-wide {
+  width: 100%;
+  max-width: var(--container-5xl);
+  margin-inline: auto;
+  padding: 2rem 1rem;
+  @variant sm { padding-inline: 1.5rem; }
+}
+@utility page-title {
+  font-family: var(--font-display), Georgia, serif;
+  font-size: var(--text-3xl);
+  line-height: 1.2;
+  font-weight: 700;
+  color: var(--color-brand-text);
+  margin-bottom: 0.5rem;
+}

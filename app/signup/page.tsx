@@ -77,11 +77,11 @@ export default function SignupPage() {
   };
 
   return (
-    <div className="flex-1 flex flex-col items-center justify-center px-4 py-16 bg-brand-dark">
+    <div className="page-shell flex-1 flex flex-col items-center bg-brand-dark">
       <div className="w-full max-w-md bg-brand-surface border border-brand-muted/10 rounded-3xl p-8 shadow-2xl">
         <div className="text-center mb-8">
           <span className="text-4xl">🍖</span>
-          <h1 className="text-3xl font-bold text-brand-text mt-3" style={{ fontFamily: 'var(--font-display, Georgia, serif)' }}>
+          <h1 className="page-title mt-3">
             Create Account
           </h1>
           <p className="text-brand-muted text-sm mt-2">

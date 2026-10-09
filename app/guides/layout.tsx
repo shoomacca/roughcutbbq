@@ -7,7 +7,7 @@ export const metadata: Metadata = {
 
 export default function GuidesLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="max-w-2xl mx-auto px-4 py-10">
+    <div className="page-shell">
       {children}
     </div>
   );
