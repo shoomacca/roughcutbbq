@@ -3,15 +3,16 @@
 import { useRef, useState, useCallback, useEffect, useLayoutEffect } from 'react';
 import { useDragScroll, prefersReducedMotion } from '@/lib/useDragScroll';
 import { useRouter } from 'next/navigation';
+import { categoryIcon } from '@/components/icons/BbqIcons';
 
 const CATEGORIES = [
-  { id: 'pork',    icon: '🐷', label: 'Pork',         headline: 'Low & slow pork glory',      body: 'Shoulder, ribs, belly — all day in the smoke.' },
-  { id: 'beef',    icon: '🐄', label: 'Beef',         headline: 'Brisket? Say less.',          body: 'Melt-in-your-mouth beef, every single time.' },
-  { id: 'chicken', icon: '🐔', label: 'Chicken',      headline: 'From rubbery to legendary',   body: "Never serve dry chicken again. Promise." },
-  { id: 'lamb',    icon: '🐑', label: 'Lamb',         headline: 'The fancy option',            body: "Smoky shoulder, perfect leg — looks hard, isn't." },
-  { id: 'fish',    icon: '🐟', label: 'Fish',         headline: 'Yes, you can smoke fish',     body: "Hot-smoked salmon that'll genuinely blow minds." },
-  { id: 'veggies', icon: '🥦', label: 'Vegetables',   headline: 'Plants deserve smoke too',    body: 'Smoked cauliflower. Smoked garlic paste. Trust us.' },
-  { id: 'jerky',   icon: '🥩', label: 'Jerky & Dried', headline: 'DIY snack game activated',  body: 'Make your own jerky. Surprisingly not complicated.' },
+  { id: 'pork',    label: 'Pork',         headline: 'Low & slow pork glory',      body: 'Shoulder, ribs, belly — all day in the smoke.' },
+  { id: 'beef',    label: 'Beef',         headline: 'Brisket? Say less.',          body: 'Melt-in-your-mouth beef, every single time.' },
+  { id: 'chicken', label: 'Chicken',      headline: 'From rubbery to legendary',   body: "Never serve dry chicken again. Promise." },
+  { id: 'lamb',    label: 'Lamb',         headline: 'The fancy option',            body: "Smoky shoulder, perfect leg — looks hard, isn't." },
+  { id: 'fish',    label: 'Fish',         headline: 'Yes, you can smoke fish',     body: "Hot-smoked salmon that'll genuinely blow minds." },
+  { id: 'veggies', label: 'Vegetables',   headline: 'Plants deserve smoke too',    body: 'Smoked cauliflower. Smoked garlic paste. Trust us.' },
+  { id: 'jerky',   label: 'Jerky & Dried', headline: 'DIY snack game activated',  body: 'Make your own jerky. Surprisingly not complicated.' },
 ];
 
 const GAP = 20;
@@ -258,7 +259,7 @@ export default function HeroCarousel() {
                   transition: 'border var(--motion-base) var(--ease-out-soft), box-shadow var(--motion-base) var(--ease-out-soft)',
                 }}
               >
-                <span style={{ fontSize: emojiSize, lineHeight: 1 }}>{cat.icon}</span>
+                <span style={{ fontSize: emojiSize, lineHeight: 1 }}>{categoryIcon(cat.id)}</span>
                 <span className="font-bold text-sm" style={{ color: '#162818' }}>{cat.label}</span>
               </div>
             </div>

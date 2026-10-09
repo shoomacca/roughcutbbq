@@ -1,11 +1,12 @@
 'use client';
 
+import type { ReactNode } from 'react';
 import { useRef, useState, useCallback, useEffect, useLayoutEffect } from 'react';
 import { useDragScroll, prefersReducedMotion } from '@/lib/useDragScroll';
 
 export interface CarouselItem {
   id: string;
-  icon: string;
+  icon: ReactNode;
   label: string;
   sublabel?: string;
 }

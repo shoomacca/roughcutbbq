@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 import meatsData from '@/data/meats.json';
 import { RECIPES, type Recipe } from '@/data/recipes';
 import { GEAR } from '@/data/gear';
+import { methodIcon } from '@/components/icons/BbqIcons';
 import Reveal from '@/components/Reveal';
 import { RUBS } from '@/data/rubs';
 
@@ -43,16 +44,16 @@ interface CategoryData {
 
 const CATEGORIES = meatsData as unknown as CategoryData[];
 
-const METHOD_META: Record<MethodId, { label: string; emoji: string; recipeKeywords: string[] }> = {
-  smoker: { label: 'Smoker', emoji: '💨', recipeKeywords: ['smoker', 'smoke'] },
-  kamado: { label: 'Kamado', emoji: '🥚', recipeKeywords: ['kamado', 'smoker', 'smoke'] },
-  charcoal_kettle: { label: 'Charcoal Kettle', emoji: '⚫', recipeKeywords: ['kettle', 'charcoal', 'grill', 'smoker'] },
-  wood_fire: { label: 'Wood Fire', emoji: '🪵', recipeKeywords: ['wood', 'fire', 'coals'] },
-  oven: { label: 'Oven', emoji: '🔥', recipeKeywords: ['oven', 'roast'] },
-  rotisserie: { label: 'Rotisserie', emoji: '🍗', recipeKeywords: ['rotisserie', 'spit'] },
-  slow_cooker: { label: 'Slow Cooker', emoji: '🍲', recipeKeywords: ['slow cooker', 'braise'] },
-  pressure_cooker: { label: 'Pressure Cooker', emoji: '⚡', recipeKeywords: ['pressure'] },
-  dehydrator: { label: 'Dehydrator', emoji: '🌵', recipeKeywords: ['dehydrator', 'jerky', 'dried'] },
+const METHOD_META: Record<MethodId, { label: string; recipeKeywords: string[] }> = {
+  smoker: { label: 'Smoker', recipeKeywords: ['smoker', 'smoke'] },
+  kamado: { label: 'Kamado', recipeKeywords: ['kamado', 'smoker', 'smoke'] },
+  charcoal_kettle: { label: 'Charcoal Kettle', recipeKeywords: ['kettle', 'charcoal', 'grill', 'smoker'] },
+  wood_fire: { label: 'Wood Fire', recipeKeywords: ['wood', 'fire', 'coals'] },
+  oven: { label: 'Oven', recipeKeywords: ['oven', 'roast'] },
+  rotisserie: { label: 'Rotisserie', recipeKeywords: ['rotisserie', 'spit'] },
+  slow_cooker: { label: 'Slow Cooker', recipeKeywords: ['slow cooker', 'braise'] },
+  pressure_cooker: { label: 'Pressure Cooker', recipeKeywords: ['pressure'] },
+  dehydrator: { label: 'Dehydrator', recipeKeywords: ['dehydrator', 'jerky', 'dried'] },
 };
 
 const CATEGORY_EMOJI: Record<string, string> = {
@@ -198,7 +199,7 @@ export default function IdeasClient() {
                 : 'bg-brand-surface text-brand-text border-brand-muted/30 hover:border-brand-secondary/60'
             }`}
           >
-            {METHOD_META[m].emoji} {METHOD_META[m].label}
+            <span className="inline-block align-[-0.2em] text-xl mr-1">{methodIcon(m)}</span>{METHOD_META[m].label}
           </button>
         ))}
       </div>

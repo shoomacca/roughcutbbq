@@ -1,6 +1,7 @@
 'use client';
 
 import ScrollCarousel from './ScrollCarousel';
+import { cutIcon } from '@/components/icons/BbqIcons';
 import { getCategoriesForMethod } from '@/lib/calculator';
 import type { CookingMethod } from '@/types/calculator';
 
@@ -24,7 +25,7 @@ export default function CutStep({ method, categoryId, onSelect, onBack }: Props)
       : `~${cut.hoursPerKg[method]} hrs/kg`;
     return {
       id: cut.id,
-      icon: '🍖',
+      icon: cutIcon(cut.id),
       label: cut.name,
       sublabel: `${timeStr} · pull ${cut.internalTempC[method]}°C`,
     };
