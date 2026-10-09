@@ -174,8 +174,8 @@ export default function IdeasClient() {
   };
 
   return (
-    <div className="max-w-5xl mx-auto w-full px-4 md:px-8 py-8">
-      <h1 className="text-3xl md:text-4xl font-black mb-2">
+    <div className="page-shell-wide">
+      <h1 className="page-title">
         What can I cook with what I&rsquo;ve got?
       </h1>
       <p className="text-brand-muted mb-8">

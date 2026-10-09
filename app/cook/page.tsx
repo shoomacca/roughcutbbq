@@ -15,8 +15,8 @@ export default function CookHubPage() {
   const categories = allCategories();
 
   return (
-    <div className="max-w-4xl mx-auto px-4 py-8">
-      <h1 className="text-brand-text text-3xl font-bold">BBQ Cooking Times &amp; Temperatures</h1>
+    <div className="page-shell-wide">
+      <h1 className="page-title">BBQ Cooking Times &amp; Temperatures</h1>
       <p className="text-brand-muted mt-3 leading-relaxed max-w-2xl">
         Every cut, every method — in kilograms and Celsius. Pick a combination below for exact times,
         temperatures, stall and wrap advice, or jump straight to the{' '}

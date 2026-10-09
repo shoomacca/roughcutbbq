@@ -163,7 +163,7 @@ function ResultsInner() {
         variants={stagger(0.08, 0.25)}
         initial="hidden"
         animate="show"
-        className="max-w-3xl mx-auto w-full py-6 px-4 md:px-8 flex flex-col gap-8"
+        className="page-shell flex flex-col gap-8"
       >
 
         {/* Print-only title — hidden on screen */}

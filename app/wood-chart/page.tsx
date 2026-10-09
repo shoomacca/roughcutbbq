@@ -142,10 +142,10 @@ const WOODS = [
 
 export default function WoodChartPage() {
   return (
-    <div className="relative w-full flex flex-col items-center pb-20 pt-8">
-      <div className="relative z-10 w-full max-w-4xl mx-auto px-4 flex flex-col">
+    <div className="relative w-full flex flex-col items-center pb-20">
+      <div className="page-shell-wide relative z-10 flex flex-col">
         <div className="text-center mb-12">
-          <h1 className="text-4xl md:text-5xl font-bold text-[#FAF6E9] mb-4" style={{ fontFamily: 'var(--font-display, Georgia, serif)' }}>
+          <h1 className="page-title">
             Wood Smoking Chart
           </h1>
           <p className="text-white/60 text-lg max-w-2xl mx-auto">

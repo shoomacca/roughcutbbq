@@ -60,10 +60,10 @@ function CalculatorInner() {
         <ProgressBar current={pre ? state.step + 1 : state.step} />
       </div>
 
-      {/* ── Step content — vertically centred in remaining page space ──── */}
+      {/* ── Step content — top-anchored so the step indicator and first row never move between steps ──── */}
       {/* Carousel steps: full width so calc(50% - halfCard) = 50% of viewport */}
       {/* Weight step: constrained and centred */}
-      <div className="flex-1 flex flex-col justify-center overflow-x-clip">
+      <div className="flex-1 flex flex-col overflow-x-clip">
        <AnimatePresence mode="wait" custom={dir} initial={false}>
         <m.div
           key={state.step}
@@ -72,7 +72,7 @@ function CalculatorInner() {
           initial="enter"
           animate="center"
           exit="exit"
-          className="flex flex-col flex-1 justify-center"
+          className="flex flex-col flex-1"
         >
 
         {/* Step 1 (free mode): category carousel — full width */}
@@ -108,7 +108,7 @@ function CalculatorInner() {
 
         {/* Weight step — constrained */}
         {((pre && state.step === 3) || (!pre && state.step === 4)) && (
-          <div className="max-w-2xl mx-auto w-full px-4 pb-8 flex-1 flex flex-col justify-center">
+          <div className="max-w-2xl mx-auto w-full px-6 pb-8 flex-1 flex flex-col">
             <WeightStep
               cutName={cutName}
               initialWeight={state.weightKg}

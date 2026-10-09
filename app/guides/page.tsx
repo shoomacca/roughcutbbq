@@ -48,7 +48,7 @@ const GUIDES = [
 export default function GuidesPage() {
   return (
     <>
-      <h1 className="text-3xl font-bold text-brand-text mb-2">BBQ Guides</h1>
+      <h1 className="page-title">BBQ Guides</h1>
       <p className="text-brand-muted mb-8">
         Step-by-step guides to help you cook better BBQ — every time.
       </p>

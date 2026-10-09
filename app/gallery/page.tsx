@@ -376,11 +376,11 @@ export default function GalleryPage() {
   };
 
   return (
-    <div className="max-w-5xl mx-auto w-full px-4 md:px-8 py-8 bg-brand-dark">
+    <div className="page-shell-wide bg-brand-dark">
       {/* Header with Upload Trigger */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
         <div>
-          <h1 className="text-brand-text text-3xl font-bold tracking-tight" style={{ fontFamily: 'var(--font-display, Georgia, serif)' }}>
+          <h1 className="page-title">
             🔥 Community Cook Forum
           </h1>
           <p className="text-brand-muted text-sm mt-1.5">

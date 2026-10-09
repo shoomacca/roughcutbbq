@@ -108,8 +108,8 @@ export default function SavesPage() {
 
   return (
     <div className="relative w-full flex flex-col items-center pb-20">
-      <div className="relative z-10 w-full max-w-4xl mx-auto px-4 flex flex-col pt-4">
-        <h1 className="text-3xl font-bold text-[#FAF6E9] mb-8" style={{ fontFamily: 'var(--font-display, Georgia, serif)' }}>My BBQ Logbook</h1>
+      <div className="page-shell-wide relative z-10 flex flex-col">
+        <h1 className="page-title mb-8">My BBQ Logbook</h1>
 
         {sortedSaves.length === 0 ? (
           <div className="text-center py-16 bg-white/5 rounded-3xl border border-white/10">

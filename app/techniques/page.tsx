@@ -7,7 +7,7 @@ const categories = meatsData as unknown as MeatCategory[];
 export default function TechniquesPage() {
   return (
     <div className="flex flex-col min-h-screen" style={{ background: '#0A150D' }}>
-      <main className="flex-1 max-w-7xl mx-auto w-full px-4 sm:px-6 py-16 relative">
+      <main className="flex-1 page-shell-wide relative">
         <div
           className="absolute inset-x-0 top-0 h-[500px] z-0 pointer-events-none"
           style={{
@@ -15,9 +15,8 @@ export default function TechniquesPage() {
           }}
         />
 
-        <div className="relative z-10 flex flex-col items-center text-center mb-16">
-          <div className="w-16 h-1 bg-[#5A9B6A] rounded-full mb-6" />
-          <h1 className="text-5xl md:text-7xl font-bold text-[#FAF6E9] mb-6 tracking-tight" style={{ fontFamily: 'var(--font-display, Georgia, serif)', textShadow: '0 8px 24px rgba(0,0,0,0.8)' }}>
+        <div className="relative z-10 flex flex-col items-center text-center mb-10">
+          <h1 className="page-title">
             Reference & Techniques
           </h1>
           <p className="text-white/60 text-lg md:text-xl max-w-2xl leading-relaxed">

@@ -70,7 +70,7 @@ export default function DeleteAccountPage() {
 
   if (loading) {
     return (
-      <div className="flex-1 flex flex-col items-center justify-center px-4 py-16 bg-brand-dark">
+      <div className="page-shell flex-1 flex flex-col items-center bg-brand-dark">
         <div className="text-brand-text font-semibold flex items-center gap-2">
           <span>🔥</span> Loading...
         </div>
@@ -79,13 +79,13 @@ export default function DeleteAccountPage() {
   }
 
   return (
-    <div className="flex-1 flex flex-col items-center justify-center px-4 py-16 bg-brand-dark">
+    <div className="page-shell flex-1 flex flex-col items-center bg-brand-dark">
       <div className="w-full max-w-md bg-brand-surface border border-brand-primary/20 rounded-3xl p-8 shadow-2xl">
         <div className="text-center mb-8">
           <span className="text-4xl">⚠️</span>
           {success ? (
             <>
-              <h1 className="text-3xl font-bold text-brand-text mt-3 font-display">
+              <h1 className="page-title mt-3">
                 Account Deleted
               </h1>
               <p className="text-brand-muted text-sm mt-2">
@@ -94,7 +94,7 @@ export default function DeleteAccountPage() {
             </>
           ) : (
             <>
-              <h1 className="text-3xl font-bold text-brand-text mt-3 font-display">
+              <h1 className="page-title mt-3">
                 Delete Account
               </h1>
               <p className="text-brand-primary text-sm mt-2 font-semibold">

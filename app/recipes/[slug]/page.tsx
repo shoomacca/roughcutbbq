@@ -58,7 +58,7 @@ export default async function RecipePage({ params }: PageProps) {
   ];
 
   return (
-    <div className="max-w-3xl mx-auto px-4 py-8">
+    <div className="page-shell">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
 
       <nav className="text-xs text-brand-muted mb-4">
@@ -67,7 +67,7 @@ export default async function RecipePage({ params }: PageProps) {
         <span className="text-brand-text">{recipe.name}</span>
       </nav>
 
-      <h1 className="text-brand-text text-3xl font-bold leading-tight">{recipe.name}</h1>
+      <h1 className="page-title">{recipe.name}</h1>
       <p className="text-brand-muted mt-2 text-sm">{recipe.category} · {recipe.cut}</p>
 
       <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-3">

@@ -190,16 +190,16 @@ export default function ScrollCarousel({
     <div className="flex flex-col w-full">
 
       {/* ── Back button only — above dots, matches homepage which has no header above carousel */}
-      {onBack && (
-        <div className="px-6 pb-1">
+      <div className="px-6 pb-1 h-6">
+          {onBack && (
           <button
             onClick={onBack}
             className="text-brand-muted hover:text-brand-text text-sm flex items-center gap-1 transition-ui"
           >
             ← Back
           </button>
-        </div>
-      )}
+          )}
+      </div>
 
       {/* ── Dot nav ─────────────────────────────────────────────────────── */}
       <div className="flex justify-center gap-2 mb-2">
@@ -267,7 +267,7 @@ export default function ScrollCarousel({
       </div>
 
       {/* ── Label — static centred text below carousel (like homepage headline) */}
-      <div className="flex flex-col items-center text-center px-6 pt-1 pb-4 min-h-[60px]">
+      <div className="flex flex-col items-center text-center px-6 pt-2 pb-4 min-h-[88px]">
         {centeredItem && (
           <>
             <p
@@ -292,7 +292,7 @@ export default function ScrollCarousel({
 
       {/* ── CTA — full width, same as homepage button ───────────────────── */}
       {centeredItem && (
-        <div className="px-6 pt-0 pb-6">
+        <div className="px-6 pt-2 pb-6">
           <button
             onClick={() => onSelect(centeredItem.id)}
             className="w-full bg-brand-secondary hover:bg-brand-primary transition-ui text-white font-black text-lg px-8 py-4 rounded-2xl tracking-wide"
