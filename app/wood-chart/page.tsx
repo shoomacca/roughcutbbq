@@ -8,7 +8,7 @@ const WOODS = [
     strength: "Mild",
     description: "Alder is mostly used for seafood and fish but it works well with beef and pork too. Overall, it has a light, sweet and natural flavor which is not overpowering. It is less dense than most of the other woods and is very similar to cedar.",
     greatFor: "Salmon, Seafood & fish. Poultry & Pork",
-    icon: "🐟",
+    icon: "🌿",
   },
   {
     name: "Apple",
@@ -24,7 +24,7 @@ const WOODS = [
     strength: "Strong",
     description: "Hickory is probably the most popular smoke wood for many. It has a strong, stinging profile that gives the food a sweet and strong bacon flavor at the same time. It can be overwhelming, giving the meat a strong bitter flavor, especially if it is used in large amounts. Most people prefer to mix it with other woods to have better results.",
     greatFor: "Ribs, Pork Shoulders, Red meat and Poultry",
-    icon: "🥓",
+    icon: "🍂",
   },
   {
     name: "Oak",
@@ -48,7 +48,7 @@ const WOODS = [
     strength: "Strong",
     description: "Mesquite is quite popular in Texas barbecues. It generates an intense earthy flavor, which can easily become overpowered for your food and give it a negative flavor and scent. Since this type burns down very fast, it is a great option for hot and fast bbq techniques and smoking meat.",
     greatFor: "Mostly red and dark meat",
-    icon: "🥩",
+    icon: "🌵",
   },
   {
     name: "Maple",
@@ -96,7 +96,7 @@ const WOODS = [
     strength: "Mild",
     description: "Very similar wood to apple. It has a mild, sweet, fruity flavor, making a good option for most meat types.",
     greatFor: "Most types of meat, especially recommended for poultry, fish, and pork",
-    icon: "🍇",
+    icon: "🫐",
   },
   {
     name: "Citrus",
@@ -112,7 +112,7 @@ const WOODS = [
     strength: "Strong",
     description: "You should be careful when using grap vine for smoking. It is a strong fruit wood, with an acrid smoke flavor that will easily overpower the flavor of your meat if you go overboard.",
     greatFor: "Poultry, Lamb, or Some type of Red Meats",
-    icon: "🍷",
+    icon: "🍇",
   },
   {
     name: "Guava",
@@ -120,7 +120,7 @@ const WOODS = [
     strength: "Medium",
     description: "Guava is a fruit wood coming from Hawaii and other tropical regions. It is a member of the Myrtle family has a semi-sweet aroma, which goes well with beef, pork, lamb, poultry, and fish.",
     greatFor: "Beef, pork, lamb, poultry, and fish",
-    icon: "🌴",
+    icon: "🍃",
   },
   {
     name: "Kiawe",
@@ -136,7 +136,7 @@ const WOODS = [
     strength: "Medium",
     description: "Another not-so-common type you can give a try when smoking meat. Wine barrel chunks are cut of woods from the wine barrels, once they reach the end of their life. They have the same aroma you experience when visiting the winery cellars.",
     greatFor: "Mostly red meat and Beef",
-    icon: "🛢️",
+    icon: "🍷",
   },
 ];
 

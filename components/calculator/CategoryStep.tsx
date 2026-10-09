@@ -1,18 +1,9 @@
 'use client';
 
 import ScrollCarousel from './ScrollCarousel';
+import { categoryIcon } from '@/components/icons/BbqIcons';
 import { getCategoriesForMethod, getMeatCategories } from '@/lib/calculator';
 import type { CookingMethod } from '@/types/calculator';
-
-const CATEGORY_ICONS: Record<string, string> = {
-  pork:    '🐷',
-  beef:    '🐄',
-  chicken: '🐔',
-  lamb:    '🐑',
-  fish:    '🐟',
-  veggies: '🥦',
-  jerky:   '🥩',
-};
 
 interface Props {
   method: CookingMethod | null;
@@ -26,7 +17,7 @@ export default function CategoryStep({ method, onSelect, onBack }: Props) {
 
   const items = categories.map((cat) => ({
     id: cat.id,
-    icon: CATEGORY_ICONS[cat.id] ?? '🍖',
+    icon: categoryIcon(cat.id),
     label: cat.name,
     sublabel: `${cat.cuts.length} cuts`,
   }));
